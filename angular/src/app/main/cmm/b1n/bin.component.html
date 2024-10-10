@@ -1,0 +1,78 @@
+<div id="container" class="mt-2" [busyIf]="isLoading">
+    <div class="ui-g-12">
+        <fieldset class="fieldset-border grid-parent">
+            <div class="ui-g-12">
+                <div class="ui-g-12">
+                    <h6 class="card-header">
+                         {{ l('BIN List') }}
+                    </h6>
+                </div>
+                <div class="prod-cont">
+                    <div class="ui-g-12">
+                        <div class="form-group m-form__group align-items-center">
+                            <div class="input-group">
+								<div class='input-search'>
+									<input [(ngModel)]='binName' name='binName'
+									class='form-control' [placeholder]="l('Bin Name')"
+									type='text' (keyup.enter)='searchDatas()'>
+								</div>
+                                <div class='input-search'>
+									<input [(ngModel)]='binType' name='binType'
+									class='form-control' [placeholder]="l('Supplier')"
+									type='text' (keyup.enter)='searchDatas()'>
+								</div>
+                                <div class="btn-search">
+                                    <button (click)="searchDatas()"
+                                        class="btn btn-primary action-button" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <div class="btn-search">
+                                    <button (click)="clearTextSearch()"
+                                        class="btn btn-primary action-button" type="submit">
+                                        <i class="fas fa-backspace"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+
+                        <div class="panel panel-default pt-1">
+                            <div class="content">
+                                <!-- The AG Grid component, with various Grid Option properties -->
+                                <ag-grid-angular
+                                  style="width: 100%; height: 550px;"
+                                  [rowData]="rowData"
+                                  [class]="themeClass"
+                                  [columnDefs]="colDefs"
+                                  [defaultColDef]="defaultColDef"
+                                  [pagination]="true"
+                                  [autoSizeStrategy]="autoSizeStrategy"
+                                  [rowSelection]="'multiple'"
+                                  (gridReady)="onGridReady($event)"
+                                  (cellValueChanged)="onCellValueChanged($event)"
+                                  (selectionChanged)="onChangeRowSelection($event)"
+                                >
+                                </ag-grid-angular>
+                              </div>
+                        </div>
+
+                        <hr>
+                        <div class="text-right">
+                            <button class="btn btn-primary font-weight-bold" (click)="createOrEditModalCmmBin.show(selectedRow)">
+                                <i class="fas fa-file-plus mr-1"></i>{{ l('Edit') }}
+                            </button>
+                            <button class="btn btn-success font-weight-bold">
+                                <i class="fas fa-file-excel mr-1"></i>{{ l('Export Excel') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+
+<create-or-edit-bin-modal #createOrEditModalCmmBin (modalSave)="clearTextSearch()"></create-or-edit-bin-modal>
