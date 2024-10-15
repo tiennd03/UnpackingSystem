@@ -334,7 +334,7 @@ export class ChatBarComponent extends AppComponentBase implements OnInit, AfterV
         }
 
         this._chatService
-            .getUserChatMessages(user.friendTenantId ? user.friendTenantId : undefined, user.friendUserId, minMessageId, this.maxMessageCount)
+            .getUserChatMessages(user.friendTenantId ? user.friendTenantId : undefined, user.friendUserId, minMessageId)
             .subscribe((result) => {
                 if (!user.messages) {
                     user.messages = [];

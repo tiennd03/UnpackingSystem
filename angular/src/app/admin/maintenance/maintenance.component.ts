@@ -77,11 +77,6 @@ export class MaintenanceComponent extends AppComponentBase implements OnInit {
         });
     }
 
-    setCanClearAllCaches(): void{
-        this._cacheService.canClearAllCaches().subscribe((result) => {
-            this.canClearAllCaches = result;
-        });
-    }
 
     downloadWebLogs = function () {
         const self = this;
@@ -164,6 +159,5 @@ export class MaintenanceComponent extends AppComponentBase implements OnInit {
         const self = this;
         self.getCaches();
         self.getWebLogs();
-        self.setCanClearAllCaches();
     }
 }
