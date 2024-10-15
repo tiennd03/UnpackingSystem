@@ -77,23 +77,6 @@
                         <label class="form-check form-check-custom form-check-solid col-lg-12">
                             <input
                                 type="checkbox"
-                                name="DefaultMinimizedAside"
-                                class="form-check-input"
-                                [(ngModel)]="settings.menu.defaultMinimizedAside"
-                                [(disabled)]="!settings.menu.allowAsideMinimizing"
-                            />
-                            <span class="form-check-label">
-                                {{ 'UiCustomization_DefaultMinimizedAside' | localize }}
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-5 row">
-                    <div class="col-lg-12">
-                        <label class="form-check form-check-custom form-check-solid col-lg-12">
-                            <input
-                                type="checkbox"
                                 name="HoverableAside"
                                 class="form-check-input"
                                 [(ngModel)]="settings.menu.hoverableAside"
@@ -117,43 +100,6 @@
                             />
                             <span class="form-check-label">
                                 {{ 'ShowMenuSearchInput' | localize }}
-                            </span>
-                        </label>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </tab>
-
-    <tab heading="{{ 'UiCustomization_Toolbar' | localize }}" class="p-5">
-        <div class="form">
-            <form>
-                <div class="mb-5 row">
-                    <div class="col-lg-12">
-                        <label class="form-check form-check-custom form-check-solid col-lg-12">
-                            <input
-                                type="checkbox"
-                                name="DesktopFixedHeader"
-                                class="form-check-input"
-                                [(ngModel)]="settings.toolbar.desktopFixedToolbar"
-                            />
-                            <span class="form-check-label">
-                                {{ 'UiCustomization_Toolbar_DesktopFixedHeader' | localize }}
-                            </span>
-                        </label>
-                    </div>
-                </div>
-                <div class="mb-5 row">
-                    <div class="col-lg-12">
-                        <label class="form-check form-check-custom form-check-solid col-lg-12">
-                            <input
-                                type="checkbox"
-                                name="MobileFixedHeader"
-                                class="form-check-input"
-                                [(ngModel)]="settings.toolbar.mobileFixedToolbar"
-                            />
-                            <span class="form-check-label">
-                                {{ 'UiCustomization_Toolbar_MobileFixedHeader' | localize }}
                             </span>
                         </label>
                     </div>

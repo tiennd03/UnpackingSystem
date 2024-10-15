@@ -31,33 +31,7 @@
                 ></friendsLookupTable>
 
                 <ng-template #noUserListPermission class="mt-5">
-                    <form #addFriendForm="ngForm" class="mt-5" (ngSubmit)="save()">
-                        <div class="row">
-                            <label class="col-4 form-label">
-                                <label>{{ 'UserName' | localize }}</label>
-                            </label>
-                            <label class="col form-label">
-                                <input
-                                    class="form-control"
-                                    type="text"
-                                    id="UserName"
-                                    [(ngModel)]="userName"
-                                    name="UserName"
-                                    required
-                                />
-                            </label>
-                        </div>
-                    </form>
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            (click)="save()"
-                            class="btn btn-primary"
-                            [disabled]="saving || !addFriendForm.form.valid"
-                        >
-                            <i class="fa fa-save"></i>
-                            <span>{{ 'Save' | localize }}</span>
-                        </button>
                         <button type="button" class="btn btn-light-primary fw-bold" (click)="close()">
                             {{ 'Cancel' | localize }}
                         </button>

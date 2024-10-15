@@ -1,7 +1,6 @@
 ﻿import { Component, ElementRef, EventEmitter, Injector, Output, ViewChild, OnInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
-    CreateFriendshipWithDifferentTenantInput,
     FriendshipServiceProxy,
     ProfileServiceProxy,
     VerifyAuthenticatorCodeInput,
@@ -48,26 +47,6 @@ export class AddFromDifferentTenantModalComponent extends AppComponentBase imple
     close(): void {
         this.active = false;
         this.modal.hide();
-    }
-
-    save(): void {
-        let input = new CreateFriendshipWithDifferentTenantInput();
-        input.tenancyName = this.tenancyName;
-        input.userName = this.userName;
-
-        this.saving = true;
-        this._friendshipService
-            .createFriendshipWithDifferentTenant(input)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe(() => {
-                this.notify.info(this.l('FriendshipRequestAccepted'));
-                this.close();
-                this.modalSave.emit(null);
-            });
     }
 
     switchTenant(): void {

@@ -132,12 +132,11 @@ export class TenantSettingsComponent extends AppComponentBase implements OnInit 
                         value: item.claim,
                     }));
 
-                if(this.settings.externalLoginProviderSettings.openIdConnect.responseType){                
-                    var openIdConnectResponseTypes = this.settings.externalLoginProviderSettings.openIdConnect.responseType.split(',');
-                    
-                    this.openIdConnectResponseTypeCode = openIdConnectResponseTypes.indexOf('code') >- 1;
-                    this.openIdConnectResponseTypeIdToken = openIdConnectResponseTypes.indexOf('id_token') >- 1;
-                    this.openIdConnectResponseTypeToken = openIdConnectResponseTypes.indexOf('token') >- 1 ;
+                if (this.settings.externalLoginProviderSettings.openIdConnect.responseType){
+                    let openIdConnectResponseTypes = this.settings.externalLoginProviderSettings.openIdConnect.responseType.split(',');
+                    this.openIdConnectResponseTypeCode = openIdConnectResponseTypes.indexOf('code') > - 1;
+                    this.openIdConnectResponseTypeIdToken = openIdConnectResponseTypes.indexOf('id_token') > - 1;
+                    this.openIdConnectResponseTypeToken = openIdConnectResponseTypes.indexOf('token') > - 1 ;
                 }
 
                 this.initialEmailSettings = JSON.stringify(this.settings.email);
@@ -214,22 +213,6 @@ export class TenantSettingsComponent extends AppComponentBase implements OnInit 
         this.customCssUploader.uploadAll();
     }
 
-    clearDarkLogo(): void {
-        this._tenantSettingsService.clearDarkLogo().subscribe(() => {
-            this.appSession.tenant.darkLogoFileType = null;
-            this.appSession.tenant.darkLogoId = null;
-            this.notify.info(this.l('ClearedSuccessfully'));
-        });
-    }
-
-    clearLightLogo(): void {
-        this._tenantSettingsService.clearLightLogo().subscribe(() => {
-            this.appSession.tenant.lightLogoFileType = null;
-            this.appSession.tenant.lightLogoId = null;
-            this.notify.info(this.l('ClearedSuccessfully'));
-        });
-    }
-
     clearCustomCss(): void {
         this._tenantSettingsService.clearCustomCss().subscribe(() => {
             this.appSession.tenant.customCssId = null;
@@ -277,7 +260,7 @@ export class TenantSettingsComponent extends AppComponentBase implements OnInit 
         }
 
         this.settings.externalLoginProviderSettings.openIdConnect.responseType = this.getSelectedOpenIdConnectResponseTypes();
-        
+
         this.mapClaims();
         this._tenantSettingsService.updateAllSettings(this.settings).subscribe(() => {
             this.notify.info(this.l('SavedSuccessfully'));
@@ -296,23 +279,23 @@ export class TenantSettingsComponent extends AppComponentBase implements OnInit 
     }
 
     getSelectedOpenIdConnectResponseTypes(): string {
-        var openIdConnectResponseTypes='';
-        if(this.openIdConnectResponseTypeToken){
-            openIdConnectResponseTypes += "token";
+        let openIdConnectResponseTypes = '';
+        if (this.openIdConnectResponseTypeToken){
+            openIdConnectResponseTypes += 'token';
         }
 
-        if(this.openIdConnectResponseTypeIdToken){
-            if(openIdConnectResponseTypes.length > 0){
-                openIdConnectResponseTypes += ",";
+        if (this.openIdConnectResponseTypeIdToken){
+            if (openIdConnectResponseTypes.length > 0){
+                openIdConnectResponseTypes += ',';
             }
-            openIdConnectResponseTypes+="id_token";
+            openIdConnectResponseTypes += 'id_token';
         }
 
-        if(this.openIdConnectResponseTypeCode){
-            if(openIdConnectResponseTypes.length > 0){
-                openIdConnectResponseTypes += ",";
+        if (this.openIdConnectResponseTypeCode){
+            if (openIdConnectResponseTypes.length > 0){
+                openIdConnectResponseTypes += ',';
             }
-            openIdConnectResponseTypes += "code";
+            openIdConnectResponseTypes += 'code';
         }
 
         return openIdConnectResponseTypes;

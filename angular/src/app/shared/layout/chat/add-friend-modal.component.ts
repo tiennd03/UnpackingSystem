@@ -1,6 +1,6 @@
 ﻿import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateFriendshipForCurrentTenantInput, CreateFriendshipRequestInput, FriendshipServiceProxy, NameValueDto } from '@shared/service-proxies/service-proxies';
+import { CreateFriendshipRequestInput, FriendshipServiceProxy, NameValueDto } from '@shared/service-proxies/service-proxies';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { merge as _merge } from 'lodash-es';
 import { AddFromDifferentTenantModalComponent } from './add-from-different-tenant-modal.component';
@@ -44,24 +44,6 @@ export class AddFriendModalComponent extends AppComponentBase implements OnInit{
 
         this._friendshipService.createFriendshipRequest(input).subscribe(() => {
         });
-    }
-
-    save(): void {
-        let input = new CreateFriendshipForCurrentTenantInput();
-        input.userName = this.userName;
-
-        this.saving = true;
-        this._friendshipService
-            .createFriendshipForCurrentTenant(input)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                    this.userName = '';
-                })
-            )
-            .subscribe(() => {
-                this.notify.info(this.l('FriendshipRequestAccepted'));
-            });
     }
 
     show(): void {

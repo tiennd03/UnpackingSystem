@@ -1448,58 +1448,6 @@ export class CachingServiceProxy {
         }
         return _observableOf(null as any);
     }
-
-    /**
-     * @return Success
-     */
-    canClearAllCaches(): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/services/app/Caching/CanClearAllCaches";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCanClearAllCaches(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCanClearAllCaches(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<boolean>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<boolean>;
-        }));
-    }
-
-    protected processCanClearAllCaches(response: HttpResponseBase): Observable<boolean> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
 }
 
 @Injectable()
@@ -1568,10 +1516,9 @@ export class ChatServiceProxy {
      * @param tenantId (optional) 
      * @param userId (optional) 
      * @param minMessageId (optional) 
-     * @param maxResultCount (optional) 
      * @return Success
      */
-    getUserChatMessages(tenantId: number | undefined, userId: number | undefined, minMessageId: number | undefined, maxResultCount: number | undefined): Observable<ListResultDtoOfChatMessageDto> {
+    getUserChatMessages(tenantId: number | undefined, userId: number | undefined, minMessageId: number | undefined): Observable<ListResultDtoOfChatMessageDto> {
         let url_ = this.baseUrl + "/api/services/app/Chat/GetUserChatMessages?";
         if (tenantId === null)
             throw new Error("The parameter 'tenantId' cannot be null.");
@@ -1585,10 +1532,6 @@ export class ChatServiceProxy {
             throw new Error("The parameter 'minMessageId' cannot be null.");
         else if (minMessageId !== undefined)
             url_ += "MinMessageId=" + encodeURIComponent("" + minMessageId) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -5190,8 +5133,8 @@ export class FriendshipServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createFriendshipWithDifferentTenant(body: CreateFriendshipWithDifferentTenantInput | undefined): Observable<FriendDto> {
-        let url_ = this.baseUrl + "/api/services/app/Friendship/CreateFriendshipWithDifferentTenant";
+    createFriendshipRequestByUserName(body: CreateFriendshipRequestByUserNameInput | undefined): Observable<FriendDto> {
+        let url_ = this.baseUrl + "/api/services/app/Friendship/CreateFriendshipRequestByUserName";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -5207,11 +5150,11 @@ export class FriendshipServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateFriendshipWithDifferentTenant(response_);
+            return this.processCreateFriendshipRequestByUserName(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreateFriendshipWithDifferentTenant(response_ as any);
+                    return this.processCreateFriendshipRequestByUserName(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<FriendDto>;
                 }
@@ -5220,63 +5163,7 @@ export class FriendshipServiceProxy {
         }));
     }
 
-    protected processCreateFriendshipWithDifferentTenant(response: HttpResponseBase): Observable<FriendDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FriendDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createFriendshipForCurrentTenant(body: CreateFriendshipForCurrentTenantInput | undefined): Observable<FriendDto> {
-        let url_ = this.baseUrl + "/api/services/app/Friendship/CreateFriendshipForCurrentTenant";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateFriendshipForCurrentTenant(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateFriendshipForCurrentTenant(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FriendDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FriendDto>;
-        }));
-    }
-
-    protected processCreateFriendshipForCurrentTenant(response: HttpResponseBase): Observable<FriendDto> {
+    protected processCreateFriendshipRequestByUserName(response: HttpResponseBase): Observable<FriendDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -12407,8 +12294,8 @@ export class TenantSettingsServiceProxy {
     /**
      * @return Success
      */
-    clearDarkLogo(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/TenantSettings/ClearDarkLogo";
+    clearLogo(): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/TenantSettings/ClearLogo";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -12419,11 +12306,11 @@ export class TenantSettingsServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processClearDarkLogo(response_);
+            return this.processClearLogo(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processClearDarkLogo(response_ as any);
+                    return this.processClearLogo(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -12432,54 +12319,7 @@ export class TenantSettingsServiceProxy {
         }));
     }
 
-    protected processClearDarkLogo(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @return Success
-     */
-    clearLightLogo(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/TenantSettings/ClearLightLogo";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processClearLightLogo(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processClearLightLogo(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processClearLightLogo(response: HttpResponseBase): Observable<void> {
+    protected processClearLogo(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -15752,7 +15592,6 @@ export enum AbpLoginResultType {
     UnknownExternalLogin = 8,
     LockedOut = 9,
     UserPhoneNumberIsNotConfirmed = 10,
-    FailedForOtherReason = 11,
 }
 
 export class AcceptFriendshipRequestInput implements IAcceptFriendshipRequestInput {
@@ -17051,10 +16890,11 @@ export interface ICreateEditionDto {
     featureValues: NameValueDto[];
 }
 
-export class CreateFriendshipForCurrentTenantInput implements ICreateFriendshipForCurrentTenantInput {
+export class CreateFriendshipRequestByUserNameInput implements ICreateFriendshipRequestByUserNameInput {
+    tenancyName!: string;
     userName!: string | undefined;
 
-    constructor(data?: ICreateFriendshipForCurrentTenantInput) {
+    constructor(data?: ICreateFriendshipRequestByUserNameInput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -17065,25 +16905,28 @@ export class CreateFriendshipForCurrentTenantInput implements ICreateFriendshipF
 
     init(_data?: any) {
         if (_data) {
+            this.tenancyName = _data["tenancyName"];
             this.userName = _data["userName"];
         }
     }
 
-    static fromJS(data: any): CreateFriendshipForCurrentTenantInput {
+    static fromJS(data: any): CreateFriendshipRequestByUserNameInput {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateFriendshipForCurrentTenantInput();
+        let result = new CreateFriendshipRequestByUserNameInput();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
         data["userName"] = this.userName;
         return data;
     }
 }
 
-export interface ICreateFriendshipForCurrentTenantInput {
+export interface ICreateFriendshipRequestByUserNameInput {
+    tenancyName: string;
     userName: string | undefined;
 }
 
@@ -17125,46 +16968,6 @@ export class CreateFriendshipRequestInput implements ICreateFriendshipRequestInp
 export interface ICreateFriendshipRequestInput {
     userId: number;
     tenantId: number | undefined;
-}
-
-export class CreateFriendshipWithDifferentTenantInput implements ICreateFriendshipWithDifferentTenantInput {
-    tenancyName!: string;
-    userName!: string | undefined;
-
-    constructor(data?: ICreateFriendshipWithDifferentTenantInput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.tenancyName = _data["tenancyName"];
-            this.userName = _data["userName"];
-        }
-    }
-
-    static fromJS(data: any): CreateFriendshipWithDifferentTenantInput {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateFriendshipWithDifferentTenantInput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["tenancyName"] = this.tenancyName;
-        data["userName"] = this.userName;
-        return data;
-    }
-}
-
-export interface ICreateFriendshipWithDifferentTenantInput {
-    tenancyName: string;
-    userName: string | undefined;
 }
 
 export class CreateInvoiceDto implements ICreateInvoiceDto {
@@ -23073,7 +22876,6 @@ export class LdapSettingsEditDto implements ILdapSettingsEditDto {
     domain!: string | undefined;
     userName!: string | undefined;
     password!: string | undefined;
-    useSsl!: boolean;
 
     constructor(data?: ILdapSettingsEditDto) {
         if (data) {
@@ -23091,7 +22893,6 @@ export class LdapSettingsEditDto implements ILdapSettingsEditDto {
             this.domain = _data["domain"];
             this.userName = _data["userName"];
             this.password = _data["password"];
-            this.useSsl = _data["useSsl"];
         }
     }
 
@@ -23109,7 +22910,6 @@ export class LdapSettingsEditDto implements ILdapSettingsEditDto {
         data["domain"] = this.domain;
         data["userName"] = this.userName;
         data["password"] = this.password;
-        data["useSsl"] = this.useSsl;
         return data;
     }
 }
@@ -23120,7 +22920,6 @@ export interface ILdapSettingsEditDto {
     domain: string | undefined;
     userName: string | undefined;
     password: string | undefined;
-    useSsl: boolean;
 }
 
 export class LinkToUserInput implements ILinkToUserInput {
@@ -28553,7 +28352,6 @@ export class ThemeSettingsDto implements IThemeSettingsDto {
     subHeader!: ThemeSubHeaderSettingsDto;
     menu!: ThemeMenuSettingsDto;
     footer!: ThemeFooterSettingsDto;
-    toolbar!: ThemeToolbarSettingsDto;
 
     constructor(data?: IThemeSettingsDto) {
         if (data) {
@@ -28572,7 +28370,6 @@ export class ThemeSettingsDto implements IThemeSettingsDto {
             this.subHeader = _data["subHeader"] ? ThemeSubHeaderSettingsDto.fromJS(_data["subHeader"]) : <any>undefined;
             this.menu = _data["menu"] ? ThemeMenuSettingsDto.fromJS(_data["menu"]) : <any>undefined;
             this.footer = _data["footer"] ? ThemeFooterSettingsDto.fromJS(_data["footer"]) : <any>undefined;
-            this.toolbar = _data["toolbar"] ? ThemeToolbarSettingsDto.fromJS(_data["toolbar"]) : <any>undefined;
         }
     }
 
@@ -28591,7 +28388,6 @@ export class ThemeSettingsDto implements IThemeSettingsDto {
         data["subHeader"] = this.subHeader ? this.subHeader.toJSON() : <any>undefined;
         data["menu"] = this.menu ? this.menu.toJSON() : <any>undefined;
         data["footer"] = this.footer ? this.footer.toJSON() : <any>undefined;
-        data["toolbar"] = this.toolbar ? this.toolbar.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -28603,7 +28399,6 @@ export interface IThemeSettingsDto {
     subHeader: ThemeSubHeaderSettingsDto;
     menu: ThemeMenuSettingsDto;
     footer: ThemeFooterSettingsDto;
-    toolbar: ThemeToolbarSettingsDto;
 }
 
 export class ThemeSubHeaderSettingsDto implements IThemeSubHeaderSettingsDto {
@@ -28660,46 +28455,6 @@ export interface IThemeSubHeaderSettingsDto {
     titleStyle: string | undefined;
     containerStyle: string | undefined;
     subContainerStyle: string | undefined;
-}
-
-export class ThemeToolbarSettingsDto implements IThemeToolbarSettingsDto {
-    desktopFixedToolbar!: boolean;
-    mobileFixedToolbar!: boolean;
-
-    constructor(data?: IThemeToolbarSettingsDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.desktopFixedToolbar = _data["desktopFixedToolbar"];
-            this.mobileFixedToolbar = _data["mobileFixedToolbar"];
-        }
-    }
-
-    static fromJS(data: any): ThemeToolbarSettingsDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ThemeToolbarSettingsDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["desktopFixedToolbar"] = this.desktopFixedToolbar;
-        data["mobileFixedToolbar"] = this.mobileFixedToolbar;
-        return data;
-    }
-}
-
-export interface IThemeToolbarSettingsDto {
-    desktopFixedToolbar: boolean;
-    mobileFixedToolbar: boolean;
 }
 
 export class TopStatsData implements ITopStatsData {
@@ -29790,8 +29545,8 @@ export interface IUserListRoleDto {
 
 export class UserLockOutSettingsEditDto implements IUserLockOutSettingsEditDto {
     isEnabled!: boolean;
-    maxFailedAccessAttemptsBeforeLockout!: number | undefined;
-    defaultAccountLockoutSeconds!: number | undefined;
+    maxFailedAccessAttemptsBeforeLockout!: number;
+    defaultAccountLockoutSeconds!: number;
 
     constructor(data?: IUserLockOutSettingsEditDto) {
         if (data) {
@@ -29828,8 +29583,8 @@ export class UserLockOutSettingsEditDto implements IUserLockOutSettingsEditDto {
 
 export interface IUserLockOutSettingsEditDto {
     isEnabled: boolean;
-    maxFailedAccessAttemptsBeforeLockout: number | undefined;
-    defaultAccountLockoutSeconds: number | undefined;
+    maxFailedAccessAttemptsBeforeLockout: number;
+    defaultAccountLockoutSeconds: number;
 }
 
 export class UserLoginAttemptDto implements IUserLoginAttemptDto {

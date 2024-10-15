@@ -29,7 +29,4 @@ export class DefaultLayoutComponent extends ThemesLayoutBaseComponent implements
         }
     }
 
-    getMobileMenuSkin(): string {
-        return this.appSession.theme.baseSettings.layout.darkMode ? "dark" : "light";
-    }
 }
