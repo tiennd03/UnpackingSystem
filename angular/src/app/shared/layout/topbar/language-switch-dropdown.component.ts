@@ -31,7 +31,7 @@ export class LanguageSwitchDropdownComponent extends ThemesLayoutBaseComponent i
     changeLanguage(languageName: string): void {
         const input = new ChangeUserLanguageDto();
         input.languageName = languageName;
-        
+
         this._profileServiceProxy.changeLanguage(input).subscribe(() => {
             abp.utils.setCookieValue(
                 'Abp.Localization.CultureName',
