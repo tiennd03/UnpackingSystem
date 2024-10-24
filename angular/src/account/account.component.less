@@ -104,3 +104,32 @@ ul.text-danger {
     margin: auto;
     width: 70%;
 }
+
+// custom
+.kt-login__form {
+    width: 100%;
+    max-width: 450px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    padding: 60px 40px 60px 40px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+}
+.kt-login__form::before {
+    content: "";
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    inset: 0;
+    transform: rotate(-5deg);
+    z-index: -1;
+}
+.kt-login__form .kt-login__title {
+    display: block;
+    text-align: center;
+    margin-bottom: 5rem;
+    text-decoration: none;
+}
+.forgot-password{
+    padding: 50px;
+}

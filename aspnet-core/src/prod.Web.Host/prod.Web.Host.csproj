@@ -48,11 +48,15 @@
 
     <ItemGroup>
         <PackageReference Include="Abp.Castle.Log4Net" Version="8.0.0" />
+		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+		<PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+		<PackageReference Include="morelinq" Version="4.3.0" />
         <PackageReference Include="Z.Dapper.Plus" Version="5.0.1" />
     </ItemGroup>
 
