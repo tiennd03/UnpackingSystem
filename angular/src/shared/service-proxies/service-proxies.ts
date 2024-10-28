@@ -3037,6 +3037,81 @@ export class DemoUiComponentsServiceProxy {
 }
 
 @Injectable()
+export class DevaningModuleServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param status (optional) 
+     * @return Success
+     */
+    getAll(status: number | undefined): Observable<DevaningModuleDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/DevaningModule/GetAll?";
+        if (status === null)
+            throw new Error("The parameter 'status' cannot be null.");
+        else if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<DevaningModuleDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<DevaningModuleDto[]>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<DevaningModuleDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DevaningModuleDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class DynamicEntityPropertyServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -17859,6 +17934,86 @@ export class DelegatedImpersonateInput implements IDelegatedImpersonateInput {
 
 export interface IDelegatedImpersonateInput {
     userDelegationId: number;
+}
+
+export class DevaningModuleDto implements IDevaningModuleDto {
+    devaningNo!: string | undefined;
+    containerNo!: string | undefined;
+    renban!: string | undefined;
+    suppilerNo!: string | undefined;
+    shiftNo!: string | undefined;
+    workingDate!: DateTime | undefined;
+    planDevaningDate!: DateTime | undefined;
+    actDevaningDate!: DateTime | undefined;
+    actDevaningDateFinish!: DateTime | undefined;
+    devaningType!: string | undefined;
+    devaningStatus!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IDevaningModuleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.devaningNo = _data["devaningNo"];
+            this.containerNo = _data["containerNo"];
+            this.renban = _data["renban"];
+            this.suppilerNo = _data["suppilerNo"];
+            this.shiftNo = _data["shiftNo"];
+            this.workingDate = _data["workingDate"] ? DateTime.fromISO(_data["workingDate"].toString()) : <any>undefined;
+            this.planDevaningDate = _data["planDevaningDate"] ? DateTime.fromISO(_data["planDevaningDate"].toString()) : <any>undefined;
+            this.actDevaningDate = _data["actDevaningDate"] ? DateTime.fromISO(_data["actDevaningDate"].toString()) : <any>undefined;
+            this.actDevaningDateFinish = _data["actDevaningDateFinish"] ? DateTime.fromISO(_data["actDevaningDateFinish"].toString()) : <any>undefined;
+            this.devaningType = _data["devaningType"];
+            this.devaningStatus = _data["devaningStatus"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): DevaningModuleDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DevaningModuleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["devaningNo"] = this.devaningNo;
+        data["containerNo"] = this.containerNo;
+        data["renban"] = this.renban;
+        data["suppilerNo"] = this.suppilerNo;
+        data["shiftNo"] = this.shiftNo;
+        data["workingDate"] = this.workingDate ? this.workingDate.toString() : <any>undefined;
+        data["planDevaningDate"] = this.planDevaningDate ? this.planDevaningDate.toString() : <any>undefined;
+        data["actDevaningDate"] = this.actDevaningDate ? this.actDevaningDate.toString() : <any>undefined;
+        data["actDevaningDateFinish"] = this.actDevaningDateFinish ? this.actDevaningDateFinish.toString() : <any>undefined;
+        data["devaningType"] = this.devaningType;
+        data["devaningStatus"] = this.devaningStatus;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IDevaningModuleDto {
+    devaningNo: string | undefined;
+    containerNo: string | undefined;
+    renban: string | undefined;
+    suppilerNo: string | undefined;
+    shiftNo: string | undefined;
+    workingDate: DateTime | undefined;
+    planDevaningDate: DateTime | undefined;
+    actDevaningDate: DateTime | undefined;
+    actDevaningDateFinish: DateTime | undefined;
+    devaningType: string | undefined;
+    devaningStatus: string | undefined;
+    id: number | undefined;
 }
 
 export class DynamicEntityPropertyDto implements IDynamicEntityPropertyDto {

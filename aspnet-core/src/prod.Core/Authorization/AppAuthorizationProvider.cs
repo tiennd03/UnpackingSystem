@@ -130,7 +130,12 @@ namespace prod.Authorization
             var cmm = pages.CreateChildPermission(AppPermissions.Pages_Cmm_Bin, L("Pages_Cmm_Bin"), multiTenancySides: MultiTenancySides.Tenant);
             cmm.CreateChildPermission(AppPermissions.Pages_Cmm_Bin_CreateEdit, L("Pages_Cmm_Bin_CreateEdit"), multiTenancySides: MultiTenancySides.Tenant);
 
-        }
+            // GHS
+            var ups = pages.CreateChildPermission(AppPermissions.Pages_UPS, L("UPS"));
+
+            //Master - Devaning
+            var mstDevaning = pages.CreateChildPermission(AppPermissions.Pages_UPS_Devaning, L("UpsDevaning"), multiTenancySides: MultiTenancySides.Tenant);
+    }
 
         private static ILocalizableString L(string name)
         {

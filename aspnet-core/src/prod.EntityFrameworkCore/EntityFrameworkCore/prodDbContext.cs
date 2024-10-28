@@ -8,6 +8,7 @@ using prod.Chat;
 using prod.Cmm;
 using prod.Editions;
 using prod.Friendships;
+using prod.Master;
 using prod.MultiTenancy;
 using prod.MultiTenancy.Accounting;
 using prod.MultiTenancy.Payments;
@@ -40,7 +41,8 @@ namespace prod.EntityFrameworkCore
         public virtual DbSet<RecentPassword> RecentPasswords { get; set; }
 
         public virtual DbSet<CmmBin> CmmBins { get; set; }
-
+        public virtual DbSet<DvnContList> DvnContLists { get; set; }
+ 
 
         public prodDbContext(DbContextOptions<prodDbContext> options)
             : base(options)

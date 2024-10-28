@@ -357,7 +357,7 @@
             return;
         }
 
-        console.log(logObject);
+        // console.log(logObject);
     };
 
     abp.log.debug = function (logObject) {
@@ -705,7 +705,7 @@
           * This is a simple implementation created to be used by ABP.
           * Please use a complete cookie library if you need.
           * @param {string} key
-          * @param {string} value 
+          * @param {string} value
           * @param {Date} expireDate (optional). If not specified the cookie will expire at the end of session.
           * @param {string} path (optional)
           * @param {string} domain (optional)
@@ -794,8 +794,8 @@
 
     /**
      * Gets the domain of given url
-     * @param {string} url 
-     * @returns {string} 
+     * @param {string} url
+     * @returns {string}
      */
     abp.utils.getDomain = function (url) {
         var domainRegex = /(https?:){0,1}\/\/((?:[\w\d-]+\.)+[\w\d]{2,})/i;
