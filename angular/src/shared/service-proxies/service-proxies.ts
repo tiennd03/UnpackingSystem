@@ -3109,6 +3109,114 @@ export class DevaningModuleServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: DevaningModuleDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DevaningModule/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDevaningModuleForEdit(id: number | undefined): Observable<DevaningModuleForEditOutPut> {
+        let url_ = this.baseUrl + "/api/services/app/DevaningModule/GetDevaningModuleForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDevaningModuleForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDevaningModuleForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<DevaningModuleForEditOutPut>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<DevaningModuleForEditOutPut>;
+        }));
+    }
+
+    protected processGetDevaningModuleForEdit(response: HttpResponseBase): Observable<DevaningModuleForEditOutPut> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DevaningModuleForEditOutPut.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -18014,6 +18122,42 @@ export interface IDevaningModuleDto {
     devaningType: string | undefined;
     devaningStatus: string | undefined;
     id: number | undefined;
+}
+
+export class DevaningModuleForEditOutPut implements IDevaningModuleForEditOutPut {
+    devaningModuleDtoValue!: DevaningModuleDto;
+
+    constructor(data?: IDevaningModuleForEditOutPut) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.devaningModuleDtoValue = _data["devaningModuleDtoValue"] ? DevaningModuleDto.fromJS(_data["devaningModuleDtoValue"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): DevaningModuleForEditOutPut {
+        data = typeof data === 'object' ? data : {};
+        let result = new DevaningModuleForEditOutPut();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["devaningModuleDtoValue"] = this.devaningModuleDtoValue ? this.devaningModuleDtoValue.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IDevaningModuleForEditOutPut {
+    devaningModuleDtoValue: DevaningModuleDto;
 }
 
 export class DynamicEntityPropertyDto implements IDynamicEntityPropertyDto {

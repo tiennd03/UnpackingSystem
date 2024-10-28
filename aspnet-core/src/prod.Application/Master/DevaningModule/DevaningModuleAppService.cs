@@ -1,4 +1,5 @@
-﻿using Abp.Authorization;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Dapper.Repositories;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,36 @@ namespace prod.Master.DevaningModule
                 throw new Exception(ex.ToString());
             }
 
+        }
+
+        public async Task CreateOrEdit(DevaningModuleDto input)
+        {
+            if (input.Id == null) await Create(input);
+            else await Update(input);
+        }
+
+        //ADD
+        private async Task Create(DevaningModuleDto input)
+        {
+            var DevaningModule = ObjectMapper.Map<DvnContList>(input);
+            await _repo.InsertAsync(DevaningModule);
+        }
+
+        //Edit
+        private async Task Update(DevaningModuleDto input)
+        {
+            var DevaningModule = await _repo.FirstOrDefaultAsync((long)input.Id);
+            ObjectMapper.Map(input, DevaningModule);
+        }
+
+        public async Task<DevaningModuleForEditOutPut> GetDevaningModuleForEdit(EntityDto<long> input)
+        {
+            var devaningModule = await _repo.FirstOrDefaultAsync(input.Id);
+            var output = new DevaningModuleForEditOutPut
+            {
+                DevaningModuleDtoValue = ObjectMapper.Map<DevaningModuleDto>(devaningModule)
+            };
+            return output;
         }
     }
 }
