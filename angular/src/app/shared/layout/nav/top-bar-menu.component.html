@@ -58,6 +58,7 @@
             <a
                 *ngIf="item.external"
                 [attr.href]="[item.route]"
+                target="_blank"
                 class="{{ getAnchorItemCssClasses(item, parentItem) }}"
             >
                 <ng-container

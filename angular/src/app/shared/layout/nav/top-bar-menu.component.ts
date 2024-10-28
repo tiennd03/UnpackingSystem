@@ -8,7 +8,6 @@ import * as objectPath from 'object-path';
 import { filter } from 'rxjs/operators';
 import { ThemeAssetContributorFactory } from '@shared/helpers/ThemeAssetContributorFactory';
 import { MenuComponent, DrawerComponent, ToggleComponent, ScrollComponent } from '@metronic/app/kt/components';
-import { FormattedStringValueExtracter } from '@shared/helpers/FormattedStringValueExtracter';
 
 @Component({
     templateUrl: './top-bar-menu.component.html',
@@ -34,12 +33,12 @@ export class TopBarMenuComponent extends AppComponentBase implements OnInit {
 
     ngOnInit() {
         this.menu = this._appNavigationService.getMenu();
-        this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
+        this.currentRouteUrl = this.router.url;
         this.menuWrapperStyle = ThemeAssetContributorFactory.getCurrent().getMenuWrapperStyle();
 
-        this.router.events
-            .pipe(filter((event) => event instanceof NavigationEnd))
-            .subscribe((event) => (this.currentRouteUrl = this.router.url.split(/[?#]/)[0]));
+        this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
+            this.currentRouteUrl = this.router.url;
+        });
 
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd || event instanceof NavigationCancel))
@@ -49,9 +48,6 @@ export class TopBarMenuComponent extends AppComponentBase implements OnInit {
     }
 
     reinitializeMenu(): void {
-        this.menu = this._appNavigationService.getMenu();
-        this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
-
         setTimeout(() => {
             MenuComponent.reinitialization();
             DrawerComponent.reinitialization();
@@ -65,19 +61,13 @@ export class TopBarMenuComponent extends AppComponentBase implements OnInit {
     }
 
     getItemCssClasses(item, parentItem, depth) {
-        let classes = 'menu-item';
+        let cssClasses = 'menu-item';
 
-        // custom class for menu item
-        const customClass = objectPath.get(item, 'custom-class');
-        if (customClass) {
-            classes += ' ' + customClass;
+        if (objectPath.get(item, 'icon-only')) {
+            cssClasses += ' menu-item-icon-only';
         }
 
-        if (this.isMenuItemIsActive(item)) {
-            classes += ' show';
-        }
-
-        return classes;
+        return cssClasses;
     }
 
     getAnchorItemCssClasses(item, parentItem): string {
@@ -99,27 +89,15 @@ export class TopBarMenuComponent extends AppComponentBase implements OnInit {
             return false;
         }
 
-        let urlTree = this.router.parseUrl(this.currentRouteUrl.replace(/\/$/, ''));
-        let urlString = '/' + urlTree.root.children.primary.segments.map((segment) => segment.path).join('/');
-        let exactMatch = urlString === item.route.replace(/\/$/, '');
-        if (!exactMatch && item.routeTemplates) {
-            for (let i = 0; i < item.routeTemplates.length; i++) {
-                let result = new FormattedStringValueExtracter().Extract(urlString, item.routeTemplates[i]);
-                if (result.IsMatch) {
-                    return true;
-                }
-            }
-        }
-        return exactMatch;
+        return this.currentRouteUrl.replace(/\/$/, '') === item.route.replace(/\/$/, '');
     }
 
     isMenuRootItemIsActive(item): boolean {
-        let result = false;
-
-        for (const subItem of item.items) {
-            result = this.isMenuItemIsActive(subItem);
-            if (result) {
-                return true;
+        if (item.items) {
+            for (const subItem of item.items) {
+                if (this.isMenuItemIsActive(subItem)) {
+                    return true;
+                }
             }
         }
 
