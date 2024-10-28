@@ -1,29 +1,30 @@
 ﻿import { AbpSessionService } from 'abp-ng2-module';
-import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { SessionServiceProxy, UpdateUserSignInTokenOutput } from '@shared/service-proxies/service-proxies';
 import { UrlHelper } from 'shared/helpers/UrlHelper';
 import { ExternalLoginProvider, LoginService } from './login.service';
-import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.service';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { AppConsts } from '@shared/AppConsts';
 
 @Component({
     templateUrl: './login.component.html',
     animations: [accountModuleAnimation()],
     styleUrls: ['./login.component.less'],
 })
-export class LoginComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class LoginComponent extends AppComponentBase implements OnInit {
     submitting = false;
     isMultiTenancyEnabled: boolean = this.multiTenancy.isEnabled;
-    
+
     constructor(
         injector: Injector,
         public loginService: LoginService,
         private _router: Router,
         private _sessionService: AbpSessionService,
         private _sessionAppService: SessionServiceProxy,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _reCaptchaV3Service: ReCaptchaV3Service
     ) {
         super(injector);
     }
@@ -42,6 +43,10 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
         }
 
         return this.setting.getBoolean('App.UserManagement.AllowSelfRegistration');
+    }
+
+    get useCaptcha(): boolean {
+        return this.setting.getBoolean('App.UserManagement.UseCaptchaOnLogin');
     }
 
     ngOnInit(): void {
@@ -63,10 +68,6 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
         }
 
         this.handleExternalLoginCallbacks();
-    }
-
-    ngAfterViewInit(): void {
-        this._recaptchaWrapperService.setCaptchaVisibilityOnLogin();
     }
 
     handleExternalLoginCallbacks(): void {
@@ -104,8 +105,8 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
             );
         };
 
-        if (this._recaptchaWrapperService.useCaptchaOnLogin()) {
-            this._recaptchaWrapperService.getService().execute('login')
+        if (this.useCaptcha) {
+            this._reCaptchaV3Service.execute('login')
                 .subscribe((token) => recaptchaCallback(token));
         } else {
             recaptchaCallback(null);

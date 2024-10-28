@@ -11,7 +11,12 @@ import * as KTUtil from '@metronic/app/kt/_utils';
 })
 export class DefaultLogoComponent extends AppComponentBase implements OnInit {
     @Input() customHrefClass = '';
+
+    //custom logo : use 'skin' decorator
     @Input() skin = null;
+
+    @Input() skinheader = 'logo-header';
+    @Input() skinsm = 'logo-icon';
 
     defaultLogo = '';
     defaultSmallLogo = '';
@@ -29,7 +34,7 @@ export class DefaultLogoComponent extends AppComponentBase implements OnInit {
         this.setLogoUrl();
     }
 
-    setLogoUrl(): void{
+    setLogoUrl(): void {
         this.defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.skin + '.svg';
         this.defaultSmallLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.skin + '-sm.svg';
     }
