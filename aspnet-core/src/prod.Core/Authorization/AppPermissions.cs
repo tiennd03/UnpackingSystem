@@ -113,5 +113,10 @@ namespace prod.Authorization
         public const string Pages_Cmm_Bin_CreateEdit = "Pages.Cmm.Bin.CreateEdit";
         //đã làm tới đây
 
+        //UnPackingSystem
+        public const string Pages_UPS = "Pages.UPS";
+
+        //Master - Devaning 
+        public const string Pages_UPS_Devaning = "Pages.UPS.Devaning";
     }
 }

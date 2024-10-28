@@ -8,8 +8,8 @@ import { RouterModule } from '@angular/router';
                 children: [
                     {
                         path: 'devaningcont',
-                        loadChildren: () => import('./devaningcont/devaningcont.module').then((m) => m.DevaningContModule),
-                        data: { permission: 'Pages.GHS.Approval' },
+                        loadChildren: () => import('./devaningcont/devaningcont.module', ).then((m) => m.DevaningContModule),
+                        data: { permission: 'Pages.UPS.Devaning' },
                     },
                 ],
             },
@@ -17,4 +17,4 @@ import { RouterModule } from '@angular/router';
     ],
     exports: [RouterModule],
 })
-export class DevaningModule {}
+export class DevaningRoutingModule {}

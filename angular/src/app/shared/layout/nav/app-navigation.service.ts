@@ -20,9 +20,17 @@ export class AppNavigationService {
                 'flaticon-line-graph',
                 '/app/admin/hostDashboard'
             ),
-            new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
-            new AppMenuItem('Common', '', 'flaticon-line-graph', '', [], [
-                new AppMenuItem('BIN', 'Pages.Cmm.Bin', 'flaticon-suitcase', '/app/main/cmm/bin'),
+            // new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
+            new AppMenuItem('UnPackingSystem', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+                // new AppMenuItem(
+                //     'Dashboard',
+                //     '',
+                //     'flaticon-line-graph',
+                //     '/app/main/dashboard'
+                // ),
+                new AppMenuItem('Devaning', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningcont/devaningcont'),///app/main/devaning/ups-devaning/devaningcont
+
+                new AppMenuItem('tesstmanhinh', '', 'flaticon-book', '/app/main/tesstmanhinh/filebentrong/filebentrong'),///app/main/devaning/ups-devaning/devaningcont
             ]),
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),

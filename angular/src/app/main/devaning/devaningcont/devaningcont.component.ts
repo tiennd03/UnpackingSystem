@@ -1,14 +1,97 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@microsoft/signalr';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
+import { DevaningModuleDto, DevaningModuleServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Paginator } from 'primeng/paginator';
+import { Table } from 'primeng/table';
 
 @Component({
-  selector: 'app-devaningcont',
-  templateUrl: './devaningcont.component.html',
+    templateUrl: './devaningcont.component.html',
+    styleUrls: ['./devaningcont.component.less'],
+    providers: [MessageService, ConfirmationService, DialogService]
 })
-export class DevaningContComponent implements OnInit {
+export class DevaningContComponent extends AppComponentBase implements OnInit {
+    @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild('dt1') dt1: Table | undefined;
 
-  constructor() { }
+    listDataDevaningCont;
+    id;
+    loading: boolean;
+    loadingDowload: boolean;
+    rowSelection: DevaningModuleDto[] = [];
+    contextMenuSelection;
+    columns;
+    cols: any[];
+    contextMenu;
+    items: MenuItem[];
+    ref: DynamicDialogRef;
+    status: number;
+    recordCountDevaned = 0;
+    recordCountDevaning = 0;
 
-  ngOnInit() {
-  }
+    constructor(
+        injector: Injector,
+        private devaningService: DevaningModuleServiceProxy,
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
+        public dialogService: DialogService,
+        private localizePipe: LocalizePipe,
+    ) {
+        super(injector);
+        this.cols = [
+            { field: 'id', header: 'Id' },
+            { field: 'devaningNo', header: 'Devaning No' },
+            { field: 'containerNo', header: 'Container No' },
+            { field: 'renban', header: 'Renban' },
+            { field: 'suppilerNo', header: 'Supplier No' },
+            { field: 'shiftNo', header: 'Shift No' },
+            { field: 'workingDate', header: 'Working Date' },
+            { field: 'planDevaningDate', header: 'Plan Devaning Date' },
+            { field: 'actDevaningDate', header: 'Activity Devaning Date' },
+            { field: 'actDevaningDateFinish', header: 'Activity Devaning Date Finish' },
+            { field: 'devaningType', header: 'Activity Devaning Date' },
+            { field: 'devaningStatus', header: 'Devaning Status' },
+        ];
+    }
+    filter(value: string, field: string): void {
+        if (this.dt1) {
+            this.dt1.filter(value, field, 'contains');
+        }
+    }
 
+    ngOnInit(): void {
+        this.loadAllData();
+        this.getAll(1);
+    }
+
+    loadAllData(status?: number){
+        this.devaningService.getAll(0).subscribe(res => {
+            this.listDataDevaningCont = res;
+            this.recordCountDevaned = res.filter(x => x.devaningStatus === 'DEVANED').length;
+            this.recordCountDevaning = res.filter(x => x.devaningStatus === 'DEVANING').length;
+        });
+    }
+
+    getAll(status?: number) {
+        this.loading = true;
+        this.devaningService.getAll(status).subscribe(res => {
+            this.status = status;
+            this.listDataDevaningCont = res;
+            this.loading = false;
+        }, error => {
+            this.loading = false;
+        });
+    }
+
+    clear(table: Table) {
+        table.clear();
+    }
+
+    onTabChange(event: any) {
+        const index = event.index;
+        this.getAll(index + 1);
+    }
 }

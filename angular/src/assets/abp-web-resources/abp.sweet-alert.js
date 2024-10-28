@@ -2,8 +2,13 @@
 (function () {
     var showMessage = function (type, message, title, options) {
 
+        if (!title) {
+            title = message;
+            message = undefined;
+        }
+
         options = options || {};
-        options.titleText = title;
+        options.title = title;
         options.icon = type;
         options.confirmButtonText = options.confirmButtonText || abp.localization.localize('Ok', 'SPC');
 

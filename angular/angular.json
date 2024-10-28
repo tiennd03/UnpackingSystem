@@ -11,6 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "allowedCommonJsDependencies": [
               "@angularclass/hmr",
               "rtl-detect",
@@ -54,14 +55,15 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/sweetalert2/dist/sweetalert2.css",
               "node_modules/cookieconsent/build/cookieconsent.min.css",
-              "node_modules/ngx-spinner/animations/ball-clip-rotate.css",
+
 
               "src/assets/primeng/file-upload/css/primeng.file-upload.css",
               "src/assets/primeng/autocomplete/css/primeng.autocomplete.less",
               "src/assets/primeng/tree/css/primeng.tree.css",
               "src/assets/primeng/context-menu/css/primeng.context-menu.css",
 
-              "src/assets/fonts/fonts-inter.css",
+              "src/assets/fonts/fonts-poppins.css",
+              "src/assets/fonts/fonts-roboto.css",
               "src/assets/metronic/common/fonts/keenthemes-icons/ki.css",
 
               "src/assets/ngx-bootstrap/bs-datepicker.css",
@@ -134,7 +136,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.SPC.ts"
                 }
               ]
             },
@@ -201,14 +203,14 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/sweetalert2/dist/sweetalert2.css",
               "node_modules/cookieconsent/build/cookieconsent.min.css",
-              "node_modules/ngx-spinner/animations/ball-clip-rotate.css",
 
               "src/assets/primeng/file-upload/css/primeng.file-upload.css",
               "src/assets/primeng/autocomplete/css/primeng.autocomplete.less",
               "src/assets/primeng/tree/css/primeng.tree.css",
               "src/assets/primeng/context-menu/css/primeng.context-menu.css",
 
-              "src/assets/fonts/fonts-inter.css",
+              "src/assets/fonts/fonts-poppins.css",
+              "src/assets/fonts/fonts-roboto.css",
               "src/assets/metronic/common/fonts/keenthemes-icons/ki.css",
 
               "src/assets/ngx-bootstrap/bs-datepicker.css",
@@ -262,6 +264,15 @@
               }
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json"
+            ],
+            "exclude": []
+          }
         }
       }
     },
@@ -276,6 +287,15 @@
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "abp-zero-template:serve",
             "port": 4200
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.json"
+            ],
+            "exclude": []
           }
         }
       }

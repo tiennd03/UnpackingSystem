@@ -13,9 +13,14 @@ import { RouterModule } from '@angular/router';
                         data: { permission: 'Pages.Tenant.Dashboard' },
                     },
                     {
-                        path: 'cmm/bin',
-                        loadChildren: () => import('./cmm/b1n/bin.module').then((m) => m.CmmBinModule),
-                        data: { permission: 'Pages.Cmm.Bin' },
+                        path: 'devaning',
+                        loadChildren: () => import('./devaning/devaning.module').then(m => m.DevaningModule),
+                        data: { permission: 'Pages.UPS' }
+                    },
+                    {
+                        path: 'tesstmanhinh',
+                        loadChildren: () => import('./tesstmanhinh/tesstmanhinh.module').then(m => m.TesstmanhinhModule),
+                        // data: { permission: 'Pages.UPS' }
                     },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
