@@ -83,23 +83,23 @@
                                 <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                             </td>
                             <td *ngFor="let col of cols">
-                                <ng-container *ngIf="col.field === 'activityDate'">
+                                <ng-container *ngIf="col.field === 'actDevaningDate' || col.field ==='actDevaningDateFinish'">
+                                    {{ rowData[col.field] | date:'dd/MM/yy HH:mm:ss' }}
+                                </ng-container>
+                                <ng-container *ngIf="col.field === 'workingDate' || col.field === 'planDevaningDate'">
                                     {{ rowData[col.field] | date:'dd/MM/yyyy' }}
                                 </ng-container>
-                                <ng-container *ngIf="col.field !== 'activityDate'">
+                                <ng-container *ngIf="col.field !== 'actDevaningDate' && col.field !== 'workingDate' && col.field !== 'planDevaningDate' && col.field !== 'actDevaningDateFinish'">
                                     {{ rowData[col.field] }}
                                 </ng-container>
                             </td>
                         </tr>
                     </ng-template>
+
                 </p-table>
             </div>
             <div class="footer-action flex-center">
-                <!-- <button (click)="confirmPosition('bottom')" class="p-button-raised p-button-rounded p-button-info mr-2" pButton icon="pi pi-check" [disabled]="rowSelection.length === 0" *ngIf="status === 1">&nbsp;{{'Submit' | localize}}</button>
-                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="showDialogAdd()" *ngIf="status === 1">&nbsp;{{'Add' | localize}}</button>
-                <button pButton type="button" class="p-button-raised p-button-rounded p-button-success" icon="pi pi-cloud-download" [loading]="loadingDowload" (click)="exportExcel()">&nbsp;{{'DownloadFile' | localize}}</button>
-                <button pButton type="button" class="p-button-raised p-button-rounded p-button-success" icon="pi pi-cloud-download" [loading]="loadingDowload" (click)="exportSummaryFile()" [disabled]="!rowSelection">&nbsp;{{'DownloadFileSummary' | localize}}</button> -->
-
+                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="createDevaningCont()" *ngIf="status === 1">{{'Add' | localize}}</button>
             </div>
         </div>
     </div>
@@ -107,5 +107,5 @@
 <p-contextMenu #contextMenu [model]="items"></p-contextMenu>
 <p-toast></p-toast>
 <p-confirmPopup></p-confirmPopup>
-<!-- <p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [position]="position" [baseZIndex]="10000"></p-confirmDialog>
-<p-confirmDialog [style]="{width: '50vw'}" key="deleteDialog" [baseZIndex]="10000"></p-confirmDialog> -->
+<create-or-edit-devaningcont #createOrEditDevaningContModal  [listDataDevaningCont]="listDataDevaningCont" (modalSave)="getAll()">
+</create-or-edit-devaningcont>

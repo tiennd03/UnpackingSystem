@@ -4,15 +4,16 @@ import { AppSharedModule } from '@app/shared/app-shared.module';
 import { DevaningContRoutingModule } from './devaningcont-routing.module';
 import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
 import { DialogService } from 'primeng/dynamicdialog';
+import { CreateOrEditDevaningContComponent } from './create-or-edit-devaningcont/create-or-edit-devaningcont.component';
 
 @NgModule({
     declarations: [
-        DevaningContComponent
+        DevaningContComponent, CreateOrEditDevaningContComponent
     ],
     imports: [
         AppSharedModule, DevaningContRoutingModule],
     exports: [
-        DevaningContComponent
+        DevaningContComponent, CreateOrEditDevaningContComponent
     ],
     providers: [LocalizePipe, DialogService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

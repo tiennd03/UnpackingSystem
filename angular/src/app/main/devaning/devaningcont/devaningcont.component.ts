@@ -7,6 +7,9 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
+import { CreateOrEditDevaningContComponent } from './create-or-edit-devaningcont/create-or-edit-devaningcont.component';
+import { result } from 'lodash-es';
+import { error } from 'console';
 
 @Component({
     templateUrl: './devaningcont.component.html',
@@ -16,6 +19,7 @@ import { Table } from 'primeng/table';
 export class DevaningContComponent extends AppComponentBase implements OnInit {
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     @ViewChild('dt1') dt1: Table | undefined;
+    @ViewChild('createOrEditDevaningContModal') createOrEditDevaningContModal: CreateOrEditDevaningContComponent;
 
     listDataDevaningCont;
     id;
@@ -31,6 +35,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     status: number;
     recordCountDevaned = 0;
     recordCountDevaning = 0;
+    selected;
 
     constructor(
         injector: Injector,
@@ -93,5 +98,13 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     onTabChange(event: any) {
         const index = event.index;
         this.getAll(index + 1);
+    }
+
+    createDevaningCont() {
+        this.createOrEditDevaningContModal.show();
+    }
+
+    editDevaningCont() {
+        this.createOrEditDevaningContModal.show(this.selected);
     }
 }
