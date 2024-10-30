@@ -34,6 +34,8 @@ using prod.Friendships;
 using prod.Friendships.Cache;
 using prod.Friendships.Dto;
 using prod.Localization.Dto;
+using prod.Master;
+using prod.Master.DevaningModule.Dto;
 using prod.MultiTenancy;
 using prod.MultiTenancy.Dto;
 using prod.MultiTenancy.HostDashboard.Dto;
@@ -167,9 +169,7 @@ namespace prod
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
-            configuration.CreateMap<CmmBin, CmmBinDto>();
-            configuration.CreateMap<CmmBinDto, CmmBin>();
-            configuration.CreateMap<CreateOrEditCmmBinDto, CmmBin>();
+            configuration.CreateMap<DevaningModuleDto, DvnContList>().ReverseMap();
         }
     }
 }
