@@ -1,7 +1,20 @@
-import { Component, EventEmitter, HostListener, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AppComponentBase } from "@shared/common/app-component-base";
+import {
+    Component,
+    EventEmitter,
+    HostListener,
+    Injector,
+    Input,
+    OnInit,
+    Optional,
+    Output,
+    ViewChild,
+} from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
 import { DevaningModuleDto, DevaningModuleServiceProxy } from '@shared/service-proxies/service-proxies';
+import { DateTime } from 'luxon';
+import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -10,61 +23,54 @@ import { finalize } from 'rxjs';
     styleUrls: ['./create-or-edit-devaningcont.component.less'],
 })
 export class CreateOrEditDevaningContComponent extends AppComponentBase {
-    @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
+    saving = false;
+    selection: DevaningModuleDto = new DevaningModuleDto();
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
-    @Input() listDataDevaningCont: any[] = [];
-    active: boolean = false;
-    saving: boolean = false;
-    createOrEditDevaningCont: DevaningModuleDto = new DevaningModuleDto();
 
     constructor(
         injector: Injector,
         private _service: DevaningModuleServiceProxy,
+        public dialogService: DialogService,
+        @Optional() public ref: DynamicDialogRef
     ) {
         super(injector);
     }
 
-    show(selected?: number) {
-        if (!selected) {
-            this.createOrEditDevaningCont = new DevaningModuleDto();
-            this.active = true;
-            this.listDataDevaningCont = this.listDataDevaningCont.filter(x => x.value != '');
-            this.modal.show();
-        }
-        else {
-            this._service.getDevaningModuleForEdit(selected).subscribe((result) => {
-                this.createOrEditDevaningCont = result.devaningModuleDtoValue;
-                this.active = true;
-                this.listDataDevaningCont = this.listDataDevaningCont.filter(x => x.value != '');
-                this.modal.show();
-            })
+    ngOnInit(): void {
+        console.log('edit', this.selection);
+        if (!this.selection) {
+            this.selection = new DevaningModuleDto();
         }
     }
 
     save(): void {
         this.saving = true;
-        this._service.createOrEdit(this.createOrEditDevaningCont)
-            .pipe(finalize(() => this.saving = false))
+        const convertDate = (date: any): DateTime => {
+            if (typeof date === 'string') {
+                return DateTime.fromISO(date);
+            } else if (date instanceof Date) {
+                return DateTime.fromJSDate(date);
+            }
+            return date; // Trả về giá trị gốc nếu không phải là string hay Date
+        };
+    
+        // Áp dụng hàm chuyển đổi cho các thuộc tính ngày tháng
+        this.selection.actDevaningDate = convertDate(this.selection.actDevaningDate);
+        this.selection.planDevaningDate = convertDate(this.selection.planDevaningDate);
+        this.selection.workingDate = convertDate(this.selection.workingDate);
+
+        this._service
+            .updateOrCreate(this.selection)
+            .pipe(finalize(() => (this.saving = false)))
             .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-                this.createOrEditDevaningCont = new DevaningModuleDto();
-                this.saving = false;
+                this.notify.info(this.l('Saved Successfully'));
+                this.ref.close(this.selection);
+                this.modalSave.emit(this.selection);
             });
-
     }
 
-    close(): void {
-        this.active = false;
-        this.modal.hide();
-    }
-
-    @HostListener('document:keydown', ['$event'])
-    onKeydownHandler(event: KeyboardEvent) {
-        if (event.key === "Escape") {
-            this.close();
-        }
+    closeModal(): void {
+        this.ref.close();
     }
 }

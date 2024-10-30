@@ -99,7 +99,7 @@
                 </p-table>
             </div>
             <div class="footer-action flex-center">
-                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="createDevaningCont()" *ngIf="status === 1">{{'Add' | localize}}</button>
+                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="showDialog()" *ngIf="status === 1">{{'Add' | localize}}</button>
             </div>
         </div>
     </div>
@@ -107,5 +107,4 @@
 <p-contextMenu #contextMenu [model]="items"></p-contextMenu>
 <p-toast></p-toast>
 <p-confirmPopup></p-confirmPopup>
-<create-or-edit-devaningcont #createOrEditDevaningContModal  [listDataDevaningCont]="listDataDevaningCont" (modalSave)="getAll()">
-</create-or-edit-devaningcont>
+

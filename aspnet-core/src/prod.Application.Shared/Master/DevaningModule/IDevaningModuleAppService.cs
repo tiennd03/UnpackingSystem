@@ -10,5 +10,6 @@ namespace prod.Master.DevaningModule
     public interface IDevaningModuleAppService : IApplicationService
     {
         Task<List<DevaningModuleDto>> GetAll(GetDevaningContModuleInput input);
+        Task UpdateOrCreate(DevaningModuleDto input);
     }
 }

@@ -26,6 +26,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { TabViewModule } from 'primeng/tabview';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 
 const imports = [
@@ -56,6 +57,8 @@ const imports = [
     ButtonModule,
     ContextMenuModule,
     TabViewModule,
+    DynamicDialogModule,
+
 ];
 
 @NgModule({

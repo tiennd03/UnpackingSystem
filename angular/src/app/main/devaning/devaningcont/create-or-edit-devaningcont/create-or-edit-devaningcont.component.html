@@ -1,1 +1,75 @@
-chiu chiu
+
+<div class="cre-modal-dialog">
+    <div class="modal-content">       
+        <div class="modal-body-devaning d-flex">
+            <div class="background-add-devaning col-3 d-flex justify-content-between align-items-end flex-column">
+                <div class="shape"></div>
+                <img src="/assets/common/images/toyota_icon_crud.jpg" class="logo-icon icon w-75 mt-5" />
+                <img src="/assets/common/images/background_cre_dvn.png" class="icon w-75 mb-5 mr-4" />
+            </div>
+            <div class="form-add-devaning col-9">
+                <div class="dvn-modal-header">
+                    <h4 class="modal-title">Create Edit Devaning Container</h4>
+                </div>
+                <div class="col-md-12 d-flex justify-content-between mt-2">
+                    <div class="col-md-12 form-group pl-0 pr-1">
+                        <label class="title">Devaning No</label>
+                        <input type="text" class="form-control input-text" name="devaningNo" [(ngModel)]="selection.devaningNo"/>
+                    </div>               
+                </div>
+                <div class="col-md-12 d-flex justify-content-between">               
+                    <div class="col-md-12 form-group pr-0 pl-1">
+                        <label class="title">Container No</label>
+                        <input type="text" class="form-control input-text" name="containerNo"  [(ngModel)]="selection.containerNo" />
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex justify-content-between">
+                    <div class="col-md-6 form-group pl-0 pr-1">
+                        <label class="title">Renban</label>
+                        <input type="text" class="form-control input-text" name="renban" [(ngModel)]="selection.renban"/>
+                    </div>
+                    <div class="col-md-6 form-group pr-0 pl-1">
+                        <label class="title">Suppiler</label>
+                        <input type="text" class="form-control input-text" name="suppiler"  [(ngModel)]="selection.suppilerNo" />
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex justify-content-between">
+                    <div class="col-md-6 form-group pl-0 pr-1">
+                        <label class="title">Shift No</label>
+                        <input type="text" class="form-control input-text" name="shiftNo"  [(ngModel)]="selection.shiftNo" />
+                    </div>
+                    <div class="col-md-6 form-group pr-0 pl-1">
+                        <label class="title">Working Date</label>
+                        <input type="date" class="form-control input-text" name="workingDate" [(ngModel)]="selection.workingDate"/>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex justify-content-between">
+                    <div class="col-md-6 form-group pl-0 pr-1">
+                        <label class="title">Plan Dvn Date</label>
+                        <input type="date" class="form-control input-text" name="planDvnDate"  [(ngModel)]="selection.planDevaningDate" />
+                    </div>
+                    <div class="col-md-6 form-group pr-0 pl-1">
+                        <label class="title">Act Dvn Date</label>
+                        <input type="date" class="form-control input-text" name="actDvnDate" [(ngModel)]="selection.actDevaningDate"/>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex justify-content-between mb-2">
+                    <div class="col-md-6 form-group pl-0 pr-1">
+                        <label class="title">Devanning Type</label>
+                        <input type="text" class="form-control input-text" name="devanningType"  [(ngModel)]="selection.devaningType" />
+                    </div>
+                    <div class="col-md-6 form-group pr-0 pl-1">
+                        <label class="title">Devanning Status</label>
+                        <input type="text" class="form-control input-text" name="devanningStatus" [(ngModel)]="selection.devaningStatus"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" (click)=" save()">Save</button>
+                    <button type="button" class="btn btn-primary" (click)="closeModal()">Close</button>
+                </div>
+            </div>
+           
+        </div>
+        
+    </div>
+</div>

@@ -46,10 +46,16 @@ namespace prod.Master.DevaningModule
 
         }
 
-        public async Task CreateOrEdit(DevaningModuleDto input)
+        public async Task UpdateOrCreate(DevaningModuleDto input)
         {
-            if (input.Id == null) await Create(input);
-            else await Update(input);
+            if (input.Id == null)
+            {
+                await Create(input);
+            }
+            else
+            {
+                await Update(input);
+            }
         }
 
         //ADD
@@ -64,16 +70,7 @@ namespace prod.Master.DevaningModule
         {
             var DevaningModule = await _repo.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, DevaningModule);
-        }
-
-        public async Task<DevaningModuleForEditOutPut> GetDevaningModuleForEdit(EntityDto<long> input)
-        {
-            var devaningModule = await _repo.FirstOrDefaultAsync(input.Id);
-            var output = new DevaningModuleForEditOutPut
-            {
-                DevaningModuleDtoValue = ObjectMapper.Map<DevaningModuleDto>(devaningModule)
-            };
-            return output;
+            await _repo.UpdateAsync(DevaningModule);
         }
     }
 }

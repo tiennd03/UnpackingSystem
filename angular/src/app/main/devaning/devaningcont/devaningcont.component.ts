@@ -14,7 +14,7 @@ import { error } from 'console';
 @Component({
     templateUrl: './devaningcont.component.html',
     styleUrls: ['./devaningcont.component.less'],
-    providers: [MessageService, ConfirmationService, DialogService]
+    providers: [MessageService, ConfirmationService, DialogService],
 })
 export class DevaningContComponent extends AppComponentBase implements OnInit {
     @ViewChild('paginator', { static: true }) paginator: Paginator;
@@ -43,7 +43,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         public dialogService: DialogService,
-        private localizePipe: LocalizePipe,
+        private localizePipe: LocalizePipe
     ) {
         super(injector);
         this.cols = [
@@ -72,23 +72,26 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.getAll(1);
     }
 
-    loadAllData(status?: number){
-        this.devaningService.getAll(0).subscribe(res => {
+    loadAllData(status?: number) {
+        this.devaningService.getAll(0).subscribe((res) => {
             this.listDataDevaningCont = res;
-            this.recordCountDevaned = res.filter(x => x.devaningStatus === 'DEVANED').length;
-            this.recordCountDevaning = res.filter(x => x.devaningStatus === 'DEVANING').length;
+            this.recordCountDevaned = res.filter((x) => x.devaningStatus === 'DEVANED').length;
+            this.recordCountDevaning = res.filter((x) => x.devaningStatus === 'DEVANING').length;
         });
     }
 
     getAll(status?: number) {
         this.loading = true;
-        this.devaningService.getAll(status).subscribe(res => {
-            this.status = status;
-            this.listDataDevaningCont = res;
-            this.loading = false;
-        }, error => {
-            this.loading = false;
-        });
+        this.devaningService.getAll(status).subscribe(
+            (res) => {
+                this.status = status;
+                this.listDataDevaningCont = res;
+                this.loading = false;
+            },
+            (error) => {
+                this.loading = false;
+            }
+        );
     }
 
     clear(table: Table) {
@@ -100,11 +103,20 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.getAll(index + 1);
     }
 
-    createDevaningCont() {
-        this.createOrEditDevaningContModal.show();
-    }
+    showDialog(selection?: DevaningModuleDto) {
+        this.ref = this.dialogService.open(CreateOrEditDevaningContComponent, {
+            data: {
+                selection: selection || new DevaningModuleDto(),
+            },
+            header: selection ? 'Chỉnh sửa Devaning' + "   " + selection.devaningNo : 'Thêm mới Devaning',
+            width: '70%',
+            height: 'auto'
+        });
 
-    editDevaningCont() {
-        this.createOrEditDevaningContModal.show(this.selected);
+        this.ref.onClose.subscribe(result => {
+            if (result) {
+                this.getAll();
+            }
+        });
     }
 }

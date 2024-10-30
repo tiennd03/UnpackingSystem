@@ -30,9 +30,4 @@ namespace prod.Master.DevaningModule.Dto
     {
         public virtual int Status { get; set; }
     }
-
-    public class DevaningModuleForEditOutPut
-    {
-        public DevaningModuleDto DevaningModuleDtoValue { get; set; }
-    }
 }
