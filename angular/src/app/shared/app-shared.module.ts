@@ -1,13 +1,12 @@
 ﻿import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { UtilsModule } from '@shared/utils/utils.module';
 import { TextMaskModule } from 'angular2-text-mask';
-import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -25,8 +24,22 @@ import { ThemesLayoutBaseComponent } from './layout/themes/themes-layout-base.co
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import {ToastModule} from 'primeng/toast';
 import { TabViewModule } from 'primeng/tabview';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { TagModule } from 'primeng/tag';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { MessagesModule } from 'primeng/messages';
+import {BadgeModule} from 'primeng/badge';
+import {CardModule} from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {FileUploadModule} from 'primeng/fileupload';
+import {SkeletonModule} from 'primeng/skeleton';
+import {AccordionModule} from 'primeng/accordion';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 
 const imports = [
@@ -58,7 +71,18 @@ const imports = [
     ContextMenuModule,
     TabViewModule,
     DynamicDialogModule,
-
+    CalendarModule,
+    ButtonModule,
+    ToastModule,
+    RadioButtonModule,
+    TagModule,
+    ConfirmPopupModule,
+    ConfirmDialogModule,
+    MessagesModule,
+    BadgeModule,
+    CardModule,
+    ProgressSpinnerModule,
+    SkeletonModule
 ];
 
 @NgModule({

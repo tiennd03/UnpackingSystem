@@ -1,6 +1,6 @@
 <div class="container" id="container">
     <div class="tab-heading">
-        <p-tabView (onChange)="onTabChange($event)"  styleClass="tabview-custom">
+        <p-tabView (onChange)="onTabChange($event)" styleClass="tabview-custom">
             <p-tabPanel>
                 <ng-template pTemplate="header">
                     <i class="pi pi-check-circle"></i>
@@ -16,7 +16,7 @@
                 </ng-template>
             </p-tabPanel>
         </p-tabView>
-      </div>
+    </div>
     <div class="devaning">
         <div class="devaning__content">
             <div class="content-wrapper">
@@ -27,9 +27,8 @@
                     dataKey="id"
                     selectionMode="multiple"
                     [(selection)]="rowSelection"
-                    [metaKeySelection]="true"
-                    [rowHover]="true"
-                    [rows]="10"
+                    [metaKeySelection]="false"
+                    [rowHover]="true" [rows]="10"
                     [showCurrentPageReport]="true"
                     [rowsPerPageOptions]="[10,25,5000]"
                     [paginator]="true"
@@ -42,19 +41,22 @@
                     [contextMenu]="contextMenu"
                     [(contextMenuSelection)]="contextMenuSelection"
                     currentPageReportTemplate="{{'ShowingEntries' | localize}}"
-	                [globalFilterFields]="['devaningNo','containerNo','renban','suppilerNo', 'shiftNo']">
+                    [globalFilterFields]="['devaningNo','containerNo','renban','suppilerNo', 'shiftNo']">
                     <ng-template pTemplate="caption">
                         <div class="d-flex justify-between">
-                            <button pButton [label]="l('Clear')" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                            <button pButton [label]="l('Clear')" class="p-button-outlined" icon="pi pi-filter-slash"
+                                (click)="clear(dt1)"></button>
                             <span class="p-input-icon-left ml-auto">
                                 <i class="pi pi-search"></i>
-                                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" [placeholder]="l('Search')" />
+                                <input pInputText type="text"
+                                    (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                    [placeholder]="l('Search')" />
                             </span>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
-                            <th style="width: 3rem" pFrozenColumn >
+                            <th style="width: 3rem" pFrozenColumn>
                                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                             </th>
                             <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn>
@@ -63,18 +65,13 @@
                                     <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
                                 </div>
                             </th>
-                            <!-- <th class="action-col" pFrozenColumn alignFrozen="right">{{'Actions' | localize}}</th> -->
                         </tr>
                         <tr class="colums-filter-header">
                             <th pFrozenColumn></th>
                             <th *ngFor="let col of cols; let i = index">
-                                <input pInputText
-                                       type="text"
-                                       (input)="filter($event.target.value, col.field)"
-                                       placeholder="Search by {{col.header}}"
-                                       class="w-full">
+                                <input pInputText type="text" (input)="filter($event.target.value, col.field)"
+                                    placeholder="Search by {{col.header}}" class="w-full">
                             </th>
-                            <!-- <th pFrozenColumn alignFrozen="right"></th> -->
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -83,23 +80,40 @@
                                 <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                             </td>
                             <td *ngFor="let col of cols">
-                                <ng-container *ngIf="col.field === 'actDevaningDate' || col.field ==='actDevaningDateFinish'">
+                                <ng-container
+                                    *ngIf="col.field === 'actDevaningDate' || col.field ==='actDevaningDateFinish'">
                                     {{ rowData[col.field] | date:'dd/MM/yy HH:mm:ss' }}
                                 </ng-container>
                                 <ng-container *ngIf="col.field === 'workingDate' || col.field === 'planDevaningDate'">
                                     {{ rowData[col.field] | date:'dd/MM/yyyy' }}
                                 </ng-container>
-                                <ng-container *ngIf="col.field !== 'actDevaningDate' && col.field !== 'workingDate' && col.field !== 'planDevaningDate' && col.field !== 'actDevaningDateFinish'">
+                                <ng-container
+                                    *ngIf="col.field !== 'actDevaningDate' && col.field !== 'workingDate' && col.field !== 'planDevaningDate' && col.field !== 'actDevaningDateFinish'">
                                     {{ rowData[col.field] }}
                                 </ng-container>
                             </td>
                         </tr>
                     </ng-template>
-
                 </p-table>
             </div>
+
             <div class="footer-action flex-center">
-                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="showDialog()" *ngIf="status === 1">{{'Add' | localize}}</button>
+                <button
+                    pButton
+                    type="button"
+                    class="p-button-raised p-button-rounded mr-2"
+                    icon="pi pi-plus-circle"
+                    (click)="showDialog()" *ngIf="status === 1">{{'Add' | localize}}</button>
+                <button
+                    pButton
+                    type="button"
+                    class="p-button-raised p-button-rounded mr-2"
+                    icon="pi pi-pencil"
+                    label="Edit"
+                    (click)="editRecord()"
+                    [disabled]="rowSelection.length !== 1"
+                    *ngIf="status === 1">
+                </button>
             </div>
         </div>
     </div>
@@ -107,4 +121,3 @@
 <p-contextMenu #contextMenu [model]="items"></p-contextMenu>
 <p-toast></p-toast>
 <p-confirmPopup></p-confirmPopup>
-
