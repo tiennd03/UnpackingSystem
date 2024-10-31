@@ -1,0 +1,88 @@
+:host::ng-deep {
+    .p-card {
+        box-shadow: none;
+    }
+
+    .p-card .p-card-body {
+        padding: 0;
+    }
+
+    .p-inputgroup-addon {
+        display: flex;
+        align-items: center;
+    }
+
+    .inputNameposition {
+        margin-left: 8px; /* Khoảng cách giữa checkbox và label */
+    }
+
+    .w-49 {
+        width: 49%; /* Giữ các ô input nhỏ hơn 50% để có khoảng cách */
+    }
+
+
+    .p-inputgroup-addon {
+        border: none !important;
+    }
+    .input-underline {
+        outline: 0;
+        border-width: 0 0 2px;
+        border-color: rgb(53, 53, 129);
+        flex: 1;
+        min-width: 120px;
+        max-width: 200px;
+        margin-left: 35px;
+    }
+    .input-underline:focus {
+        border-color: rgb(53, 53, 129);
+        outline: none;
+    }
+
+
+    input[pInputText],
+    [pInputTextarea] {
+        &:not([disabled]) {
+            color: #000;
+            font-weight: normal;
+            border: 1px solid #000000db;
+        }
+
+        &[disabled] {
+            font-weight: 500;
+            color: black;
+            opacity: 0.6;
+            border: 1px solid rgb(0 0 0 / 32%);
+        }
+    }
+
+    .p-calendar .p-inputtext {
+        color: #000;
+        font-weight: normal;
+        border: 1px solid #000000db;
+    }
+
+    [pInputTextarea] {
+        height: 101.75px;
+    }
+
+    .inputPosition {
+        margin-right: 1px;
+    }
+
+    .inputNameposition {
+        margin-left: 9px;
+    }
+
+    .bold-label {
+        font-weight: 400;
+        color: black;
+    }
+}
+
+.steptwo-container {
+    height: 65vh;
+}
+
+.footer-action{
+    padding: 10px;
+}

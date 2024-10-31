@@ -19,7 +19,6 @@ import { error } from 'console';
 export class DevaningContComponent extends AppComponentBase implements OnInit {
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     @ViewChild('dt1') dt1: Table | undefined;
-    @ViewChild('createOrEditDevaningContModal') createOrEditDevaningContModal: CreateOrEditDevaningContComponent;
 
     listDataDevaningCont;
     id;
@@ -115,8 +114,16 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
 
         this.ref.onClose.subscribe(result => {
             if (result) {
-                this.getAll();
+                this.getAll(this.status);
             }
         });
+    }
+
+    editRecord() {
+        if (this.rowSelection.length === 1) {
+            this.showDialog(this.rowSelection[0]);
+        } else {
+            this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select one record to edit.' });
+        }
     }
 }

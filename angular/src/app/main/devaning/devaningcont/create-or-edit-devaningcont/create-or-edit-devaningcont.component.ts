@@ -12,8 +12,6 @@ import {
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DevaningModuleDto, DevaningModuleServiceProxy } from '@shared/service-proxies/service-proxies';
 import { DateTime } from 'luxon';
-import * as moment from 'moment';
-import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { finalize } from 'rxjs';
 
@@ -32,6 +30,7 @@ export class CreateOrEditDevaningContComponent extends AppComponentBase {
         injector: Injector,
         private _service: DevaningModuleServiceProxy,
         public dialogService: DialogService,
+        public config: DynamicDialogConfig,
         @Optional() public ref: DynamicDialogRef
     ) {
         super(injector);
@@ -39,7 +38,9 @@ export class CreateOrEditDevaningContComponent extends AppComponentBase {
 
     ngOnInit(): void {
         console.log('edit', this.selection);
-        if (!this.selection) {
+        if (this.config.data && this.config.data.selection) {
+            this.selection = { ...this.config.data.selection };
+        } else {
             this.selection = new DevaningModuleDto();
         }
     }
@@ -52,10 +53,9 @@ export class CreateOrEditDevaningContComponent extends AppComponentBase {
             } else if (date instanceof Date) {
                 return DateTime.fromJSDate(date);
             }
-            return date; // Trả về giá trị gốc nếu không phải là string hay Date
+            return date;
         };
-    
-        // Áp dụng hàm chuyển đổi cho các thuộc tính ngày tháng
+
         this.selection.actDevaningDate = convertDate(this.selection.actDevaningDate);
         this.selection.planDevaningDate = convertDate(this.selection.planDevaningDate);
         this.selection.workingDate = convertDate(this.selection.workingDate);
