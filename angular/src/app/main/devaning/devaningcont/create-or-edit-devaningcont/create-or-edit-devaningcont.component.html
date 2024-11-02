@@ -25,19 +25,27 @@
                         <input pInputText [(ngModel)]="selection.devaningNo">
                     </div>
                     <div class="form-group">
-                        <label>Container No</label>
-                        <input pInputText [(ngModel)]="selection.containerNo">
+                        <label>Supplier</label>
+                        <p-dropdown
+                            [options]="suppliers"
+                            [(ngModel)]="selection.suppilerNo"
+                            placeholder="Select a Supplier"
+                            appendTo="body"
+                            [autoDisplayFirst]="false">
+                        </p-dropdown>
                     </div>
                 </div>
                 <!-- Row 2 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Renban</label>
-                        <input pInputText [(ngModel)]="selection.renban">
+                        <label>Container No</label>
+                        <input pInputText [(ngModel)]="selection.containerNo">
                     </div>
                     <div class="form-group">
-                        <label>Supplier</label>
-                        <input pInputText [(ngModel)]="selection.suppilerNo">
+                        <label>Plan Devaning Date</label>
+                        <p-calendar [(ngModel)]="selection.planDevaningDate" [showIcon]="true" dateFormat="dd/mm/yy"
+                            appendTo="body">
+                        </p-calendar>
                     </div>
                 </div>
                 <!-- Row 3 -->
@@ -56,10 +64,8 @@
                 <!-- Row 4 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Plan Devaning Date</label>
-                        <p-calendar [(ngModel)]="selection.planDevaningDate" [showIcon]="true" dateFormat="dd/mm/yy"
-                            appendTo="body">
-                        </p-calendar>
+                        <label>Renban</label>
+                        <input pInputText [(ngModel)]="selection.renban">
                     </div>
                     <div class="form-group">
                         <label>Acivity Devaning Date</label>
@@ -76,7 +82,12 @@
                     </div>
                     <div class="form-group">
                         <label>Devaning Status</label>
-                        <input pInputText [(ngModel)]="selection.devaningStatus">
+                        <p-dropdown
+                            [options]="devaningStatuses"
+                            [(ngModel)]="selection.devaningStatus"
+                            placeholder="Select a Status"
+                            appendTo="body">
+                        </p-dropdown>
                     </div>
                 </div>
             </div>

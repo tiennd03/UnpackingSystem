@@ -1,3 +1,48 @@
-<p>
-  devaningscreen works!
-</p>
+<div class="container-devaning">
+    <div class="header content">
+      <div class="header-content time-act">{{dateNow}}</div>
+      <div class="header-content title-screen">
+        DEVANING SCREEN
+      </div>
+      <div class="header-content arrived">
+        <div class="ping"></div>
+        <p>Arrived TMV </p>
+      </div>
+    </div>
+    <div class="body content">
+      <div class="next-devan">
+        <h1>NEXT</h1>
+        <div class="containerNo">
+          <div class="caseNo">
+            <div class="renban">{{renbanNext}}</div>
+            <div class="containerName">{{containerNameNext}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="current-devan">
+        <h1>CURRENT</h1>
+        <div class="containerNo">
+          <div class="caseNo" (click)=" finishDevModule(currentId)">
+            <div class="renban">{{renbanCurent}}</div>
+            <div class="containerName">{{containerNameCurrent}}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="fotter content">
+      <div class="plan_actual">
+        <div class="plan_actual_item" *ngFor="let item of fornumbersProcess();let i = index"
+          [style.width.%]="100 / fornumbersProcess().length"></div>
+      </div>
+      <div class="progress">
+        <div class="progress-item" *ngFor="let item of devaningPlan">
+          <div class="progress-item-detail">{{item.counT_DEVANING}}</div>
+          <div class="icon-status">
+            <div class="icon-status-item" [ngClass]="checkStatusContainer(item.status)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-toast position="bottom-center"></p-toast>

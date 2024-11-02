@@ -40,6 +40,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {AccordionModule} from 'primeng/accordion';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 const imports = [
@@ -82,7 +83,8 @@ const imports = [
     BadgeModule,
     CardModule,
     ProgressSpinnerModule,
-    SkeletonModule
+    SkeletonModule,
+    DropdownModule
 ];
 
 @NgModule({

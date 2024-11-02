@@ -32,8 +32,10 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     items: MenuItem[];
     ref: DynamicDialogRef;
     status: number;
+    recordCountReady = 0;
     recordCountDevaned = 0;
     recordCountDevaning = 0;
+    currentTab: string = 'New';
     selected;
 
     constructor(
@@ -67,25 +69,20 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadAllData();
+        this.loading = true;
         this.getAll(1);
-        this.items = [
-            {
-                label: 'Edit', icon: 'pi pi-fw pi-search',
-                command: () => this.showDialog(this.contextMenuSelection)
-            },
-            {
-                label: 'Delete', icon: 'pi pi-fw pi-times',
-                command: () => this.deleteRecord(this.contextMenuSelection, 'MULTI_DELETE')
-            }
-        ];
+        this.updateContextMenuItems();
+        this.loadAllData();
     }
 
-    loadAllData(status?: number) {
+    loadAllData() {
         this.devaningService.getAll(0).subscribe((res) => {
             this.listDataDevaningCont = res;
+            this.recordCountReady = res.filter((x) => x.devaningStatus === 'READY').length
             this.recordCountDevaned = res.filter((x) => x.devaningStatus === 'DEVANED').length;
             this.recordCountDevaning = res.filter((x) => x.devaningStatus === 'DEVANING').length;
+
+            this.getAll(1);
         });
     }
 
@@ -109,7 +106,51 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
 
     onTabChange(event: any) {
         const index = event.index;
+        switch (index) {
+            case 0:
+                this.currentTab = 'New';
+                break;
+            case 1:
+                this.currentTab = 'Devaned';
+                break;
+            case 2:
+                this.currentTab = 'Devaning';
+                break;
+            default:
+                this.currentTab = 'New';
+                break;
+        }
         this.getAll(index + 1);
+        this.updateContextMenuItems();
+    }
+
+    updateContextMenuItems() {
+        this.items = [];
+
+        if (this.currentTab === 'New') {
+            this.items.push(
+                {
+                    label: 'Edit', icon: 'pi pi-fw pi-search',
+                    command: () => this.showDialog(this.contextMenuSelection)
+                }
+            );
+        }
+
+        if (this.currentTab === 'New' || this.currentTab === 'Devaned') {
+            this.items.push(
+                {
+                    label: 'Delete', icon: 'pi pi-fw pi-times',
+                    command: () => this.deleteRecord(this.contextMenuSelection, 'MULTI_DELETE')
+                }
+            );
+        } else {
+            this.items.push(
+                {
+                    label: 'Delete', icon: 'pi pi-fw pi-times',
+                    command: () => this.messageService.add({ severity: 'warn', summary: 'Delete', detail: 'Devaning cannot delete'  })
+                }
+            );
+        }
     }
 
     showDialog(selection?: DevaningModuleDto) {
@@ -124,7 +165,8 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
 
         this.ref.onClose.subscribe(result => {
             if (result) {
-                this.getAll(this.status);
+                // this.getAll(this.status);
+                this.ngOnInit();
             }
         });
     }
@@ -135,6 +177,11 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         } else {
             this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select one record to edit.' });
         }
+    }
+
+    onRecordSaved(): void {
+        this.loadAllData()
+        this.getAll(this.status)
     }
 
     deleteRecord(id, typeDelete: string) {
@@ -151,11 +198,13 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
                     ids = this.rowSelection.map(record => record.id);
                 }
                 this.devaningService.delete(ids).subscribe(() => {
+                    this.loadAllData()
                     this.getAll(this.status)
                     this.messageService.add({ severity: 'success', summary: 'Delete', detail: this.localizePipe.transform('Youhavedeleted') });
                 }, error => {
                     this.messageService.add({ severity: 'danger', summary: 'Delete', detail: error });
                 })
+
             },
             reject: (type) => {
                 switch (type) {
