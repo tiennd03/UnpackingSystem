@@ -13,6 +13,16 @@ import { RouterModule } from '@angular/router';
                     },
                 ],
             },
+            {
+                path: '',
+                children: [
+                    {
+                        path: 'devaningscreen',
+                        loadChildren: () => import('./devaningscreen/devaningscreen.module', ).then((m) => m.DevaningScreenModule),
+                        data: { permission: 'Pages.UPS.Devaning' },
+                    },
+                ],
+            },
         ]),
     ],
     exports: [RouterModule],

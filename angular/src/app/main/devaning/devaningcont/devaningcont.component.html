@@ -103,7 +103,10 @@
                     type="button"
                     class="p-button-raised p-button-rounded mr-2"
                     icon="pi pi-plus-circle"
-                    (click)="showDialog()" *ngIf="status === 1">{{'Add' | localize}}</button>
+                    label="Add"
+                    (click)="showDialog()"
+                    *ngIf="status === 1">
+                </button>
                 <button
                     pButton
                     type="button"
@@ -121,3 +124,4 @@
 <p-contextMenu #contextMenu [model]="items"></p-contextMenu>
 <p-toast></p-toast>
 <p-confirmPopup></p-confirmPopup>
+<p-confirmDialog [style]="{width: '50vw'}" key="deleteDialog" [baseZIndex]="10000"></p-confirmDialog>

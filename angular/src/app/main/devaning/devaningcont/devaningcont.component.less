@@ -13,8 +13,8 @@
     margin-top: 1.25rem;
     min-height: 87.5vh;
     max-height: 87.5vh;
-    // background: white;
     border-radius: 5px;
+    overflow: hidden;
 
     .devaning {
         margin-top: 10px;
@@ -22,6 +22,7 @@
         background-color: white;
         padding: 20px;
         border-radius: @radiusMain;
+        overflow: auto;
 
         .devaning__content {
             .content-wrapper {
@@ -32,6 +33,8 @@
 
             .footer-action {
                 height: 6vh;
+                display: flex; // Sử dụng flexbox để căn giữa
+                flex-wrap: wrap;
             }
         }
 
@@ -72,16 +75,9 @@
         border-top-left-radius: @radiusChild;
         border-top-right-radius: @radiusChild;
 
-        // -ms-overflow-style: none;
-        // scrollbar-width: none;
-
         table {
             border-collapse: separate
         }
-    }
-
-    .p-datatable-wrapper::-webkit-scrollbar {
-        // display: none;
     }
 
     .p-datatable-tbody {
@@ -89,22 +85,7 @@
             td {
                 padding: 0.75rem 0.75rem;
                 cursor: pointer;
-
-                &:first-child {
-                    // border-top-left-radius: 10px;
-                    // border-bottom-left-radius: 10px;
-                }
-
-                &:last-child {
-                    // border-top-right-radius: 10px;
-                    // border-bottom-right-radius: 10px;
-                }
             }
         }
     }
-
-    // .action-col {
-    //     width: 50px;
-    //     max-width: 150px;
-    // }
 }

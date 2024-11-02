@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using prod.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using prod.EntityFrameworkCore;
 namespace prod.Migrations
 {
     [DbContext(typeof(prodDbContext))]
-    partial class prodDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241101112443_Added_PcHome_Table")]
+    partial class AddedPcHomeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

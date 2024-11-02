@@ -3,7 +3,7 @@ import { HttpClient } from '@microsoft/signalr';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { LocalizePipe } from '@shared/common/pipes/localize.pipe';
 import { DevaningModuleDto, DevaningModuleServiceProxy } from '@shared/service-proxies/service-proxies';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, ConfirmEventType, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
@@ -69,6 +69,16 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {
         this.loadAllData();
         this.getAll(1);
+        this.items = [
+            {
+                label: 'Edit', icon: 'pi pi-fw pi-search',
+                command: () => this.showDialog(this.contextMenuSelection)
+            },
+            {
+                label: 'Delete', icon: 'pi pi-fw pi-times',
+                command: () => this.deleteRecord(this.contextMenuSelection, 'MULTI_DELETE')
+            }
+        ];
     }
 
     loadAllData(status?: number) {
@@ -107,8 +117,8 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
             data: {
                 selection: selection || new DevaningModuleDto(),
             },
-            header: selection ? 'Chỉnh sửa Devaning' + "   " + selection.devaningNo : 'Thêm mới Devaning',
-            width: '70%',
+            header: selection ? 'Edit Devaning' + "   " + selection.devaningNo : 'Create Devaning',
+            width: '60%',
             height: 'auto'
         });
 
@@ -125,5 +135,36 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         } else {
             this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select one record to edit.' });
         }
+    }
+
+    deleteRecord(id, typeDelete: string) {
+        this.confirmationService.confirm({
+            key: 'deleteDialog',
+            message:'Do you want to delete this record',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-info-circle',
+            accept: () => {
+                let ids: number[] = [];
+                if (typeDelete === 'ONE_DELETE') {
+                    ids = id;
+                } else if (typeDelete === 'MULTI_DELETE') {
+                    ids = this.rowSelection.map(record => record.id);
+                }
+                this.devaningService.delete(ids).subscribe(() => {
+                    this.getAll(this.status)
+                    this.messageService.add({ severity: 'success', summary: 'Delete', detail: this.localizePipe.transform('Youhavedeleted') });
+                }, error => {
+                    this.messageService.add({ severity: 'danger', summary: 'Delete', detail: error });
+                })
+            },
+            reject: (type) => {
+                switch (type) {
+                    case ConfirmEventType.REJECT:
+                        break;
+                    case ConfirmEventType.CANCEL:
+                        break;
+                }
+            }
+        });
     }
 }

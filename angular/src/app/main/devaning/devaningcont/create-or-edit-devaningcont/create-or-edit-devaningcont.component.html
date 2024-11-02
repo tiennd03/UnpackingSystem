@@ -1,70 +1,94 @@
-<div class="steptwo-container">
-    <div class="container-content">
-        <div class="form-general-information">
-            <p-card [style]="{'width': '80%','padding':'10px'}" class="flex-center">
-                <div class="form-proposer-information">
-                    <div class="col-12 d-flex mb-2 justify-between">
-                        <div class="p-field w-49 flex-column">
-                            <label>Devaning No</label>
-                            <input class="w-100" type="text" name="devaningNo" [(ngModel)]="selection.devaningNo" pInputText />
-                        </div>
-                        <div class="p-field w-49 flex-column">
-                            <label>Container No</label>
-                            <input class="w-100" type="text" name="containerNo" [(ngModel)]="selection.containerNo" pInputText />
-                        </div>
-                    </div>
+<div class="devaning-container">
+    <div class="effect-container">
+        <div class="loop-wrapper">
+            <div class="mountain"></div>
+            <div class="hill"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="rock"></div>
+            <div class="truck"></div>
+            <div class="wheels"></div>
+        </div>
 
-                    <div class="col-12 d-flex mb-2 justify-between">
-                        <div class="p-field w-49 flex-column">
-                            <label>Renban</label>
-                            <input class="w-100" type="text" name="devaningNo" [(ngModel)]="selection.renban" pInputText />
-                        </div>
-                        <div class="p-field w-49 flex-column">
-                            <label>Supplier</label>
-                            <input class="w-100" type="text" name="containerNo" [(ngModel)]="selection.suppilerNo" pInputText />
-                        </div>
+        <!-- <div class="shape">
+            <img src="/assets/common/images/loading.4e1da2fb9f41c26db3a293b61b073ec3.svg">
+        </div> -->
+    </div>
+    <div class="form-container">
+        <p-card>
+            <div class="form-content">
+                <!-- Row 1 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Devaning No</label>
+                        <input pInputText [(ngModel)]="selection.devaningNo">
                     </div>
-
-                    <div class="col-12 d-flex mb-2 justify-between">
-                        <div class="p-field w-49 flex-column">
-                            <label>Shift No</label>
-                            <input class="w-100" type="text" name="devaningNo" [(ngModel)]="selection.shiftNo" pInputText />
-                        </div>
-                        <div class="p-field w-49 flex-column">
-                            <label>Working Date</label>
-                            <input class="w-100" type="text" name="containerNo" pInputText />
-                        </div>
-                    </div>
-
-                    <div class="col-12 d-flex mb-2 justify-between">
-                        <div class="p-field w-49 flex-column">
-                            <label>PLan Date</label>
-                            <input class="w-100" type="text" name="devaningNo" [(ngModel)]="selection.devaningNo" pInputText />
-                        </div>
-                        <div class="p-field w-49 flex-column">
-                            <label>Act Date</label>
-                            <input class="w-100" type="text" name="containerNo" [(ngModel)]="selection.containerNo" pInputText />
-                        </div>
-                    </div>
-                    <div class="col-12 d-flex mb-2 justify-between">
-                        <div class="p-field w-49 flex-column">
-                            <label>Devaning Type</label>
-                            <input class="w-100" type="text" name="devaningNo" [(ngModel)]="selection.devaningNo" pInputText />
-                        </div>
-                        <div class="p-field w-49 flex-column">
-                            <label>Devaning Status</label>
-                            <input class="w-100" type="text" name="containerNo" [(ngModel)]="selection.containerNo" pInputText />
-                        </div>
+                    <div class="form-group">
+                        <label>Container No</label>
+                        <input pInputText [(ngModel)]="selection.containerNo">
                     </div>
                 </div>
-            </p-card>
-        </div>
-        <div class="footer-action flex-center col-12 mb-2">
-            <div class="button-action w-80 d-flex justify-content-end">
-                <button pButton class="btn btn-success" (click)=" save()">{{'Save' | localize}}</button>
-                <button pButton class="btn btn-primary" (click)="closeModal()">{{'Close' | localize}}</button>
+                <!-- Row 2 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Renban</label>
+                        <input pInputText [(ngModel)]="selection.renban">
+                    </div>
+                    <div class="form-group">
+                        <label>Supplier</label>
+                        <input pInputText [(ngModel)]="selection.suppilerNo">
+                    </div>
+                </div>
+                <!-- Row 3 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Shift No</label>
+                        <input pInputText [(ngModel)]="selection.shiftNo">
+                    </div>
+                    <div class="form-group">
+                        <label>Working Date</label>
+                        <p-calendar [(ngModel)]="selection.workingDate" [showIcon]="true" dateFormat="dd/mm/yy"
+                            appendTo="body">
+                        </p-calendar>
+                    </div>
+                </div>
+                <!-- Row 4 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Plan Devaning Date</label>
+                        <p-calendar [(ngModel)]="selection.planDevaningDate" [showIcon]="true" dateFormat="dd/mm/yy"
+                            appendTo="body">
+                        </p-calendar>
+                    </div>
+                    <div class="form-group">
+                        <label>Acivity Devaning Date</label>
+                        <p-calendar [(ngModel)]="selection.actDevaningDate" [showIcon]="true" dateFormat="dd/mm/yy"
+                            appendTo="body">
+                        </p-calendar>
+                    </div>
+                </div>
+                <!-- Row 5 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Devaning Type</label>
+                        <input pInputText [(ngModel)]="selection.devaningType">
+                    </div>
+                    <div class="form-group">
+                        <label>Devaning Status</label>
+                        <input pInputText [(ngModel)]="selection.devaningStatus">
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <div class="form-footer">
+                <p-button label="Save" icon="pi pi-check" styleClass="p-button-success" (click)=" save()" >
+                </p-button>
+
+                <p-button label="Close" icon="pi pi-times" styleClass="p-button-secondary" (click)="closeModal()">
+                </p-button>
+            </div>
+        </p-card>
     </div>
+
 </div>
-<p-toast></p-toast>

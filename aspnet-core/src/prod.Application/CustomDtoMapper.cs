@@ -36,6 +36,7 @@ using prod.Friendships.Dto;
 using prod.Localization.Dto;
 using prod.Master;
 using prod.Master.DevaningModule.Dto;
+using prod.Master.Unpacking.Dto;
 using prod.MultiTenancy;
 using prod.MultiTenancy.Dto;
 using prod.MultiTenancy.HostDashboard.Dto;
@@ -170,6 +171,7 @@ namespace prod
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
             configuration.CreateMap<DevaningModuleDto, DvnContList>().ReverseMap();
+            configuration.CreateMap<CreateOrEditUnpackingDto, LupContModule>().ReverseMap();
         }
     }
 }

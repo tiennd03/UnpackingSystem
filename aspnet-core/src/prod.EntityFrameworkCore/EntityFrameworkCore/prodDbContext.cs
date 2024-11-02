@@ -42,7 +42,11 @@ namespace prod.EntityFrameworkCore
 
         public virtual DbSet<CmmBin> CmmBins { get; set; }
         public virtual DbSet<DvnContList> DvnContLists { get; set; }
- 
+        public virtual DbSet<LupContModule> LupContModules { get; set; }
+        public virtual DbSet<Part> Parts { get; set; }
+        public virtual DbSet<Robings> Robingss { get; set; }
+        public virtual DbSet<PcStore> PcStores { get; set; }
+        public virtual DbSet<PcHome> PcHomes { get; set; }
 
         public prodDbContext(DbContextOptions<prodDbContext> options)
             : base(options)

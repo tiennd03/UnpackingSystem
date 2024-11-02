@@ -28,7 +28,8 @@ export class AppNavigationService {
                 //     'flaticon-line-graph',
                 //     '/app/main/dashboard'
                 // ),
-                new AppMenuItem('Devaning', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningcont/devaningcont'),///app/main/devaning/ups-devaning/devaningcont
+                new AppMenuItem('Devaning Container', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningcont/devaningcont'),///app/main/devaning/ups-devaning/devaningcont
+                new AppMenuItem('Devaning Screen', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningscreen/devaningscreen'),
 
                 new AppMenuItem('tesstmanhinh', '', 'flaticon-book', '/app/main/tesstmanhinh/filebentrong/filebentrong'),///app/main/devaning/ups-devaning/devaningcont
             ]),

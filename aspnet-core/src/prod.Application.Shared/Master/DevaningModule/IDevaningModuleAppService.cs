@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using prod.Master.DevaningModule.Dto;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace prod.Master.DevaningModule
     {
         Task<List<DevaningModuleDto>> GetAll(GetDevaningContModuleInput input);
         Task UpdateOrCreate(DevaningModuleDto input);
+        Task Delete(List<int> deleteUsers);
     }
 }
