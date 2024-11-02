@@ -40,6 +40,15 @@ export class CreateOrEditDevaningContComponent extends AppComponentBase {
         console.log('edit', this.selection);
         if (this.config.data && this.config.data.selection) {
             this.selection = { ...this.config.data.selection };
+            if (this.config.data.selection.planDevaningDate instanceof DateTime) {
+                this.selection.planDevaningDate = this.config.data.selection.planDevaningDate.toJSDate();
+            }
+            if (this.config.data.selection.actDevaningDate instanceof DateTime) {
+                this.selection.actDevaningDate = this.config.data.selection.actDevaningDate.toJSDate();
+            }
+            if (this.config.data.selection.workingDate instanceof DateTime) {
+                this.selection.workingDate = this.config.data.selection.workingDate.toJSDate();
+            }
         } else {
             this.selection = new DevaningModuleDto();
         }

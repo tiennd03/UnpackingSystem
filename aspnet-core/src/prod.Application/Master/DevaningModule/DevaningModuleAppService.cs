@@ -72,5 +72,38 @@ namespace prod.Master.DevaningModule
             ObjectMapper.Map(input, DevaningModule);
             await _repo.UpdateAsync(DevaningModule);
         }
+
+        //Delete
+
+        public async Task Delete(List<int> deleteUsers)
+        {
+            try
+            {
+                var ids = string.Join(",", deleteUsers);
+                await _dapperRepo.ExecuteAsync(@" exec [dbo].[spDeleteDevaning] @pIds, @pUserId ", new
+                {
+                    pIds = ids,
+                    pUserId = AbpSession.UserId
+                }); ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task FinishDvnCont(int dvn_id)
+        {
+            string _sql = "Exec DEVANT_MODULE @IdDevant";
+            await _dapperRepo.QueryAsync<DevaningModuleDto>(_sql, new { IdDevant = dvn_id });
+        }
+
+        public async Task<List<CoutPlanDvn>> GetDevaningPlan()
+        {
+            string _sqlSearch = "Exec COUNT_DEVANING_WORKINGDATE";
+
+            IEnumerable<CoutPlanDvn> _result = await _dapperRepo.QueryAsync<CoutPlanDvn>(_sqlSearch, new { });
+            return _result.ToList();
+        }
     }
 }

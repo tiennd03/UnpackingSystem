@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities;
+﻿using Abp.Application.Services.Dto;
+using Abp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,5 +30,16 @@ namespace prod.Master.DevaningModule.Dto
     public class GetDevaningContModuleInput
     {
         public virtual int Status { get; set; }
+    }
+
+    public class CoutPlanDvn : EntityDto<long?>
+    {
+
+        public int Id { get; set; }
+        public string COUNT_DEVANING { get; set; }
+
+        public string Renban { get; set; }
+        public string Container { get; set; }
+        public string Status { get; set; }
     }
 }

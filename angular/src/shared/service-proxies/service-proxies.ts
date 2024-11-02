@@ -3161,6 +3161,168 @@ export class DevaningModuleServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param deleteUsers (optional) 
+     * @return Success
+     */
+    delete(deleteUsers: number[] | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DevaningModule/Delete?";
+        if (deleteUsers === null)
+            throw new Error("The parameter 'deleteUsers' cannot be null.");
+        else if (deleteUsers !== undefined)
+            deleteUsers && deleteUsers.forEach(item => { url_ += "deleteUsers=" + encodeURIComponent("" + item) + "&"; });
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param dvn_id (optional) 
+     * @return Success
+     */
+    finishDvnCont(dvn_id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DevaningModule/FinishDvnCont?";
+        if (dvn_id === null)
+            throw new Error("The parameter 'dvn_id' cannot be null.");
+        else if (dvn_id !== undefined)
+            url_ += "dvn_id=" + encodeURIComponent("" + dvn_id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processFinishDvnCont(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processFinishDvnCont(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processFinishDvnCont(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getDevaningPlan(): Observable<CoutPlanDvn[]> {
+        let url_ = this.baseUrl + "/api/services/app/DevaningModule/GetDevaningPlan";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDevaningPlan(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDevaningPlan(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CoutPlanDvn[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CoutPlanDvn[]>;
+        }));
+    }
+
+    protected processGetDevaningPlan(response: HttpResponseBase): Observable<CoutPlanDvn[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CoutPlanDvn.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -16963,6 +17125,58 @@ export interface IComboboxItemDto {
     value: string | undefined;
     displayText: string | undefined;
     isSelected: boolean;
+}
+
+export class CoutPlanDvn implements ICoutPlanDvn {
+    id!: number;
+    counT_DEVANING!: string | undefined;
+    renban!: string | undefined;
+    container!: string | undefined;
+    status!: string | undefined;
+
+    constructor(data?: ICoutPlanDvn) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.counT_DEVANING = _data["counT_DEVANING"];
+            this.renban = _data["renban"];
+            this.container = _data["container"];
+            this.status = _data["status"];
+        }
+    }
+
+    static fromJS(data: any): CoutPlanDvn {
+        data = typeof data === 'object' ? data : {};
+        let result = new CoutPlanDvn();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["counT_DEVANING"] = this.counT_DEVANING;
+        data["renban"] = this.renban;
+        data["container"] = this.container;
+        data["status"] = this.status;
+        return data;
+    }
+}
+
+export interface ICoutPlanDvn {
+    id: number;
+    counT_DEVANING: string | undefined;
+    renban: string | undefined;
+    container: string | undefined;
+    status: string | undefined;
 }
 
 export class CreateEditionDto implements ICreateEditionDto {
