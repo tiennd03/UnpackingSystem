@@ -21,6 +21,9 @@ import { finalize } from 'rxjs';
     styleUrls: ['./create-or-edit-devaningcont.component.less'],
 })
 export class CreateOrEditDevaningContComponent extends AppComponentBase {
+
+    suppliers: { label: string; value: string }[] = [];
+    devaningStatuses: { label: string; value: string }[] = [];
     saving = false;
     selection: DevaningModuleDto = new DevaningModuleDto();
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
@@ -34,6 +37,18 @@ export class CreateOrEditDevaningContComponent extends AppComponentBase {
         @Optional() public ref: DynamicDialogRef
     ) {
         super(injector);
+
+        this.suppliers = [
+            { label: 'Supplier A', value: 'A' },
+            { label: 'Supplier B', value: 'B' },
+            { label: 'Supplier C', value: 'C' },
+        ];
+
+        this.devaningStatuses = [
+            { label: 'Pending', value: 'Pending' },
+            { label: 'Completed', value: 'Completed' },
+            { label: 'Canceled', value: 'Canceled' },
+        ];
     }
 
     ngOnInit(): void {

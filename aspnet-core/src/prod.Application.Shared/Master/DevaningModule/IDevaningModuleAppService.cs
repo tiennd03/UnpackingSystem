@@ -13,5 +13,6 @@ namespace prod.Master.DevaningModule
         Task<List<DevaningModuleDto>> GetAll(GetDevaningContModuleInput input);
         Task UpdateOrCreate(DevaningModuleDto input);
         Task Delete(List<int> deleteUsers);
+        Task FinishDvnCont(int dvn_id);
     }
 }

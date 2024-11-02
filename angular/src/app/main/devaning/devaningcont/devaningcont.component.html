@@ -3,6 +3,13 @@
         <p-tabView (onChange)="onTabChange($event)" styleClass="tabview-custom">
             <p-tabPanel>
                 <ng-template pTemplate="header">
+                    <i class="pi pi-plus"></i>
+                    <span>{{'New' | localize}}</span>
+                    <p-badge [value]="recordCountReady"></p-badge>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
                     <i class="pi pi-check-circle"></i>
                     <span>{{'Devaned' | localize}}</span>
                     <p-badge [value]="recordCountDevaned"></p-badge>
