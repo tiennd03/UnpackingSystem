@@ -54,11 +54,11 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
             { field: 'renban', header: 'Renban' },
             { field: 'suppilerNo', header: 'Supplier No' },
             { field: 'shiftNo', header: 'Shift No' },
-            { field: 'workingDate', header: 'Working Date' },
+            // { field: 'workingDate', header: 'Working Date' },
             { field: 'planDevaningDate', header: 'Plan Devaning Date' },
-            { field: 'actDevaningDate', header: 'Activity Devaning Date' },
-            { field: 'actDevaningDateFinish', header: 'Activity Devaning Date Finish' },
-            { field: 'devaningType', header: 'Activity Devaning Date' },
+            // { field: 'actDevaningDate', header: 'Activity Devaning Date' },
+            // { field: 'actDevaningDateFinish', header: 'Activity Devaning Date Finish' },
+            { field: 'devaningType', header: 'Devaning Type' },
             { field: 'devaningStatus', header: 'Devaning Status' },
         ];
     }

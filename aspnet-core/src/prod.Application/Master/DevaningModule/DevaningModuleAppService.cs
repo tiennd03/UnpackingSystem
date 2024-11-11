@@ -68,7 +68,7 @@ namespace prod.Master.DevaningModule
         {
             try
             {
-                string sql = "Exec spCreateDevaning " + // Thêm khoảng trắng sau 'Exec'
+                string sql = "Exec spCreateDevaning " + 
                              "@p_DevaningNo, " +
                              "@p_ContainerNo, " +
                              "@p_Renban, " +
@@ -79,8 +79,8 @@ namespace prod.Master.DevaningModule
                              "@p_ActDevaningDate, " +
                              "@p_ActDevaningDateFinish, " +
                              "@p_DevaningType, " +
-                             "@p_DevaningStatus, " + // Thêm dấu phẩy cho tham số cuối cùng nếu cần
-                             "@p_login_id"; // Thêm tham số này vào nếu cần truyền
+                             "@p_DevaningStatus, " + 
+                             "@p_login_id"; 
                 var result = await _dapperRepo.QueryAsync<DevaningNewIdDto>(sql, new
                 {
                     p_DevaningNo = input.DevaningNo,
@@ -108,9 +108,43 @@ namespace prod.Master.DevaningModule
         //Edit
         private async Task Update(DevaningModuleDto input)
         {
-            var DevaningModule = await _repo.FirstOrDefaultAsync((long)input.Id);
-            ObjectMapper.Map(input, DevaningModule);
-            await _repo.UpdateAsync(DevaningModule);
+            try
+            {
+                string sql = "Exec spUpdateDevaning " +
+                             "@p_Id, " +
+                             "@p_DevaningNo, " +
+                             "@p_ContainerNo, " +
+                             "@p_Renban, " +
+                             "@p_SuppilerNo, " +
+                             "@p_ShiftNo, " +
+                             "@p_WorkingDate, " +
+                             "@p_PlanDevaningDate, " +
+                             "@p_ActDevaningDate, " +
+                             "@p_ActDevaningDateFinish, " +
+                             "@p_DevaningType, " +
+                             "@p_DevaningStatus, " +
+                             "@p_login_id";
+                var result = await _dapperRepo.QueryAsync<DevaningNewIdDto>(sql, new
+                {
+                    p_Id = input.Id,
+                    p_DevaningNo = input.DevaningNo,
+                    p_ContainerNo = input.ContainerNo,
+                    p_Renban = input.Renban,
+                    p_SuppilerNo = input.SuppilerNo,
+                    p_ShiftNo = input.ShiftNo,
+                    p_WorkingDate = input.WorkingDate,
+                    p_PlanDevaningDate = input.PlanDevaningDate,
+                    p_ActDevaningDate = input.ActDevaningDate,
+                    p_ActDevaningDateFinish = input.ActDevaningDateFinish,
+                    p_DevaningType = input.DevaningType,
+                    p_DevaningStatus = input.DevaningStatus,
+                    p_login_id = AbpSession.UserId
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         //Delete
