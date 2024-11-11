@@ -17129,10 +17129,13 @@ export interface IComboboxItemDto {
 
 export class CoutPlanDvn implements ICoutPlanDvn {
     id!: number;
-    counT_DEVANING!: string | undefined;
+    devaningNo!: string | undefined;
+    containerNo!: string | undefined;
+    devaningStatus!: string | undefined;
     renban!: string | undefined;
-    container!: string | undefined;
-    status!: string | undefined;
+    actDevaningDate!: DateTime | undefined;
+    actDevaningDateFinish!: DateTime | undefined;
+    planDevaningDate!: DateTime | undefined;
 
     constructor(data?: ICoutPlanDvn) {
         if (data) {
@@ -17146,10 +17149,13 @@ export class CoutPlanDvn implements ICoutPlanDvn {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.counT_DEVANING = _data["counT_DEVANING"];
+            this.devaningNo = _data["devaningNo"];
+            this.containerNo = _data["containerNo"];
+            this.devaningStatus = _data["devaningStatus"];
             this.renban = _data["renban"];
-            this.container = _data["container"];
-            this.status = _data["status"];
+            this.actDevaningDate = _data["actDevaningDate"] ? DateTime.fromISO(_data["actDevaningDate"].toString()) : <any>undefined;
+            this.actDevaningDateFinish = _data["actDevaningDateFinish"] ? DateTime.fromISO(_data["actDevaningDateFinish"].toString()) : <any>undefined;
+            this.planDevaningDate = _data["planDevaningDate"] ? DateTime.fromISO(_data["planDevaningDate"].toString()) : <any>undefined;
         }
     }
 
@@ -17163,20 +17169,26 @@ export class CoutPlanDvn implements ICoutPlanDvn {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["counT_DEVANING"] = this.counT_DEVANING;
+        data["devaningNo"] = this.devaningNo;
+        data["containerNo"] = this.containerNo;
+        data["devaningStatus"] = this.devaningStatus;
         data["renban"] = this.renban;
-        data["container"] = this.container;
-        data["status"] = this.status;
+        data["actDevaningDate"] = this.actDevaningDate ? this.actDevaningDate.toString() : <any>undefined;
+        data["actDevaningDateFinish"] = this.actDevaningDateFinish ? this.actDevaningDateFinish.toString() : <any>undefined;
+        data["planDevaningDate"] = this.planDevaningDate ? this.planDevaningDate.toString() : <any>undefined;
         return data;
     }
 }
 
 export interface ICoutPlanDvn {
     id: number;
-    counT_DEVANING: string | undefined;
+    devaningNo: string | undefined;
+    containerNo: string | undefined;
+    devaningStatus: string | undefined;
     renban: string | undefined;
-    container: string | undefined;
-    status: string | undefined;
+    actDevaningDate: DateTime | undefined;
+    actDevaningDateFinish: DateTime | undefined;
+    planDevaningDate: DateTime | undefined;
 }
 
 export class CreateEditionDto implements ICreateEditionDto {

@@ -1,4 +1,4 @@
-<div class="container-devaning">
+<!-- <div class="container-devaning">
     <div class="header content">
       <div class="header-content time-act">{{dateNow}}</div>
       <div class="header-content title-screen">
@@ -44,5 +44,52 @@
         </div>
       </div>
     </div>
-  </div>
-  <p-toast position="bottom-center"></p-toast>
+  </div> -->
+<div class="container">
+    <div class="tab-heading">
+        <p-tabView>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    Devaning Screen
+                    <!-- <p-badge [value]="recordCountReady"></p-badge> -->
+                </ng-template>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+    <div class="devaningscreen">
+        <div class="card-container flex-center col-6">
+            <div class="unique-card">
+                <div class="background-overlay"></div>
+                <div class="card-content">
+                    <div class="card-title">NEXT</div>
+                    <div class="card-description"></div>
+                    <div class="card-description"></div>
+                </div>
+            </div>
+
+            <div class="unique-card" >
+                <div class="background-overlay"></div>
+                <div class="card-content">
+                    <div class="card-title">CURRENT</div>
+                    <div class="card-description"></div>
+                    <div class="card-description"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fotter content">
+            <div class="plan_actual">
+                <p-progressBar></p-progressBar>
+            </div>
+
+            <div class="progress">
+                <div class="progress-item" >
+                    <div class="progress-item-detail"></div>
+                    <div class="icon-status">
+                        <div class="icon-status-item" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

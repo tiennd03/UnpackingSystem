@@ -39,15 +39,13 @@ export class CreateOrEditDevaningContComponent extends AppComponentBase {
         super(injector);
 
         this.suppliers = [
-            { label: 'Supplier A', value: 'A' },
-            { label: 'Supplier B', value: 'B' },
-            { label: 'Supplier C', value: 'C' },
+            { label: 'TMV', value: 'TMV' },
+            { label: 'TMI', value: 'TMI' },
         ];
 
         this.devaningStatuses = [
-            { label: 'Pending', value: 'Pending' },
-            { label: 'Completed', value: 'Completed' },
-            { label: 'Canceled', value: 'Canceled' },
+            { label: 'READY', value: 'READY' },
+            { label: 'DEVANED', value: 'DEVANED' },
         ];
     }
 

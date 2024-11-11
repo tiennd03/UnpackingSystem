@@ -37,8 +37,7 @@ import { CalendarModule } from 'primeng/calendar';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {FileUploadModule} from 'primeng/fileupload';
 import {SkeletonModule} from 'primeng/skeleton';
-import {AccordionModule} from 'primeng/accordion';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import {ToolbarModule} from 'primeng/toolbar';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -84,7 +83,9 @@ const imports = [
     CardModule,
     ProgressSpinnerModule,
     SkeletonModule,
-    DropdownModule
+    DropdownModule,
+    ToolbarModule,
+
 ];
 
 @NgModule({

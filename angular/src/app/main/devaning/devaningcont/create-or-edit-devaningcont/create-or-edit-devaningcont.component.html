@@ -25,29 +25,40 @@
                         <input pInputText [(ngModel)]="selection.devaningNo">
                     </div>
                     <div class="form-group">
-                        <label>Supplier</label>
-                        <p-dropdown
-                            [options]="suppliers"
-                            [(ngModel)]="selection.suppilerNo"
-                            placeholder="Select a Supplier"
-                            appendTo="body"
-                            [autoDisplayFirst]="false">
-                        </p-dropdown>
-                    </div>
-                </div>
-                <!-- Row 2 -->
-                <div class="form-row">
-                    <div class="form-group">
                         <label>Container No</label>
                         <input pInputText [(ngModel)]="selection.containerNo">
                     </div>
+                    <!-- <div class="form-group">
+                        <label>Working Date</label>
+                        <p-calendar
+                            [(ngModel)]="selection.workingDate"
+                            [showIcon]="true"
+                            dateFormat="dd/mm/yy"
+                            appendTo="body">
+                        </p-calendar>
+                    </div> -->
+                </div>
+                <!-- Row 2 -->
+                <!-- <div class="form-row">
                     <div class="form-group">
-                        <label>Plan Devaning Date</label>
-                        <p-calendar [(ngModel)]="selection.planDevaningDate" [showIcon]="true" dateFormat="dd/mm/yy"
+                        <label>Working Date</label>
+                        <p-calendar
+                            [(ngModel)]="selection.workingDate"
+                            [showIcon]="true"
+                            dateFormat="dd/mm/yy"
                             appendTo="body">
                         </p-calendar>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label>Acivity Devaning Date</label>
+                        <p-calendar
+                            [(ngModel)]="selection.actDevaningDate"
+                            [showIcon]="true"
+                            dateFormat="dd/mm/yy"
+                            appendTo="body">
+                        </p-calendar>
+                    </div>
+                </div> -->
                 <!-- Row 3 -->
                 <div class="form-row">
                     <div class="form-group">
@@ -55,8 +66,11 @@
                         <input pInputText [(ngModel)]="selection.shiftNo">
                     </div>
                     <div class="form-group">
-                        <label>Working Date</label>
-                        <p-calendar [(ngModel)]="selection.workingDate" [showIcon]="true" dateFormat="dd/mm/yy"
+                        <label>Plan Devaning Date</label>
+                        <p-calendar
+                            [(ngModel)]="selection.planDevaningDate"
+                            [showIcon]="true"
+                            dateFormat="dd/mm/yy"
                             appendTo="body">
                         </p-calendar>
                     </div>
@@ -68,10 +82,18 @@
                         <input pInputText [(ngModel)]="selection.renban">
                     </div>
                     <div class="form-group">
-                        <label>Acivity Devaning Date</label>
-                        <p-calendar [(ngModel)]="selection.actDevaningDate" [showIcon]="true" dateFormat="dd/mm/yy"
-                            appendTo="body">
-                        </p-calendar>
+                        <span class="p-float-label">
+                            <p-dropdown
+                                inputId="supplierDropdown"
+                                [options]="suppliers"
+                                [(ngModel)]="selection.suppilerNo"
+                                optionLabel="label"
+                                optionValue="value"
+                                [autoDisplayFirst]="false"
+                                appendTo="body">
+                            </p-dropdown>
+                            <label for="supplierDropdown">Supplier</label>
+                        </span>
                     </div>
                 </div>
                 <!-- Row 5 -->
@@ -81,22 +103,35 @@
                         <input pInputText [(ngModel)]="selection.devaningType">
                     </div>
                     <div class="form-group">
-                        <label>Devaning Status</label>
-                        <p-dropdown
-                            [options]="devaningStatuses"
-                            [(ngModel)]="selection.devaningStatus"
-                            placeholder="Select a Status"
-                            appendTo="body">
-                        </p-dropdown>
+                        <span class="p-float-label">
+                            <p-dropdown
+                                inputId="devaningStatusDropdown"
+                                [options]="devaningStatuses"
+                                [(ngModel)]="selection.devaningStatus"
+                                optionLabel="label"
+                                optionValue="value"
+                                [autoDisplayFirst]="false"
+                                appendTo="body">
+                            </p-dropdown>
+                            <label for="devaningStatusDropdown">Devaning Status</label>
+                        </span>
                     </div>
                 </div>
             </div>
 
             <div class="form-footer">
-                <p-button label="Save" icon="pi pi-check" styleClass="p-button-success" (click)=" save()" >
+                <p-button
+                    label="Save"
+                    icon="pi pi-check"
+                    styleClass="p-button-success"
+                    (click)="save()">
                 </p-button>
 
-                <p-button label="Close" icon="pi pi-times" styleClass="p-button-secondary" (click)="closeModal()">
+                <p-button
+                    label="Close"
+                    icon="pi pi-times"
+                    styleClass="p-button-secondary"
+                    (click)="closeModal()">
                 </p-button>
             </div>
         </p-card>

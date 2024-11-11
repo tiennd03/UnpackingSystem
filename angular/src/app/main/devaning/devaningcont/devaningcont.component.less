@@ -2,43 +2,17 @@
 @radiusChild: 10px;
 @padding: 10px;
 
-.header-center{
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-    font-weight: bold;
-}
 .container {
     padding: 0px 10px;
-    margin-top: 1.25rem;
-    min-height: 87.5vh;
-    max-height: 87.5vh;
-    border-radius: 5px;
     overflow: hidden;
 
     .devaning {
         margin-top: 10px;
-        height: calc(87.5vh - 58.13px); // 58.13px = 48.13px(height tab) + 10px(margin bottom tab)
+        height: calc(88vh - 57.5px); // 58.13px = 47.5px(height tab) + 10px(margin bottom tab)
         background-color: white;
         padding: 20px;
         border-radius: @radiusMain;
         overflow: auto;
-
-        .devaning__content {
-            .content-wrapper {
-                .content__filter-layout {
-                    height: 100px;
-                }
-            }
-
-            .footer-action {
-                height: 6vh;
-                display: flex; // Sử dụng flexbox để căn giữa
-                flex-wrap: wrap;
-            }
-        }
-
-
     }
 }
 
@@ -55,29 +29,29 @@
         }
     }
 
+    .p-toolbar {
+        border: 1px solid #e1dddd;
+        border-radius: @radiusChild;
+        background-color: #efefef;
+    }
+
     .p-button {
         margin-right: .25rem;
     }
 
-    .p-tabview p {
-        line-height: 1.5;
-        margin: 0;
-    }
-
-    .p-datatable-header {
-        border: 0;
-    }
-
     .p-datatable-wrapper {
-        min-height: 58vh;
-        max-height: 58vh;
+        min-height: 56vh;
+        max-height: 56vh;
         border: 1px solid #d3caca;
-        border-top-left-radius: @radiusChild;
-        border-top-right-radius: @radiusChild;
+        border-radius: @radiusChild;
 
         table {
             border-collapse: separate
         }
+    }
+
+    .column-border-right {
+        border-right: 1px solid #ccc;
     }
 
     .p-datatable-tbody {
@@ -85,7 +59,10 @@
             td {
                 padding: 0.75rem 0.75rem;
                 cursor: pointer;
+                text-align: center;
+                border-width: 0 1px 1px 0;
             }
         }
     }
 }
+
