@@ -235,7 +235,15 @@ bs-days-calendar-view {
     height: 803px;
     border-bottom-right-radius: 10px;
 }
+#kt_app_content_wrapper{
+    height: 803px;
+    margin-top: 1.25rem !important;
+    margin-bottom: 1.25rem !important;
+}
 
+#kt_app_main{
+    padding-bottom: 0;
+}
 #kt_app_sidebar {background: transparent;}
 
 .app-sidebar-menu .overflow-hidden .flex-column-fluid .ng-tns-c179-4 {background: transparent;}
@@ -279,7 +287,7 @@ p-paginator > div{
 }
 
 .p-datatable-thead tr:first-child th {
-    background-color: #bfbfbf94 !important;
+    background-color: #dddcdcfa !important;
     text-align: center !important;
 }
 

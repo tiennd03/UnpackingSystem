@@ -106,6 +106,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
 
     onTabChange(event: any) {
         const index = event.index;
+        this.rowSelection = [];
         switch (index) {
             case 0:
                 this.currentTab = 'New';

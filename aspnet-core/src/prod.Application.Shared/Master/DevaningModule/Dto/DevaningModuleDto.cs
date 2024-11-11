@@ -27,6 +27,11 @@ namespace prod.Master.DevaningModule.Dto
         public string DevaningStatus { get; set; }
     }
 
+    public class DevaningNewIdDto 
+    {
+        public virtual long Id { get; set; }
+    }
+
     public class GetDevaningContModuleInput
     {
         public virtual int Status { get; set; }
@@ -34,12 +39,13 @@ namespace prod.Master.DevaningModule.Dto
 
     public class CoutPlanDvn : EntityDto<long?>
     {
-
         public int Id { get; set; }
-        public string COUNT_DEVANING { get; set; }
-
+        public string DevaningNo { get; set; }
+        public string ContainerNo { get; set; }
+        public string DevaningStatus { get; set; }
         public string Renban { get; set; }
-        public string Container { get; set; }
-        public string Status { get; set; }
+        public DateTime? ActDevaningDate { get; set; }
+        public DateTime? ActDevaningDateFinish { get; set; }
+        public DateTime? PlanDevaningDate { get; set; }
     }
 }
