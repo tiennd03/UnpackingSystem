@@ -3323,6 +3323,58 @@ export class DevaningModuleServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param devaningId (optional) 
+     * @return Success
+     */
+    updateStatusToDevaning(devaningId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DevaningModule/UpdateStatusToDevaning?";
+        if (devaningId === null)
+            throw new Error("The parameter 'devaningId' cannot be null.");
+        else if (devaningId !== undefined)
+            url_ += "devaningId=" + encodeURIComponent("" + devaningId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateStatusToDevaning(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateStatusToDevaning(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processUpdateStatusToDevaning(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -17136,6 +17188,7 @@ export class CoutPlanDvn implements ICoutPlanDvn {
     actDevaningDate!: DateTime | undefined;
     actDevaningDateFinish!: DateTime | undefined;
     planDevaningDate!: DateTime | undefined;
+    workingDate!: DateTime | undefined;
 
     constructor(data?: ICoutPlanDvn) {
         if (data) {
@@ -17156,6 +17209,7 @@ export class CoutPlanDvn implements ICoutPlanDvn {
             this.actDevaningDate = _data["actDevaningDate"] ? DateTime.fromISO(_data["actDevaningDate"].toString()) : <any>undefined;
             this.actDevaningDateFinish = _data["actDevaningDateFinish"] ? DateTime.fromISO(_data["actDevaningDateFinish"].toString()) : <any>undefined;
             this.planDevaningDate = _data["planDevaningDate"] ? DateTime.fromISO(_data["planDevaningDate"].toString()) : <any>undefined;
+            this.workingDate = _data["workingDate"] ? DateTime.fromISO(_data["workingDate"].toString()) : <any>undefined;
         }
     }
 
@@ -17176,6 +17230,7 @@ export class CoutPlanDvn implements ICoutPlanDvn {
         data["actDevaningDate"] = this.actDevaningDate ? this.actDevaningDate.toString() : <any>undefined;
         data["actDevaningDateFinish"] = this.actDevaningDateFinish ? this.actDevaningDateFinish.toString() : <any>undefined;
         data["planDevaningDate"] = this.planDevaningDate ? this.planDevaningDate.toString() : <any>undefined;
+        data["workingDate"] = this.workingDate ? this.workingDate.toString() : <any>undefined;
         return data;
     }
 }
@@ -17189,6 +17244,7 @@ export interface ICoutPlanDvn {
     actDevaningDate: DateTime | undefined;
     actDevaningDateFinish: DateTime | undefined;
     planDevaningDate: DateTime | undefined;
+    workingDate: DateTime | undefined;
 }
 
 export class CreateEditionDto implements ICreateEditionDto {

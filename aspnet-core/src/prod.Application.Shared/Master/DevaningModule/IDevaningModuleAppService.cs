@@ -14,5 +14,6 @@ namespace prod.Master.DevaningModule
         Task UpdateOrCreate(DevaningModuleDto input);
         Task Delete(List<int> deleteUsers);
         Task FinishDvnCont(int dvn_id);
+        Task UpdateStatusToDevaning(long devaningId);
     }
 }

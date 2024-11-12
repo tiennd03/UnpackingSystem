@@ -8,8 +8,6 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { CreateOrEditDevaningContComponent } from './create-or-edit-devaningcont/create-or-edit-devaningcont.component';
-import { result } from 'lodash-es';
-import { error } from 'console';
 
 @Component({
     templateUrl: './devaningcont.component.html',

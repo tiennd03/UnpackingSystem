@@ -47,5 +47,6 @@ namespace prod.Master.DevaningModule.Dto
         public DateTime? ActDevaningDate { get; set; }
         public DateTime? ActDevaningDateFinish { get; set; }
         public DateTime? PlanDevaningDate { get; set; }
+        public DateTime? WorkingDate { get; set; }
     }
 }

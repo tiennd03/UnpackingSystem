@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace prod.Master.DevaningModule
 {
-   
+
     [AbpAuthorize(AppPermissions.Pages_UPS_Devaning)]
     public class DevaningModuleAppService : prodAppServiceBase, IDevaningModuleAppService
     {
         private readonly IRepository<DvnContList, long> _repo;
         private readonly IDapperRepository<DvnContList, long> _dapperRepo;
-        public DevaningModuleAppService (IRepository<DvnContList, long> repo, 
+        public DevaningModuleAppService(IRepository<DvnContList, long> repo,
                                          IDapperRepository<DvnContList, long> dapperRepo)
         {
             _repo = repo;
@@ -68,7 +68,7 @@ namespace prod.Master.DevaningModule
         {
             try
             {
-                string sql = "Exec spCreateDevaning " + 
+                string sql = "Exec spCreateDevaning " +
                              "@p_DevaningNo, " +
                              "@p_ContainerNo, " +
                              "@p_Renban, " +
@@ -79,8 +79,8 @@ namespace prod.Master.DevaningModule
                              "@p_ActDevaningDate, " +
                              "@p_ActDevaningDateFinish, " +
                              "@p_DevaningType, " +
-                             "@p_DevaningStatus, " + 
-                             "@p_login_id"; 
+                             "@p_DevaningStatus, " +
+                             "@p_login_id";
                 var result = await _dapperRepo.QueryAsync<DevaningNewIdDto>(sql, new
                 {
                     p_DevaningNo = input.DevaningNo,
@@ -99,7 +99,7 @@ namespace prod.Master.DevaningModule
                 long p_id = result.FirstOrDefault()?.Id ?? 0;
                 return p_id;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -178,6 +178,19 @@ namespace prod.Master.DevaningModule
 
             IEnumerable<CoutPlanDvn> _result = await _dapperRepo.QueryAsync<CoutPlanDvn>(_sqlSearch, new { });
             return _result.ToList();
+        }
+
+        public async Task UpdateStatusToDevaning(long devaningId)
+        {
+            try
+            {
+                string sql = "Exec spUpdateStatusToDevaning @p_Id";
+                await _dapperRepo.ExecuteAsync(sql, new { p_Id = devaningId });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Không thể cập nhật trạng thái: " + ex.Message);
+            }
         }
     }
 }

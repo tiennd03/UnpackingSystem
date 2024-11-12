@@ -1,9 +1,12 @@
-import { Component, ElementRef, Inject, Injector, NgZone, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Inject, Injector, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { DevaningModuleServiceProxy } from '@shared/service-proxies/service-proxies';
+import { DevaningModuleDto, DevaningModuleServiceProxy } from '@shared/service-proxies/service-proxies';
+import { error } from 'console';
 import { result } from 'lodash-es';
+import { DateTime } from 'luxon';
 import { MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 
 
 @Component({
@@ -13,6 +16,7 @@ import { MessageService } from 'primeng/api';
     providers: [MessageService],
 })
 export class DevaningScreenComponent extends AppComponentBase implements OnInit {
+    @ViewChild('dt1') dt1: Table | undefined;
 
     // counT_DEVANING;
     // id;
@@ -181,30 +185,82 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
     //     }
     // }
 
+    rowSelection: DevaningModuleDto
+    cols: any[];
     devanedList;
     devaningList: {devaningId: any, renban: string, containerNo: string}[] = [];
-    readyList: {renban: string, containerNo: string}[] = [];
+    readyList: {devaningId: any, renban: string, containerNo: string, planDevaningDate: DateTime, devaningStatus: string}[] = [];
+    inProgressRecord;
 
     constructor(
         injector: Injector,
         private _service: DevaningModuleServiceProxy,
     ) {
         super(injector)
+        this.cols = [
+            { field: 'devaningId', header: 'ID' },
+            { field: 'renban', header: 'Renban' },
+            { field: 'containerNo', header: 'Container No' },
+            { field: 'planDevaningDate', header: 'Plan Devaning Date'},
+            { field: 'devaningStatus', header: 'Devaning Status' }
+        ];
+    }
+    filter(value: string, field: string): void {
+        if (this.dt1) {
+            this.dt1.filter(value, field, 'contains');
+        }
     }
 
     ngOnInit(): void {
-
+        this.getDevaningPlan()
     }
-    getDevaningPlan(){
+
+    getDevaningPlan() {
         this._service.getDevaningPlan()
         .subscribe((result) => {
             this.devaningList = result
-                .filter(item => item.devaningStatus ==='DEVANING')
-                .map(item => ({devaningId: item.id, renban: item.renban, containerNo: item.containerNo}));
+                .filter(item => item.devaningStatus === 'DEVANING')
+                .map(item => ({
+                    devaningId: item.id,
+                    renban: item.renban,
+                    containerNo: item.containerNo
+                }));
+
+            if (this.devaningList.length > 0) {
+                this.inProgressRecord = this.devaningList.reduce((min, item) =>
+                    item.devaningId < min.devaningId ? item : min, this.devaningList[0]);
+            }
 
             this.readyList = result
-                .filter(item => item.devaningStatus ==='READY')
-                .map(item => ({renban: item.renban, containerNo: item.containerNo}));
-        })
+                .filter(item => item.devaningStatus === 'READY')
+                .map(item => ({
+                    devaningId: item.id,
+                    renban: item.renban,
+                    containerNo: item.containerNo,
+                    planDevaningDate: item.planDevaningDate,
+                    devaningStatus: item.devaningStatus
+                }));
+        });
+    }
+
+    updateStatusToDevaning(devaningId: any) {
+        this._service.updateStatusToDevaning(devaningId)
+        .subscribe(() => {
+            this.getDevaningPlan();
+        }, (error) => {
+            console.error('Failed', error);
+        });
+    }
+
+    finishDevModule(id: number) {
+        this.message.confirm(this.l(''), 'FINISH CONTAINER CURRENT', (isConfirmed) => {
+            if (isConfirmed) {
+                this._service.finishDvnCont(id)
+                    .subscribe(() => {
+                        this.notify.success(this.l('FINISH Successfully '));
+                        this.getDevaningPlan();
+                    });
+            }
+        });
     }
 }
