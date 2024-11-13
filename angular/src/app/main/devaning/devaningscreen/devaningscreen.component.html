@@ -173,12 +173,12 @@
             <div class="plan_actual">
                 <p-progressBar [value]="progress" [showValue]="true"></p-progressBar>
             </div>
-
+        
             <div class="progress">
-                <div class="progress-item" >
-                    <div class="progress-item-detail"></div>
+                <div class="progress-item" *ngFor="let item of devaningList">
+                    <div class="progress-item-detail">{{ item.counT_DEVANING }}</div>
                     <div class="icon-status">
-                        <div class="icon-status-item" ></div>
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
                     </div>
                 </div>
             </div>
