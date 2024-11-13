@@ -233,7 +233,7 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
                     devaningId: item.id,
                     renban: item.renban,
                     containerNo: item.containerNo,
-                    actDevaningDate: item.actDevaningDate
+                    actDevaningDate: item.actDevaningDate,
                 }));
 
             if (this.devaningList.length > 0) {
