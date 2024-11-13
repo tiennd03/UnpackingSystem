@@ -101,7 +101,7 @@
             [(selection)]="rowSelection"
             [resizableColumns]="true"
             [scrollable]="true"
-            scrollHeight="150px"
+            scrollHeight="174px"
             [virtualScrollItemSize]="50"
             [globalFilterFields]="['devaningId','renban','containerNo']">
 
@@ -153,10 +153,10 @@
                 <div class="card-content-inprogress">
                     <div class="card-title">IN PROGRESS</div>
                     <div class="card-description">
-                        Renban: {{ inProgressRecord.renban }}
+                        <p><strong>Renban:</strong> {{ inProgressRecord?.renban }}</p>
                     </div>
                     <div class="card-description">
-                        Container No: {{ inProgressRecord.containerNo }}
+                        <p><strong>Container No:</strong> {{ inProgressRecord?.containerNo }}</p>
                     </div>
                 </div>
             </div>
@@ -165,15 +165,13 @@
                 <div class="background-overlay-finish" (click)="finishDevModule(inProgressRecord.devaningId)"></div>
                 <div class="card-content-finish">
                     <div class="card-title">FINISH</div>
-                    <div class="card-description"></div>
-                    <div class="card-description"></div>
                 </div>
             </div>
         </div>
 
-        <div class="fotter content">
+        <div class="footer content">
             <div class="plan_actual">
-                <p-progressBar></p-progressBar>
+                <p-progressBar [value]="progress" [showValue]="true"></p-progressBar>
             </div>
 
             <div class="progress">
@@ -187,3 +185,6 @@
         </div>
     </div>
 </div>
+
+<p-confirmDialog [style]="{width: '50vw'}" key="CompletionDialog" [baseZIndex]="10000"></p-confirmDialog>
+<p-toast></p-toast>
