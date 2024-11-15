@@ -13977,6 +13977,101 @@ export class UiCustomizationSettingsServiceProxy {
 }
 
 @Injectable()
+export class UnpackingServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param moduleNo (optional) 
+     * @param devaningNo (optional) 
+     * @param renban (optional) 
+     * @param supplier (optional) 
+     * @param moduleStatus (optional) 
+     * @return Success
+     */
+    getAll(moduleNo: string | undefined, devaningNo: string | undefined, renban: string | undefined, supplier: string | undefined, moduleStatus: string | undefined): Observable<UnpackingDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Unpacking/GetAll?";
+        if (moduleNo === null)
+            throw new Error("The parameter 'moduleNo' cannot be null.");
+        else if (moduleNo !== undefined)
+            url_ += "ModuleNo=" + encodeURIComponent("" + moduleNo) + "&";
+        if (devaningNo === null)
+            throw new Error("The parameter 'devaningNo' cannot be null.");
+        else if (devaningNo !== undefined)
+            url_ += "DevaningNo=" + encodeURIComponent("" + devaningNo) + "&";
+        if (renban === null)
+            throw new Error("The parameter 'renban' cannot be null.");
+        else if (renban !== undefined)
+            url_ += "Renban=" + encodeURIComponent("" + renban) + "&";
+        if (supplier === null)
+            throw new Error("The parameter 'supplier' cannot be null.");
+        else if (supplier !== undefined)
+            url_ += "Supplier=" + encodeURIComponent("" + supplier) + "&";
+        if (moduleStatus === null)
+            throw new Error("The parameter 'moduleStatus' cannot be null.");
+        else if (moduleStatus !== undefined)
+            url_ += "ModuleStatus=" + encodeURIComponent("" + moduleStatus) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<UnpackingDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<UnpackingDto[]>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<UnpackingDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UnpackingDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class UserServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -29316,6 +29411,74 @@ export class UnlinkUserInput implements IUnlinkUserInput {
 export interface IUnlinkUserInput {
     tenantId: number | undefined;
     userId: number;
+}
+
+export class UnpackingDto implements IUnpackingDto {
+    moduleNo!: string | undefined;
+    devaningNo!: string | undefined;
+    renban!: string | undefined;
+    supplier!: string | undefined;
+    planUnpackingDate!: DateTime | undefined;
+    actUnpackingDate!: DateTime | undefined;
+    actUnpackingDateFinish!: DateTime | undefined;
+    moduleStatus!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: IUnpackingDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.moduleNo = _data["moduleNo"];
+            this.devaningNo = _data["devaningNo"];
+            this.renban = _data["renban"];
+            this.supplier = _data["supplier"];
+            this.planUnpackingDate = _data["planUnpackingDate"] ? DateTime.fromISO(_data["planUnpackingDate"].toString()) : <any>undefined;
+            this.actUnpackingDate = _data["actUnpackingDate"] ? DateTime.fromISO(_data["actUnpackingDate"].toString()) : <any>undefined;
+            this.actUnpackingDateFinish = _data["actUnpackingDateFinish"] ? DateTime.fromISO(_data["actUnpackingDateFinish"].toString()) : <any>undefined;
+            this.moduleStatus = _data["moduleStatus"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UnpackingDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UnpackingDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["moduleNo"] = this.moduleNo;
+        data["devaningNo"] = this.devaningNo;
+        data["renban"] = this.renban;
+        data["supplier"] = this.supplier;
+        data["planUnpackingDate"] = this.planUnpackingDate ? this.planUnpackingDate.toString() : <any>undefined;
+        data["actUnpackingDate"] = this.actUnpackingDate ? this.actUnpackingDate.toString() : <any>undefined;
+        data["actUnpackingDateFinish"] = this.actUnpackingDateFinish ? this.actUnpackingDateFinish.toString() : <any>undefined;
+        data["moduleStatus"] = this.moduleStatus;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IUnpackingDto {
+    moduleNo: string | undefined;
+    devaningNo: string | undefined;
+    renban: string | undefined;
+    supplier: string | undefined;
+    planUnpackingDate: DateTime | undefined;
+    actUnpackingDate: DateTime | undefined;
+    actUnpackingDateFinish: DateTime | undefined;
+    moduleStatus: string | undefined;
+    id: number | undefined;
 }
 
 export class UpdateEditionDto implements IUpdateEditionDto {

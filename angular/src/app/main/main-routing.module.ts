@@ -18,8 +18,18 @@ import { RouterModule } from '@angular/router';
                         data: { permission: 'Pages.UPS' }
                     },
                     {
-                        path: 'tesstmanhinh',
-                        loadChildren: () => import('./tesstmanhinh/tesstmanhinh.module').then(m => m.TesstmanhinhModule),
+                        path: 'unpacking',
+                        loadChildren: () => import('./unpacking/unpacking.module').then(m => m.UnpackingModule),
+                        // data: { permission: 'Pages.UPS' }
+                    },
+                    {
+                        path: 'pc',
+                        loadChildren: () => import('./pc/pc.module').then(m => m.PcModule),
+                        // data: { permission: 'Pages.UPS' }
+                    },
+                    {
+                        path: 'robing',
+                        loadChildren: () => import('./robing/robing.module').then(m => m.RobingModule),
                         // data: { permission: 'Pages.UPS' }
                     },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
