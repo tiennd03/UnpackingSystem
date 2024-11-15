@@ -1,14 +1,14 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FilebentrongComponent } from './filebentrong.component';
+import { RobingComponent } from './robing.component';
 
 const routes: Routes = [
     {
         path: '',
         children: [
             {
-                path: 'filebentrong',
-                component: FilebentrongComponent,
+                path: 'robing',
+                component: RobingComponent,
                 data: {
                     // permission: 'Pages.GHS.Approval'
                 }
@@ -21,4 +21,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class FilebentrongRoutingModule {}
+export class RobingRoutingModule {}

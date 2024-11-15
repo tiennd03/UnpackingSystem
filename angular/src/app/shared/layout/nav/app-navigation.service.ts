@@ -20,19 +20,33 @@ export class AppNavigationService {
                 'flaticon-line-graph',
                 '/app/admin/hostDashboard'
             ),
-            // new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
-            new AppMenuItem('UnPackingSystem', 'Pages.UPS', 'flaticon-interface-8', '', [], [
-                // new AppMenuItem(
-                //     'Dashboard',
-                //     '',
-                //     'flaticon-line-graph',
-                //     '/app/main/dashboard'
-                // ),
-                new AppMenuItem('Devaning Container', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningcont/devaningcont'),///app/main/devaning/ups-devaning/devaningcont
-                new AppMenuItem('Devaning Screen', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningscreen/devaningscreen'),
 
-                new AppMenuItem('tesstmanhinh', '', 'flaticon-book', '/app/main/tesstmanhinh/filebentrong/filebentrong'),///app/main/devaning/ups-devaning/devaningcont
+            new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
+
+            new AppMenuItem('Devaning', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+
+                new AppMenuItem('Devaning Container', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningcont/devaningcont'),
+                new AppMenuItem('Devaning Screen', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningscreen/devaningscreen'),
             ]),
+
+            new AppMenuItem('Unpacking', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+
+                new AppMenuItem('Unpacking Lot', '', 'flaticon-book', '/app/main/unpacking/unpackinglot/unpackinglot'),
+                new AppMenuItem('Unpacking Partlist', '', 'flaticon-book', '/app/main/unpacking/unpackingpartlist/unpackingpartlist'),
+                new AppMenuItem('Unpacking Screen', '', 'flaticon-book', '/app/main/unpacking/unpackingscreen/unpackingscreen'),
+            ]),
+
+            new AppMenuItem('Robing', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+
+                new AppMenuItem('Robing', '', 'flaticon-book', '/app/main/robing/robing/robing'),
+            ]),
+
+            new AppMenuItem('Pc', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+
+                new AppMenuItem('Pc Home', '', 'flaticon-book', '/app/main/pc/pchome/pchome'),
+                new AppMenuItem('Pc store', '', 'flaticon-book', '/app/main/pc/pcstore/pcstore'),
+            ]),
+
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(

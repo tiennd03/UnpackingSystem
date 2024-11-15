@@ -39,7 +39,7 @@ export class CreateOrEditDevaningContComponent extends AppComponentBase {
         super(injector);
 
         this.suppliers = [
-            { label: 'TMV', value: 'TMV' },
+            { label: 'TMT', value: 'TMT' },
             { label: 'TMI', value: 'TMI' },
         ];
 
