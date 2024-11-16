@@ -1,2 +1,64 @@
-<!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
- <h1>file ben trong 1</h1>
+<div class="container">
+    <div class="unpackinglot">
+        <p-table #dt1
+            [value]="listUnpackingpartlist"
+            dataKey="id"
+            [rowHover]="true"
+            [rowsPerPageOptions]="[10,25,5000]"
+            [rows]="10"
+            [paginator]="true"
+            [metaKeySelection]="false"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" [(selection)]="rowSelection" [resizableColumns]="true"
+            [globalFilterFields]="['partNo','moduleNo','renban','partName', 'supplier', 'status']">
+
+            <ng-template pTemplate="caption">
+                <div class="d-flex justify-between align-items-center">
+                    <h3 class="m-0">UNPACKING PARTLIST</h3>
+                    <div class="search-option">
+                        <p-dropdown
+                            [options]="searchFields"
+                            [(ngModel)]="selectedField"
+                            placeholder="Search by"
+                            (onChange)="onSearch(searchValue)">
+                        </p-dropdown>
+
+                        <div class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                [(ngModel)]="searchValue"
+                                (input)="onSearch(searchValue)"
+                                placeholder="Search..."
+                                [disabled]="!selectedField"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn class="column-border-right">
+                        <div class="flex justify-content-center align-items-center">
+                            {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pContextMenuRow]="rowData" [pSelectableRow]="rowData">
+                    <td *ngFor="let col of cols" [ngClass]="col.field === 'status' ? getStatusBackgroundClass(rowData[col.field]) : ''">
+                            {{ rowData[col.field] }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <p-toolbar class="flex-center">
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-button-rounded mr-2"></button>
+        </p-toolbar>
+
+    </div>
+</div>

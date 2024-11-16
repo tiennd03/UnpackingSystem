@@ -36,6 +36,10 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     currentTab: string = 'New';
     selected;
 
+    searchFields;
+    selectedField: string;
+    searchValue: string = '';
+
     constructor(
         injector: Injector,
         private devaningService: DevaningModuleServiceProxy,
@@ -58,6 +62,16 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
             // { field: 'actDevaningDateFinish', header: 'Activity Devaning Date Finish' },
             { field: 'devaningType', header: 'Devaning Type' },
             { field: 'devaningStatus', header: 'Devaning Status' },
+        ];
+
+        this.searchFields = [
+            { label: 'All', value: '' },
+            { label: 'Devaning No', value: 'devaningNo' },
+            { label: 'Container No', value: 'containerNo' },
+            { label: 'Renban', value: 'renban' },
+            { label: 'Supplier No', value: 'suppilerNo' },
+            { label: 'Shift No', value: 'shiftNo' },
+            { label: 'Devaning Status', value: 'devaningStatus' }
         ];
     }
     filter(value: string, field: string): void {
@@ -96,6 +110,14 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
                 this.loading = false;
             }
         );
+    }
+
+    onSearch(value: string): void {
+        if (this.selectedField === '') {
+            this.dt1.clear();
+        } else {
+            this.dt1.filter(value, this.selectedField, 'contains');
+        }
     }
 
     clear(table: Table) {

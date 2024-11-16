@@ -39,18 +39,31 @@
             [contextMenu]="contextMenu"
             [(contextMenuSelection)]="contextMenuSelection"
             [resizableColumns]="true"
-            [globalFilterFields]="['devaningNo','containerNo','renban','suppilerNo', 'shiftNo']">
+            [globalFilterFields]="['devaningNo','containerNo','renban','suppilerNo', 'shiftNo', 'devaningStatus']">
 
             <ng-template pTemplate="caption">
-                <div class="d-flex justify-between">
-                    <h3 class="m-0">Manage Products</h3>
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input
-                            pInputText type="text"
-                            (input)="dt1.filterGlobal($event.target.value, 'contains')"
-                            placeholder="Search..." />
-                    </span>
+                <div class="d-flex justify-between align-items-center">
+                    <h3 class="m-0">NEW DEVANING</h3>
+                    <div class="search-option">
+                        <p-dropdown
+                            [options]="searchFields"
+                            [(ngModel)]="selectedField"
+                            placeholder="Search by"
+                            (onChange)="onSearch(searchValue)">
+                        </p-dropdown>
+
+                        <div class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                [(ngModel)]="searchValue"
+                                (input)="onSearch(searchValue)"
+                                placeholder="Search..."
+                                [disabled]="!selectedField"
+                            />
+                        </div>
+                    </div>
                 </div>
             </ng-template>
 
@@ -92,13 +105,13 @@
         <p-toast></p-toast>
         <p-toolbar styleClass="mb-4 gap-2">
             <ng-template pTemplate="left">
-                <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="showDialog()"></button>
-                <button pButton pRipple  icon="pi pi-trash" class="p-button-danger" ></button>
+                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="showDialog()">&nbsp;{{'New' | localize}}</button>
+                <button pButton pRipple  icon="pi pi-trash" class="p-button-danger p-button-rounded mr-2" ></button>
             </ng-template>
 
             <ng-template pTemplate="right">
                 <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-                <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+                <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-button-rounded mr-2"></button>
             </ng-template>
         </p-toolbar>
     </div>
