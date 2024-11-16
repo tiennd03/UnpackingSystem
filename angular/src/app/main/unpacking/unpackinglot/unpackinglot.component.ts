@@ -19,11 +19,15 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
     columns;
     cols: any[];
 
-    moduleNo
-    devaningNo
-    renban
-    supplier
-    moduleStatus
+    moduleNo;
+    devaningNo;
+    renban;
+    supplier;
+    moduleStatus;
+
+    searchFields;
+    selectedField: string;
+    searchValue: string = '';
 
     constructor(
         injector: Injector,
@@ -40,6 +44,16 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
             { field: 'actUnpackingDateFinish', header: 'Act Unpacking Date Finish' },
             { field: 'moduleStatus', header: 'Module Status' },
         ]
+
+        this.searchFields = [
+            { label: 'All', value: '' },
+            { label: 'Devaning No', value: 'devaningNo' },
+            { label: 'Module No', value: 'moduleNo' },
+            { label: 'Renban', value: 'renban' },
+            { label: 'Supplier', value: 'supplier' },
+            { label: 'Module Status', value: 'moduleStatus' }
+        ];
+
     }
     ngOnInit(): void {
         this.loading = true;
@@ -63,6 +77,14 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
         })
     }
 
+    onSearch(value: string): void {
+        if (this.selectedField === '') {
+            this.dt1.clear();
+        } else {
+            this.dt1.filter(value, this.selectedField, 'contains');
+        }
+    }
+
     clearTextSearch (table: Table) {
         table.clear();
     }
@@ -72,6 +94,8 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
             return 'UPK';
         } else if (status === 'FINISH') {
             return 'FINISH';
+        } else if (status === 'READY') {
+            return 'READY';
         }
     }
 }
