@@ -1,0 +1,78 @@
+:host ::ng-deep {
+    .modal-dialog {
+        // font-family: 'Font Awesome 5 Free'
+    }
+
+    .modal-title {
+        font-weight: 900;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .modal .modal-content .modal-header .modal-title {
+            font-size: 2rem;
+            font-weight: 900 !important;
+        }
+    }
+
+    .modal-content {
+        border: none !important;
+    }
+
+    .form-group {
+        margin-bottom: 0 !important;
+    }
+
+    .title {
+        //background-color: #7c8cf5;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .modal-footer-action {
+        text-align: right;
+        padding: 0 1.25rem 0 1.25rem;
+
+        .btn {
+            width: 100px;
+            height: 100%;
+        }
+    }
+}
+
+.input-description {}
+
+label {
+    font-weight: 700;
+}
+
+.robing-type {
+    height: 100px;
+
+    .rb-type {
+        width: calc(99% / 2);
+        flex-direction: column;
+        //border: 1px solid gray;
+        cursor: pointer;
+
+        .fail-title {
+            color: gray;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.active {
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 5px;
+
+    .fail-title {
+        color: rgb(25, 112, 224) !important;
+    }
+}

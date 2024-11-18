@@ -1,0 +1,49 @@
+<div class="modal-dialog modal-lg" role="dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="header-title">Add robing</h2>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 d-flex justify-content-between">
+                <div class="col-md-6 form-group pl-0 pr-1">
+                    <label class="title">Part Name</label>
+                    <input type="text" class="form-control input-text" name="partName" [(ngModel)]="partName" readonly/>
+                </div>
+                <div class="col-md-6 form-group pr-0 pl-1">
+                    <label class="title">Supplier</label>
+                    <input type="text" class="form-control input-text" name="supplier"  [(ngModel)]="supplier" readonly/>
+                </div>
+            </div>
+            <div class="col-md-12 form-group mt-2">
+                <label class="title">Description</label>
+                 <input type="text" class="form-control input-text input-description" name="description" placeholder="Type your robing part" [(ngModel)]="description"/>
+            </div>
+            <div class="col-md-12 form-group mt-2">
+                <label class="title">Choose type Robing</label>
+                <div class="robing-type w-50 d-flex justify-content-around">
+                    <div class="robing-type-fail rb-type FAILD h-100 d-flex justify-content-center align-items-center" (click)="setTypeRobing('FAILD')">
+                        <div class="fail-icon h-50">
+                            <img src="/assets/common/images/fail-part.png" class="icon h-100" />
+                        </div>
+                        <div class="fail-title">
+                            <p>Fail</p>
+                        </div>
+                    </div>
+                    <div class="robing-type-loan rb-type LOAN h-100 d-flex justify-content-center align-items-center" (click)="setTypeRobing('LOAN')">
+                        <div class="fail-icon h-50">
+                            <img src="/assets/common/images/loan-part.png" class="icon h-100" />
+                        </div>
+                        <div class="fail-title">
+                            <p>Loan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer-action">
+            <button type="button" class="btn btn-success" [disabled]="disabled" (click)=" commit()">Commit</button>
+            <button type="button" class="btn btn-primary" (click)=" closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+

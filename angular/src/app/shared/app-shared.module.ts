@@ -40,6 +40,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {ToolbarModule} from 'primeng/toolbar';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 
 
 const imports = [
@@ -85,6 +86,7 @@ const imports = [
     SkeletonModule,
     DropdownModule,
     ToolbarModule,
+    DialogModule
 
 ];
 
