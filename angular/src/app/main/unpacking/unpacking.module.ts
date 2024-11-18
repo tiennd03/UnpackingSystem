@@ -5,7 +5,6 @@ import { UnpackingRoutingModule } from './unpacking-routing.module';
 import { CustomizableDashboardModule } from '@app/shared/common/customizable-dashboard/customizable-dashboard.module';
 
 @NgModule({
-    imports: [AppSharedModule, AdminSharedModule,
-        CustomizableDashboardModule, UnpackingRoutingModule],
+    imports: [AppSharedModule, UnpackingRoutingModule],
 })
 export class UnpackingModule {}

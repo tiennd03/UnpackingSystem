@@ -14367,6 +14367,88 @@ export class UnpackingServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param id (optional) 
+     * @param partNo (optional) 
+     * @param partName (optional) 
+     * @param supplier (optional) 
+     * @param moduleNo (optional) 
+     * @param type (optional) 
+     * @param description (optional) 
+     * @return Success
+     */
+    addPartToRobbing(id: number | undefined, partNo: string | undefined, partName: string | undefined, supplier: string | undefined, moduleNo: string | undefined, type: string | undefined, description: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Unpacking/AddPartToRobbing?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        if (partNo === null)
+            throw new Error("The parameter 'partNo' cannot be null.");
+        else if (partNo !== undefined)
+            url_ += "PartNo=" + encodeURIComponent("" + partNo) + "&";
+        if (partName === null)
+            throw new Error("The parameter 'partName' cannot be null.");
+        else if (partName !== undefined)
+            url_ += "PartName=" + encodeURIComponent("" + partName) + "&";
+        if (supplier === null)
+            throw new Error("The parameter 'supplier' cannot be null.");
+        else if (supplier !== undefined)
+            url_ += "Supplier=" + encodeURIComponent("" + supplier) + "&";
+        if (moduleNo === null)
+            throw new Error("The parameter 'moduleNo' cannot be null.");
+        else if (moduleNo !== undefined)
+            url_ += "ModuleNo=" + encodeURIComponent("" + moduleNo) + "&";
+        if (type === null)
+            throw new Error("The parameter 'type' cannot be null.");
+        else if (type !== undefined)
+            url_ += "Type=" + encodeURIComponent("" + type) + "&";
+        if (description === null)
+            throw new Error("The parameter 'description' cannot be null.");
+        else if (description !== undefined)
+            url_ += "Description=" + encodeURIComponent("" + description) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddPartToRobbing(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddPartToRobbing(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processAddPartToRobbing(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()

@@ -1,111 +1,87 @@
-<!--
 <div class="container">
     <div class="unpackingscreen">
         <p-table #dt1
-            [value]="listPartInModule"
-            dataKey="id"
-            [rowHover]="true"
-            [rows]="10"
-            [metaKeySelection]="false"
-            [(selection)]="rowSelection"
-            [resizableColumns]="true"
-            [scrollable]="true"
-            scrollHeight="174px"
-            [virtualScrollItemSize]="50"
-            [globalFilterFields]="['devaningId','renban','containerNo']">
+        [value]="listPartInModule"
+        dataKey="id"
+        [rowHover]="true"
+        [rows]="10"
+        [metaKeySelection]="false"
+        [(selection)]="rowSelection"
+        [resizableColumns]="true"
+        [scrollable]="true"
+        scrollHeight="174px"
+        [virtualScrollItemSize]="50"
+        [globalFilterFields]="['devaningId','renban','containerNo']">
 
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 4rem">
-                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    </th>
-                    <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn
-                        class="column-border-right">
-                        <div class="flex justify-content-center align-items-center">
-                            {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="flex justify-content-center align-items-center">
-                            <span class="p-input-icon-left ml-auto">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" [placeholder]="l('Search')" />
-                            </span>
-                        </div>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr [pSelectableRow]="rowData">
-                    <td pFrozenColumn>
-                        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-                    </td>
-                    <td *ngFor="let col of cols">
-                        <ng-container *ngIf="col.field === 'planDevaningDate'">
-                            {{ rowData[col.field] | date:'dd/MM/yyyy' }}
-                        </ng-container>
-                        <ng-container *ngIf="col.field !== 'planDevaningDate'">
-                            {{ rowData[col.field] }}
-                        </ng-container>
-                    </td>
-                    <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-
-        <div class="card-container flex-center col-6">
-            <div class="unique-card">
-                <div class="background-overlay-inprogress"></div>
-                <div class="card-content-inprogress">
-                    <div class="card-title">UNPACKING PLAN</div>
-                    <div class="card-description">
-                        <p><strong>{{moduleFinish}} / {{moduleActual}}</strong></p>
+        <ng-template pTemplate="header">
+            <tr>
+                <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn
+                    class="column-border-right">
+                    <div class="flex justify-content-center align-items-center">
+                        {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
                     </div>
-                </div>
-            </div>
-
-            <div class="unique-card">
-                <div class="background-overlay-finish" (click)=" finishUpkModule(moduleNoCurrent)"></div>
-                <div class="card-content-finish">
-                    <div class="card-title">FINISH</div>
+                </th>
+                <th>
+                    <div class="flex justify-content-center align-items-center">
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" [placeholder]="l('Search')" />
+                        </span>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData" [ngClass]="getStatusBackgroundClass(rowData.status)">
+                <td *ngFor="let col of cols">
+                    {{ rowData[col.field] }}
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-exclamation-circle" class="p-button-rounded p-button-danger mr-2"
+                            label="Robing" (click)="addrobing(rowData)"
+                            *ngIf="rowData.status === 'READY' || rowData.status === 'START'"></button>
+                    <button pButton pRipple icon="pi pi-check-circle" class="p-button-rounded p-button-success mr-2"
+                            label="Finish" (click)="finishPart(rowData)"
+                            *ngIf="rowData.status === 'READY' || rowData.status === 'START'"></button>
+                    <div *ngIf="rowData.status === 'FINISH' || rowData.status === 'ROBING'">
+                        DONE
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="card-container flex-center col-6">
+        <div class="unique-card">
+            <div class="background-overlay-inprogress"></div>
+            <div class="card-content-inprogress">
+                <div class="card-title">UNPACKING PLAN</div>
+                <div class="card-description">
+                    <p><strong>{{moduleFinish}} / {{moduleActual}}</strong></p>
                 </div>
             </div>
         </div>
 
-        <div class="footer content">
-            <div class="plan_actual">
-                <p-progressBar [value]="progress" [showValue]="true"></p-progressBar>
-            </div>
-
-            <div class="progress">
-                <div class="progress-item" *ngFor="let item of devanedList">
-                    <div class="progress-item-detail" [ngClass]="{
-                        'devaning-status': item.devaningStatus === 'DEVANING',
-                        'devaned-status': item.devaningStatus === 'DEVANED'}">
-                        <label for="containerNo">Container No: {{ item.containerNo }}</label>
-                        <label for="containerNo">Start: {{ item.actDevaningDate | date: 'dd/MM/yyyy HH:mm' }}</label>
-                        <label for="actDevaningDateFinish">Finish: {{ item.actDevaningDateFinish | date: 'dd/MM/yyyy HH:mm' }}</label>
-                    </div>
-                    <div class="icon-status">
-                        <ng-container *ngIf="item.devaningStatus === 'DEVANING'">
-                            <p-progressSpinner [style]="{width: '40px', height: '40px'}"
-                                               styleClass="custom-spinner"
-                                               strokeWidth="8"
-                                               fill="var(--surface-ground)"
-                                               animationDuration=".5s"></p-progressSpinner>
-                        </ng-container>
-                        <ng-container *ngIf="item.devaningStatus === 'DEVANED'">
-                            <i class="pi pi-check-circle" style="font-size: 2.5rem; color: green;"></i>
-                        </ng-container>
-                    </div>
-                </div>
+        <div class="unique-card">
+            <div class="background-overlay-finish" (click)=" finishUpkModule(moduleNoCurrent)"></div>
+            <div class="card-content-finish">
+                <div class="card-title">FINISH</div>
             </div>
         </div>
     </div>
+
+    <div class="footer content">
+        <div class="backno backno-current">
+            <div class="backno-name">Actual</div>
+            <div class="backno-value">{{partStatus}}/{{partCurrent}}</div>
+        </div>
+        <div class="backno backno-status">
+            <div class="backno-status-value" [ngClass]="checkStatusModule(moduleNoStatus)">{{moduleNoStatus}}
+            </div>
+        </div>
+        <div class="backno backno-current">
+            <div class="abc">L1-ABC123</div>
+        </div>
+    </div>
+    </div>
 </div>
 
-<p-confirmDialog [style]="{width: '50vw'}" key="CompletionDialog" [baseZIndex]="10000"></p-confirmDialog>
-<p-toast></p-toast> -->

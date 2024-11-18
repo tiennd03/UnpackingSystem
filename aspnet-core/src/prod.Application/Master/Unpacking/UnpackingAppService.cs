@@ -80,6 +80,7 @@ namespace prod.Master.Unpacking
             string _sql = "Exec FINISH_MODULE @ModuleNo";
             await _dapperRepo.QueryAsync<LupContModule>(_sql, new { ModuleNo = module_no });
         }
+
         public async Task FinishPart(long? id)
         {
             string sql = "UPDATE Part SET Status = 'FINISH' WHERE id = @Id";
@@ -88,6 +89,21 @@ namespace prod.Master.Unpacking
                 Id = id
             }); ;
 
+        }
+
+        public async Task AddPartToRobbing(long Id, string PartNo, string PartName, string Supplier, string ModuleNo, string Type, string Description)
+        {
+            string _sql = "Exec ADD_PART_TO_ROBBING @p_id ,@p_partNo ,@p_partName,@p_supplier ,@p_moduleNo,@p_type ,@p_description";
+            await _dapperRepo.QueryAsync<LupContModule>(_sql, new
+            {
+                p_id = Id,
+                p_partNo = PartNo,
+                p_partName = PartName,
+                p_supplier = Supplier,
+                p_moduleNo = ModuleNo,
+                p_type = Type,
+                p_description = Description,
+            });
         }
 
     }
