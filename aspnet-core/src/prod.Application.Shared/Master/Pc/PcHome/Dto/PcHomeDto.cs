@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace prod.Master.Pc.PcHome.Dto
+namespace prod.Master.Pc
 {
     public class PcHomeDto : Entity<long>
     {

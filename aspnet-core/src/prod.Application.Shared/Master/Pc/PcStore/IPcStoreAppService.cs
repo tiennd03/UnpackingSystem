@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace prod.Master.Pc.PcStore
+namespace prod.Master.Pc
 {
     public interface IPcStoreAppService : IApplicationService
     {
