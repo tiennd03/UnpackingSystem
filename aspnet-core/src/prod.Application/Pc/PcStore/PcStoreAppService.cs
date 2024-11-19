@@ -8,26 +8,27 @@ using System.Threading.Tasks;
 
 namespace prod.Master.Pc
 {
-    public class PcHomeAppService : prodAppServiceBase, IPcHomeAppService
+    public class PcStoreAppService : prodAppServiceBase, IPcStoreAppService
     {
-        private readonly IRepository<PcHome, long> _repo;
-        public PcHomeAppService(IRepository<PcHome, long> repo)
+        private readonly IRepository<PcStore, long> _repo;
+        public PcStoreAppService(IRepository<PcStore, long> repo)
         {
             _repo = repo;
         }
 
-        public async Task<List<PcHomeDto>> GetAll(PcHomeInputDto input)
+        public async Task<List<PcStoreDto>> GetAll(PcStoreInputDto input)
         {
             var query = _repo.GetAll().AsNoTracking()
                 .Where(e => string.IsNullOrWhiteSpace(input.PartNo) || e.PartNo.Contains(input.PartNo))
-                .Select(PcHome => new PcHomeDto
+                .Select(PcStore => new PcStoreDto
                 {
-                    Id = PcHome.Id,
-                    PartNo = PcHome.PartNo,
-                    PartName = PcHome.PartName,
+                    Id = PcStore.Id,
+                    PartNo = PcStore.PartNo,
+                    PartName = PcStore.PartName,
                 });
 
             return await query.ToListAsync();
         }
     }
 }
+

@@ -1,6 +1,5 @@
 ﻿using Abp.Application.Services;
 using prod.Dto;
-using prod.Master.Pc.PcStore.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +10,7 @@ namespace prod.Master.Pc
     public interface IPcStoreAppService : IApplicationService
     {
         Task<List<PcStoreDto>> GetAll(PcStoreInputDto input);
-        Task<FileDto> GetPcStoreToExcel(PcStoreInputDto input);
+        //Task<FileDto> GetPcStoreToExcel(PcStoreInputDto input);
 
     }
 }

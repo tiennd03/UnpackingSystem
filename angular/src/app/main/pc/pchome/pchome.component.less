@@ -1,0 +1,213 @@
+@radius: 5px;
+@shadow : rgba(0, 0, 0, 0.16) 0px 1px 4px;
+@radiusMain: 20px;
+@radiusChild: 10px;
+@padding: 10px;
+
+.pcstore-container {
+    overflow: hidden;
+    background-color: white;
+    height: calc(88vh - 1.5rem); // 58.13px = 47.5px(height tab) + 10px(margin bottom tab)
+    background-color: white;
+    padding: 20px;
+    border-radius: @radiusMain;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    >div {
+        width: 100%;
+    }
+
+    .pcstore-header {
+        height: 20%;
+        background-color: #313942;
+
+        >div {
+            width: 50%;
+            height: 100%;
+        }
+
+        .header-name {
+            .name-screen {
+                width: 70%;
+                height: 80%;
+                color: rgb(196, 243, 195);
+                font-weight: 800;
+                font-size: 3rem;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+        }
+
+        .header-data {
+
+            justify-content: space-around;
+
+            .data-total {
+                width: 100%;
+                height: 100%;
+                flex-direction: column;
+
+                .icon-data,
+                .icon {
+                    height: 60%;
+                }
+
+                h3,
+                p {
+                    color: white;
+                    height: 20%;
+                    margin-bottom: 0 !important;
+                    font-family: Amasis MT Pro Medium;
+                }
+
+                h3 {
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                }
+
+                p {
+                    font-size: 1.3rem;
+                }
+            }
+        }
+    }
+
+    .pcstore-body {
+        height: 80%;
+
+        >div {
+            width: calc(100%/2);
+            height: 100%;
+        }
+
+        .img-warehouse {
+            .logo-warehouse {
+                height: 100%;
+            }
+        }
+    }
+
+    .pcstore-table-data {
+        flex-direction: column;
+        .input-search {
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 40px;
+    
+            .input-search-robing {
+                border: 0;
+                border-radius: 10px;
+                box-shadow: @shadow;
+                padding-left: 15px;
+            }
+    
+            .input-search-robing:focus {
+                border: 1px solid #55b1e2;
+                outline: rgb(161, 161, 161);
+            }
+    
+            .input-search-btn {
+                position: absolute;
+                border: 0;
+                border-radius: 5px;
+                background-color: #646c9a;
+                width: 30px;
+                height: 30px;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+                transition: transform 0.1s;
+    
+                i {
+                    color: white;
+                }
+            }
+    
+            .btn-search {
+                right: 55px;
+    
+            }
+    
+            .btn-clear {
+                right: 15px;
+            }
+    
+            .input-search-btn:hover {
+                transform: scale(1.1);
+            }
+        }
+        .card {
+            width: 90%;
+            height: 66%;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        }
+    }
+}
+
+.pcstore-body,
+.pcstore-header,
+.name-screen,
+.pcstore-table-data,
+.header-data,
+.data-total,
+.icon-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pcstore-table {
+    .table-header {
+        height: 40px;
+        border-radius: @radius;
+        box-shadow: @shadow;
+        background-color: rgba(208, 208, 208, 0.75);
+
+        .header-title {
+            // width: calc(100%/2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #646c9a;
+            font-weight: 900;
+            border-right: 1px solid #efefef;
+        }
+
+        .header-title:last-child {
+            border-right: 0;
+        }
+    }
+
+    .table-body {
+        background-color: white;
+        height: 90%;
+        border-radius: @radius;
+        box-shadow: @shadow;
+        overflow-y: auto;
+
+
+
+        .list-item {
+            height: 40px;
+            border-bottom: 1px solid #efefef;
+
+            .body-content {
+                // width: calc(100%/2);
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: black;
+                border-right: 1px solid #efefef;
+            }
+        }
+
+        .list-item:hover {
+            background-color: #55b1e2;
+            color: white;
+            cursor: pointer;
+        }
+    }
+    .table-body::-webkit-scrollbar {
+        display: none;
+    }
+}

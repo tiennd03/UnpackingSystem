@@ -1,2 +1,61 @@
-<!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
- <h1>file ben tronggggggg</h1>
+<div class="pcstore-container">
+    <div class="pcstore-header">
+        <div class="header-name">
+            <div class="name-screen">
+                PC-STORE
+            </div>
+        </div>
+        <div class="header-data">
+            <div class="data-total part">
+                <div class="icon-data">
+                    <img src="/assets/common/images/part.png" class="icon" />
+                </div>
+                <h3>{{totalPart}}</h3>
+                <p>Total Part</p>
+            </div>
+            <div class="data-total lot">
+                <div class="icon-data">
+                    <img src="/assets/common/images/lot.png" class="icon" />
+                </div>
+                <h3>{{totalLot}}</h3>
+                <p>LOT</p>
+            </div>
+        </div>
+    </div>
+    <div class="pcstore-body">
+        <div class="img-warehouse">
+            <img src="/assets/common/images/pcstore.jpg" class="logo-warehouse" />
+        </div>
+        <div class="pcstore-table-data">
+            <div class="input-search w-100 position-relative mr-5 mb-2">
+                <input type="text" class="w-100 h-100 input-search-robing" placeholder="Search Item" [(ngModel)]="partNo">
+                <button class="input-search-btn btn-search" (click)="searchOrClear()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="input-search-btn btn-clear" (click)="searchOrClear('Clear')">
+                    <i class="fas fa-backspace"></i>
+                </button>
+            </div>
+            <div class="pcstore-table w-100 h-75 mr-5">
+                <div class="table-header w-100 d-flex">
+                    <div class="header-title col-2">No.</div>
+                    <div class="header-title col-5">Part No</div>
+                    <div class="header-title col-5">Part Name</div>
+                </div>
+                <div class="table-body w-100 mt-2">
+                    <div class="list-item w-100 d-flex"
+                        *ngFor="let item of rowdata;let i = index">
+                        <div class="body-content col-2">{{ i + 1 }}</div>
+                        <div class="body-content col-5">{{item.partNo}}</div>
+                        <div class="body-content col-5">{{item.partName}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-action w-100 d-flex justify-content-end mr-5 mt-3">
+                <button class="btn btn-success font-weight-bold" id="exportToExcel">
+                  <i class="fas fa-file-excel mr-1"></i>{{ l('Export Excel') }}
+                </button>
+              </div>
+        </div>
+    </div>
+</div>
