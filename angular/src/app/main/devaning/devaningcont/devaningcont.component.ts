@@ -82,9 +82,9 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this.loading = true;
-        this.getAll(1);
         this.updateContextMenuItems();
         this.loadAllData();
+        this.getAll(1);
     }
 
     loadAllData() {
@@ -94,7 +94,6 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
             this.recordCountDevaned = res.filter((x) => x.devaningStatus === 'DEVANED').length;
             this.recordCountDevaning = res.filter((x) => x.devaningStatus === 'DEVANING').length;
 
-            this.getAll(1);
         });
     }
 
@@ -148,27 +147,40 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     updateContextMenuItems() {
         this.items = [];
 
+        // Tab "New" có thể mở được cả "Edit" và "Delete"
         if (this.currentTab === 'New') {
             this.items.push(
                 {
                     label: 'Edit', icon: 'pi pi-fw pi-search',
                     command: () => this.showDialog(this.contextMenuSelection)
-                }
-            );
-        }
-
-        if (this.currentTab === 'New' || this.currentTab === 'Devaned') {
-            this.items.push(
+                },
                 {
                     label: 'Delete', icon: 'pi pi-fw pi-times',
                     command: () => this.deleteRecord(this.contextMenuSelection, 'MULTI_DELETE')
                 }
             );
-        } else {
+        }
+
+        // Tab "Devaned" có thể mở được cả "Edit" và "Delete"
+        else if (this.currentTab === 'Devaned') {
             this.items.push(
                 {
+                    label: 'Edit', icon: 'pi pi-fw pi-search',
+                    command: () => this.showDialog(this.contextMenuSelection)
+                },
+                {
                     label: 'Delete', icon: 'pi pi-fw pi-times',
-                    command: () => this.messageService.add({ severity: 'warn', summary: 'Delete', detail: 'Devaning cannot delete'  })
+                    command: () => this.deleteRecord(this.contextMenuSelection, 'MULTI_DELETE')
+                }
+            );
+        }
+
+        // Tab "Devaning" chỉ có thể mở được "Edit"
+        else if (this.currentTab === 'Devaning') {
+            this.items.push(
+                {
+                    label: 'Edit', icon: 'pi pi-fw pi-search',
+                    command: () => this.showDialog(this.contextMenuSelection)
                 }
             );
         }
@@ -187,7 +199,8 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.ref.onClose.subscribe(result => {
             if (result) {
                 // this.getAll(this.status);
-                this.ngOnInit();
+                // this.ngOnInit();
+                this.onRecordSaved();
             }
         });
     }
@@ -201,11 +214,20 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
     }
 
     onRecordSaved(): void {
-        this.loadAllData()
-        this.getAll(this.status)
+        this.loadAllData();
+        this.getAll(this.status);
     }
 
     deleteRecord(id, typeDelete: string) {
+        // Kiểm tra xem có bản ghi nào được chọn hay không
+        if (typeDelete === 'ONE_DELETE' && !id) {
+            this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select a record to delete.' });
+            return;
+        } else if (typeDelete === 'MULTI_DELETE' && this.rowSelection.length === 0) {
+            this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select at least one record to delete.' });
+            return;
+        }
+
         this.confirmationService.confirm({
             key: 'deleteDialog',
             message:'Do you want to delete this record',
@@ -214,18 +236,17 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
             accept: () => {
                 let ids: number[] = [];
                 if (typeDelete === 'ONE_DELETE') {
-                    ids = id;
+                    ids = [id]; // Đảm bảo id là một mảng
                 } else if (typeDelete === 'MULTI_DELETE') {
                     ids = this.rowSelection.map(record => record.id);
                 }
                 this.devaningService.delete(ids).subscribe(() => {
-                    this.loadAllData()
-                    this.getAll(this.status)
+                    this.loadAllData();
+                    this.getAll(this.status);
                     this.messageService.add({ severity: 'success', summary: 'Delete', detail: this.localizePipe.transform('Youhavedeleted') });
                 }, error => {
                     this.messageService.add({ severity: 'danger', summary: 'Delete', detail: error });
-                })
-
+                });
             },
             reject: (type) => {
                 switch (type) {

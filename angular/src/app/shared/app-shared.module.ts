@@ -42,7 +42,6 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 
-
 const imports = [
     CommonModule,
     FormsModule,
@@ -86,7 +85,7 @@ const imports = [
     SkeletonModule,
     DropdownModule,
     ToolbarModule,
-    DialogModule
+    DialogModule,
 
 ];
 

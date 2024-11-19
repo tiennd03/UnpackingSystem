@@ -1,2 +1,124 @@
-<!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
- <h1>file ben trongggggggg 123</h1>
+<div class="container">
+    <div class="robing d-flex">
+        <div class="robing_main h-100">
+            <div class="robing_header">
+                <div class="robing_header_search d-flex justify-content-between">
+                    <div class="input-search h-100">
+                        <input type="text" class="w-100 h-75 input-search-robing" placeholder="Search Item"
+                            [(ngModel)]="partNo">
+                        <button class="input-search-btn btn-search" (click)="searchOrClear()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="input-search-btn btn-clear" (click)="searchOrClear('Clear')">
+                            <i class="fas fa-backspace"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="robing-header-statistic w-100 d-flex justify-content-between">
+                    <div class="header-statistic h-100 d-flex">
+                        <div class="statistic statistic-today h-100 d-flex justify-content-center align-items-center">
+                            <p>Robbing Today</p>
+                            <h3>{{robingToday || 0}}</h3>
+                            <!-- <span> <i class="fas fa-vr-cardboard"></i> +8.51%</span> -->
+                        </div>
+                        <div class="statistic statistic-today h-100 d-flex justify-content-center align-items-center">
+                            <p>Part Fail</p>
+                            <h3>{{partFail || 0}}</h3>
+                            <!-- <span> <i class="fas fa-vr-cardboard"></i> +8.51%</span> -->
+                        </div>
+                        <div class="statistic statistic-today h-100 d-flex justify-content-center align-items-center">
+                            <p>Part Loan</p>
+                            <h3>{{partLoan || 0}}</h3>
+                            <!-- <span> <i class="fas fa-vr-cardboard"></i> +8.51%</span> -->
+                        </div>
+                        <div class="statistic statistic-today h-100 d-flex justify-content-center align-items-center">
+                            <p>Total robbing</p>
+                            <h3>{{totalRobing || 0}}</h3>
+                            <span> <i class="fas fa-vr-cardboard"></i> +{{totalRobing - robingToday}}</span>
+                        </div>
+                    </div>
+                    <div class="header-help h-100 d-flex justify-content-center">
+                        <p>POLYTROX <br><span>Help Center <i class="fas fa-poll ml-1"></i></span></p>
+                        <span>If you need help or <br> something wrong</span>
+                    </div>
+                </div>
+            </div>
+            <div class="robing_content">
+                <div class="robing-table w-100 h-100">
+                    <div class="table-header w-100 d-flex">
+                        <div class="header-title col-1">No</div>
+                        <div class="header-title col-3">Part No</div>
+                        <div class="header-title col-3">Part Name</div>
+                        <div class="header-title col-2">Suppiler</div>
+                        <div class="header-title col-3">Type</div>
+                    </div>
+                    <div class="table-body w-100 mt-2">
+                        <div class="list-item w-100 d-flex" *ngFor="let item of rowdata;let i = index"
+                            (click)="onchangeSelection(item,i)"
+                            [ngClass]="{'selected-background': selectedDiv === item}">
+                            <div class="body-content col-1">{{i + 1}}</div>
+                            <div class="body-content col-3">{{item.partNo}}</div>
+                            <div class="body-content col-3">{{item.partName}}</div>
+                            <div class="body-content col-2">{{item.supplier}}</div>
+                            <div class="body-content col-3" [ngClass]="checkTypeRobing(item.type)">{{item.type}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-action w-100 d-flex justify-content-end mr-5">
+                <button class="btn btn-success font-weight-bold" >
+                  <i class="fas fa-file-excel mr-1"></i>{{ l('Export Excel') }}
+                </button>
+            </div>
+        </div>
+        <div class="robing_detail">
+            <div class="robing-detail-content w-100 h-100">
+                <div class="detail-content detail-list-item">
+                    <div class="list-item-title w-100 mt-2 h-25">
+                        <p>List Part In {{moduleNo}}</p>
+                    </div>
+                    <div class="list-item-module w-100 h-75 d-flex ">
+                        <div class="part-item h-100" *ngFor="let item of listPartInModule">
+                            <div class="list-item-content-icon d-flex justify-content-end align-items-center ">
+                                <img src="/assets/common/images/partInModule.png" class="icon h-50" />
+                                <p>Square Large Box</p>
+                                <span>{{item.partNo}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-content detail-item">
+                    <div class="detail-part">
+                        <div class="title">RenBan</div>
+                        <div class="content">{{renban}}</div>
+                    </div>
+                    <div class="detail-part">
+                        <div class="title">Supplier</div>
+                        <div class="content">{{supplier}}</div>
+                    </div>
+                    <div class="detail-part">
+                        <div class="title">Robing Time</div>
+                        <div class="content">{{ robingTime ? (robingTime | date: 'dd/MM/yyyy') : 'dd/mm/yyyy' }}</div>
+                    </div>
+                    <div class="detail-part">
+                        <div class="title">Description</div>
+                        <div class="content">{{description}}</div>
+                    </div>
+                </div>
+                <div class="detail-content detail-recommeded-module">
+                    <div class="recommeded w-100 mt-2 h-25">
+                        <p>Recommeded Module</p>
+                    </div>
+                    <div class="recommeded-icon w-100 h-75 d-flex justify-content-end align-items-center">
+                        <img src="/assets/common/images/recommeded.png" class="icon h-75" />
+                        <p>Square Large Box</p>
+                        <span>Dimension</span>
+                    </div>
+                </div>
+                <div class="detail-content detail-action d-flex justify-content-center align-items-center">
+                    <button class="request-give-back" [disabled]="disable" (click)="requestGiveBack()">Request Give Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10627,6 +10627,133 @@ export class ProfileServiceProxy {
 }
 
 @Injectable()
+export class RobingServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    requestGiveBack(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Robing/RequestGiveBack?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRequestGiveBack(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRequestGiveBack(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processRequestGiveBack(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param partNo (optional) 
+     * @return Success
+     */
+    getAllRobing(partNo: string | undefined): Observable<RobingDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Robing/GetAllRobing?";
+        if (partNo === null)
+            throw new Error("The parameter 'partNo' cannot be null.");
+        else if (partNo !== undefined)
+            url_ += "partNo=" + encodeURIComponent("" + partNo) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllRobing(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllRobing(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<RobingDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<RobingDto[]>;
+        }));
+    }
+
+    protected processGetAllRobing(response: HttpResponseBase): Observable<RobingDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(RobingDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -27383,6 +27510,74 @@ export class ResolveTenantIdInput implements IResolveTenantIdInput {
 
 export interface IResolveTenantIdInput {
     c: string | undefined;
+}
+
+export class RobingDto implements IRobingDto {
+    partNo!: string | undefined;
+    partName!: string | undefined;
+    moduleNo!: string | undefined;
+    supplier!: string | undefined;
+    renban!: string | undefined;
+    type!: string | undefined;
+    description!: string | undefined;
+    creationTime!: DateTime;
+    id!: number | undefined;
+
+    constructor(data?: IRobingDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.partNo = _data["partNo"];
+            this.partName = _data["partName"];
+            this.moduleNo = _data["moduleNo"];
+            this.supplier = _data["supplier"];
+            this.renban = _data["renban"];
+            this.type = _data["type"];
+            this.description = _data["description"];
+            this.creationTime = _data["creationTime"] ? DateTime.fromISO(_data["creationTime"].toString()) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): RobingDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RobingDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["partNo"] = this.partNo;
+        data["partName"] = this.partName;
+        data["moduleNo"] = this.moduleNo;
+        data["supplier"] = this.supplier;
+        data["renban"] = this.renban;
+        data["type"] = this.type;
+        data["description"] = this.description;
+        data["creationTime"] = this.creationTime ? this.creationTime.toString() : <any>undefined;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IRobingDto {
+    partNo: string | undefined;
+    partName: string | undefined;
+    moduleNo: string | undefined;
+    supplier: string | undefined;
+    renban: string | undefined;
+    type: string | undefined;
+    description: string | undefined;
+    creationTime: DateTime;
+    id: number | undefined;
 }
 
 export class RoleEditDto implements IRoleEditDto {
