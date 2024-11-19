@@ -55,6 +55,7 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
         ApiServiceProxies.TwitterServiceProxy,
         ApiServiceProxies.DevaningModuleServiceProxy,
         ApiServiceProxies.UnpackingServiceProxy,
+        ApiServiceProxies.RobingServiceProxy,
 
 
         // BUSSINESS
