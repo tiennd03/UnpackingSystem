@@ -11,15 +11,15 @@
             <p-tabPanel>
                 <ng-template pTemplate="header">
                     <i class="pi pi-check-circle"></i>
-                    <span>{{'Devaned' | localize}}</span>
-                    <p-badge [value]="recordCountDevaned"></p-badge>
+                    <span>{{'Devaning' | localize}}</span>
+                    <p-badge [value]="recordCountDevaning"></p-badge>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel>
                 <ng-template pTemplate="header">
                     <i class="pi pi-inbox"></i>
-                    <span>{{'Devaning' | localize}}</span>
-                    <p-badge [value]="recordCountDevaning"></p-badge>
+                    <span>{{'Devaned' | localize}}</span>
+                    <p-badge [value]="recordCountDevaned"></p-badge>
                 </ng-template>
             </p-tabPanel>
         </p-tabView>
@@ -103,16 +103,14 @@
         </p-table>
 
         <p-toast></p-toast>
-        <p-toolbar styleClass="mb-4 gap-2">
-            <ng-template pTemplate="left">
-                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="showDialog()">&nbsp;{{'New' | localize}}</button>
-                <button pButton pRipple  icon="pi pi-trash" class="p-button-danger p-button-rounded mr-2" ></button>
-            </ng-template>
+        <p-toolbar styleClass="flex-center">
 
-            <ng-template pTemplate="right">
-                <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                <button pButton type="button" class="p-button-raised p-button-rounded mr-2" icon="pi pi-plus-circle" (click)="showDialog()" *ngIf="status === 1">&nbsp;{{'New' | localize}}</button>
+                <!-- <button pButton type="button" pRipple  icon="pi pi-trash" class="p-button-danger p-button-rounded mr-2" ></button> -->
+
+
+                <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
                 <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-button-rounded mr-2"></button>
-            </ng-template>
         </p-toolbar>
     </div>
 </div>

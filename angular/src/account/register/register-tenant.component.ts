@@ -1,5 +1,6 @@
-﻿import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
+﻿import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppConsts } from '@shared/AppConsts';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
@@ -15,8 +16,8 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { RegisterTenantModel } from './register-tenant.model';
 import { TenantRegistrationHelperService } from './tenant-registration-helper.service';
-import { finalize } from 'rxjs/operators';
-import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.service';
+import { finalize, catchError } from 'rxjs/operators';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
     templateUrl: './register-tenant.component.html',
@@ -41,9 +42,13 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit,
         private _profileService: ProfileServiceProxy,
         private _tenantRegistrationHelper: TenantRegistrationHelperService,
         private _activatedRoute: ActivatedRoute,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _reCaptchaV3Service: ReCaptchaV3Service
     ) {
         super(injector);
+    }
+
+    get useCaptcha(): boolean {
+        return this.setting.getBoolean('App.TenantManagement.UseCaptchaOnRegistration');
     }
 
     ngOnInit() {
@@ -71,8 +76,6 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit,
                 this.model.edition = result;
             });
         }
-
-        this._recaptchaWrapperService.setCaptchaVisibilityOnRegister();
     }
 
     save(): void {
@@ -104,8 +107,8 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit,
                 });
         };
 
-        if (this._recaptchaWrapperService.useCaptchaOnRegister()) {
-            this._recaptchaWrapperService.getService().execute('register_tenant').subscribe((token => recaptchaCallback(token)));
+        if (this.useCaptcha) {
+            this._reCaptchaV3Service.execute('register_tenant').subscribe((token => recaptchaCallback(token)));
         } else {
             recaptchaCallback(null);
         }
