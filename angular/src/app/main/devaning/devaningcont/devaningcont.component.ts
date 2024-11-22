@@ -84,15 +84,17 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.loading = true;
         this.updateContextMenuItems();
         this.loadAllData();
-        this.getAll(1);
+        setTimeout(() => {
+            this.getAll(1);
+        }, 1000);
     }
 
     loadAllData() {
         this.devaningService.getAll(0).subscribe((res) => {
             this.listDataDevaningCont = res;
             this.recordCountReady = res.filter((x) => x.devaningStatus === 'READY').length
-            this.recordCountDevaned = res.filter((x) => x.devaningStatus === 'DEVANED').length;
             this.recordCountDevaning = res.filter((x) => x.devaningStatus === 'DEVANING').length;
+            this.recordCountDevaned = res.filter((x) => x.devaningStatus === 'DEVANED').length;
 
         });
     }
@@ -131,10 +133,10 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
                 this.currentTab = 'New';
                 break;
             case 1:
-                this.currentTab = 'Devaned';
+                this.currentTab = 'Devaning';
                 break;
             case 2:
-                this.currentTab = 'Devaning';
+                this.currentTab = 'Devaned';
                 break;
             default:
                 this.currentTab = 'New';
@@ -215,7 +217,9 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
 
     onRecordSaved(): void {
         this.loadAllData();
-        this.getAll(this.status);
+        setTimeout(() => {
+            this.getAll(this.status);
+        }, 1000);
     }
 
     deleteRecord(id, typeDelete: string) {

@@ -67,7 +67,7 @@
 
         <div class="card-container flex-center col-6">
             <div class="unique-card">
-                <div class="background-overlay-inprogress"></div>
+                <div class="background-overlay-inprogress" (click)="showTimeSetupDialog()"></div>
                 <div class="card-content-inprogress">
                     <div class="card-title">IN PROGRESS</div>
                     <div class="card-description">
@@ -121,3 +121,23 @@
 
 <p-confirmDialog [style]="{width: '50vw'}" key="CompletionDialog" [baseZIndex]="10000"></p-confirmDialog>
 <p-toast></p-toast>
+<p-dialog [(visible)]="showSetupTimeDialog" [modal]="true" [style]="{width: '400px'}" header="Set Time for Devaning">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="hour">Hours</label>
+            <input id="hour" type="number" [(ngModel)]="hour" min="0" class="p-inputtext p-component" />
+        </div>
+        <div class="p-field">
+            <label for="minute">Minutes</label>
+            <input id="minute" type="number" [(ngModel)]="minute" min="0" max="59" class="p-inputtext p-component" />
+        </div>
+        <div class="p-field">
+            <label for="second">Seconds</label>
+            <input id="second" type="number" [(ngModel)]="second" min="0" max="59" class="p-inputtext p-component" />
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton label="Set Time"  class="p-button-success"></button>
+        <button type="button" pButton label="Cancel"  class="p-button-secondary"></button>
+    </p-footer>
+</p-dialog>

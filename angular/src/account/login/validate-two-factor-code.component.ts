@@ -1,18 +1,19 @@
-﻿import { AfterViewInit, Component, Injector, OnDestroy, OnInit } from '@angular/core';
+﻿import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { timer } from 'rxjs';
 import { LoginService } from './login.service';
-import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.service';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { AppConsts } from '@shared/AppConsts';
 
 @Component({
     templateUrl: './validate-two-factor-code.component.html',
     styleUrls: ['./validate-two-factor-code.component.less'],
     animations: [accountModuleAnimation()],
 })
-export class ValidateTwoFactorCodeComponent extends AppComponentBase implements CanActivate, OnInit, OnDestroy, AfterViewInit {
+export class ValidateTwoFactorCodeComponent extends AppComponentBase implements CanActivate, OnInit, OnDestroy {
     code: string;
     submitting = false;
     remainingSeconds = 90;
@@ -21,10 +22,14 @@ export class ValidateTwoFactorCodeComponent extends AppComponentBase implements 
     constructor(
         injector: Injector,
         public loginService: LoginService,
-        private _router: Router,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _reCaptchaV3Service: ReCaptchaV3Service,
+        private _router: Router
     ) {
         super(injector);
+    }
+
+    get useCaptcha(): boolean {
+        return this.setting.getBoolean('App.UserManagement.UseCaptchaOnLogin');
     }
 
     canActivate(): boolean {
@@ -55,10 +60,6 @@ export class ValidateTwoFactorCodeComponent extends AppComponentBase implements 
         });
     }
 
-    ngAfterViewInit(): void {
-        this._recaptchaWrapperService.setCaptchaVisibilityOnLogin();
-    }
-
     ngOnDestroy(): void {
         if (this.timerSubscription) {
             this.timerSubscription.unsubscribe();
@@ -72,8 +73,8 @@ export class ValidateTwoFactorCodeComponent extends AppComponentBase implements 
             this.loginService.authenticate(() => { }, null, token);
         };
 
-        if (this._recaptchaWrapperService.useCaptchaOnLogin()) {
-            this._recaptchaWrapperService.getService().execute('login').subscribe((token) => recaptchaCallback(token));
+        if (this.useCaptcha) {
+            this._reCaptchaV3Service.execute('login').subscribe((token) => recaptchaCallback(token));
         } else {
             recaptchaCallback(null);
         }

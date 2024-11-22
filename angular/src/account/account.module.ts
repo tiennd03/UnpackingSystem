@@ -20,7 +20,6 @@ import { PasswordModule } from 'primeng/password';
 import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module';
 import { AccountSharedModule } from '@account/shared/account-shared.module';
 import { AppConsts } from '@shared/AppConsts';
-import { ReCaptchaV3WrapperService } from './shared/recaptchav3-wrapper.service';
 
 export function getRecaptchaLanguage(): string {
     return new LocaleMappingService().map('recaptcha', abp.localization.currentLanguage.name);
@@ -49,7 +48,6 @@ export function getRecaptchaLanguage(): string {
         TenantRegistrationHelperService,
         PaymentHelperService,
         AccountRouteGuard,
-        ReCaptchaV3WrapperService,
         { provide: RECAPTCHA_V3_SITE_KEY, useValue: AppConsts.recaptchaSiteKey }],
 })
 export class AccountModule { }

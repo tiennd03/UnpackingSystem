@@ -1,7 +1,8 @@
-﻿import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
+﻿import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { AppUrlService } from '@shared/common/nav/app-url.service';
 import {
     AccountServiceProxy,
     PasswordComplexitySetting,
@@ -12,13 +13,14 @@ import {
 import { LoginService } from '../login/login.service';
 import { ResetPasswordModel } from './reset-password.model';
 import { finalize } from 'rxjs/operators';
-import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.service';
+import { AppConsts } from '@shared/AppConsts';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
     templateUrl: './reset-password.component.html',
     animations: [accountModuleAnimation()],
 })
-export class ResetPasswordComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class ResetPasswordComponent extends AppComponentBase implements OnInit {
 
     model: ResetPasswordModel = new ResetPasswordModel();
     passwordComplexitySetting: PasswordComplexitySetting = new PasswordComplexitySetting();
@@ -30,12 +32,17 @@ export class ResetPasswordComponent extends AppComponentBase implements OnInit, 
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
         private _loginService: LoginService,
-        private _profileService: ProfileServiceProxy,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _reCaptchaV3Service: ReCaptchaV3Service,
+        private _appUrlService: AppUrlService,
+        private _profileService: ProfileServiceProxy
     ) {
         super(injector);
     }
-    
+
+    get useCaptcha(): boolean {
+        return this.setting.getBoolean('App.UserManagement.UseCaptchaOnLogin');
+    }
+
     ngOnInit(): void {
         this._profileService.getPasswordComplexitySetting().subscribe((result) => {
             this.passwordComplexitySetting = result.setting;
@@ -57,10 +64,6 @@ export class ResetPasswordComponent extends AppComponentBase implements OnInit, 
                 this.parseTenantId(this._activatedRoute.snapshot.queryParams['tenantId'])
             );
         }
-    }
-
-    ngAfterViewInit(): void {
-        this._recaptchaWrapperService.setCaptchaVisibilityOnLogin();
     }
 
     save(): void {
@@ -92,8 +95,8 @@ export class ResetPasswordComponent extends AppComponentBase implements OnInit, 
                     );
                 };
 
-                if (this._recaptchaWrapperService.useCaptchaOnLogin()) {
-                    this._recaptchaWrapperService.getService().execute('login').subscribe((token) => recaptchaCallback(token));
+                if (this.useCaptcha) {
+                    this._reCaptchaV3Service.execute('login').subscribe((token) => recaptchaCallback(token));
                 } else {
                     recaptchaCallback(null);
                 }

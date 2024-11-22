@@ -1,10 +1,10 @@
-﻿import { AfterViewInit, Component, Injector } from '@angular/core';
+﻿import { Component, Injector } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { ProfileServiceProxy } from '@shared/service-proxies/service-proxies';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { LoginService } from './login.service';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { AppConsts } from '@shared/AppConsts';
-import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.service';
 
 @Component({
     selector: 'app-session-lock-screen',
@@ -12,7 +12,7 @@ import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.s
     styleUrls: ['session-lock-screen.component.less'],
     animations: [accountModuleAnimation()],
 })
-export class SessionLockScreenComponent extends AppComponentBase implements AfterViewInit {
+export class SessionLockScreenComponent extends AppComponentBase {
 
     userInfo: any;
     submitting = false;
@@ -20,15 +20,15 @@ export class SessionLockScreenComponent extends AppComponentBase implements Afte
     constructor(
         injector: Injector,
         private _profileService: ProfileServiceProxy,
-        public loginService: LoginService,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _reCaptchaV3Service: ReCaptchaV3Service,
+        public loginService: LoginService
     ) {
         super(injector);
         this.getLastUserInfo();
     }
 
-    ngAfterViewInit(): void {
-        this._recaptchaWrapperService.setCaptchaVisibilityOnLogin();
+    get useCaptcha(): boolean {
+        return this.setting.getBoolean('App.UserManagement.UseCaptchaOnLogin');
     }
 
     getLastUserInfo(): void {
@@ -79,8 +79,8 @@ export class SessionLockScreenComponent extends AppComponentBase implements Afte
             );
         };
 
-        if (this._recaptchaWrapperService.useCaptchaOnLogin()) {
-            this._recaptchaWrapperService.getService().execute('login').subscribe((token) => recaptchaCallback(token));
+        if (this.useCaptcha) {
+            this._reCaptchaV3Service.execute('login').subscribe((token) => recaptchaCallback(token));
         } else {
             recaptchaCallback(null);
         }

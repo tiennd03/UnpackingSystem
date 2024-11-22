@@ -1,5 +1,6 @@
-﻿import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
+﻿import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppConsts } from '@shared/AppConsts';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
@@ -10,14 +11,14 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { LoginService } from '../login/login.service';
 import { RegisterModel } from './register.model';
-import { finalize } from 'rxjs/operators';
-import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.service';
+import { finalize, catchError } from 'rxjs/operators';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
     templateUrl: './register.component.html',
     animations: [accountModuleAnimation()],
 })
-export class RegisterComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class RegisterComponent extends AppComponentBase implements OnInit {
     model: RegisterModel = new RegisterModel();
     passwordComplexitySetting: PasswordComplexitySetting = new PasswordComplexitySetting();
     saving = false;
@@ -28,9 +29,13 @@ export class RegisterComponent extends AppComponentBase implements OnInit, After
         private _router: Router,
         private readonly _loginService: LoginService,
         private _profileService: ProfileServiceProxy,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _reCaptchaV3Service: ReCaptchaV3Service
     ) {
         super(injector);
+    }
+
+    get useCaptcha(): boolean {
+        return this.setting.getBoolean('App.UserManagement.UseCaptchaOnRegistration');
     }
 
     ngOnInit() {
@@ -43,10 +48,6 @@ export class RegisterComponent extends AppComponentBase implements OnInit, After
         this._profileService.getPasswordComplexitySetting().subscribe((result) => {
             this.passwordComplexitySetting = result.setting;
         });
-    }
-
-    ngAfterViewInit(): void {
-        this._recaptchaWrapperService.setCaptchaVisibilityOnRegister();
     }
 
     save(): void {
@@ -77,8 +78,8 @@ export class RegisterComponent extends AppComponentBase implements OnInit, After
                 });
         };
 
-        if (this._recaptchaWrapperService.useCaptchaOnRegister()) {
-            this._recaptchaWrapperService.getService().execute('register').subscribe((token) => recaptchaCallback(token));
+        if (this.useCaptcha) {
+            this._reCaptchaV3Service.execute('register').subscribe((token) => recaptchaCallback(token));
         } else {
             recaptchaCallback(null);
         }
