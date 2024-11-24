@@ -25,9 +25,9 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
     showDialog: boolean = true;
     timeInSeconds: number = 0;
     showSetupTimeDialog: boolean = false; // Trạng thái của dialog
-  hour: number = 0;
-  minute: number = 0;
-  second: number = 0;
+    hour: number = 0;
+    minute: number = 0;
+    second: number = 0;
 
     constructor(
         injector: Injector,
@@ -86,7 +86,6 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
                 this.inProgressRecord = this.devaningList.reduce((min, item) =>
                     item.devaningId < min.devaningId ? item : min, this.devaningList[0]);
 
-                this.updateProgress();
             } else {
                 this.inProgressRecord = null;
             }
@@ -106,24 +105,31 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
     }
 
     updateProgress() {
-        this.progress = 0;
-        const updateInterval = 1000;
-        const incrementPerInterval = 100 / 20;
-
-        let interval = setInterval(() => {
-            this.progress += incrementPerInterval;
-            if (this.progress >= 100) {
-                this.progress = 100;
-                clearInterval(interval);
-
-                if(this.showDialog && this.inProgressRecord){
-                    this.showCompletedProgressDialog();
+        if (this.timeInSeconds <= 0) {
+            console.warn('Invalid time. Progress update will not run.');
+            this.messageService.add({ severity: 'warn', summary: 'Please enter time devan'});
+            return;
+        } else {
+            this.progress = 0;
+            const updateInterval = 1000;
+            const incrementPerInterval = 100 / this.timeInSeconds;
+    
+            let interval = setInterval(() => {
+                this.progress += incrementPerInterval;
+                if (this.progress >= 100) {
+                    this.progress = 100;
+                    clearInterval(interval);
+    
+                    if(this.showDialog && this.inProgressRecord){
+                        this.showCompletedProgressDialog();
+                    }
                 }
-            }
-        }, updateInterval);
+            }, updateInterval);
+        }
     }
 
     runProgressBar() {
+        this.timeInSeconds = 1
         this.progress = 0;
         const totalTime = 1500;
         const stepTime = 30;
@@ -138,9 +144,15 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
                 this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Process Completed' });
 
                 this.getDevaningPlan();
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, 1500);
+
+                setTimeout(() => {
+                    if (this. inProgressRecord) {
+                        this.hour = 0
+                        this.second = 0
+                        this.minute = 0
+                        this.timeInSeconds = 0;
+                    }
+                }, 200);
 
             }
         }, stepTime);
@@ -148,7 +160,7 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
 
     showCompletedProgressDialog() {
         this.confirmationService.confirm({
-            key: 'SetupTimeDialog',
+            key: 'CompletionDialog',
             message: 'Process has been completed. What do you want to do next?',
             header: 'Process Completed',
             icon: 'pi pi-info-circle',
@@ -159,14 +171,23 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
             },
             reject: () => {
                 this.messageService.add({ severity: 'info', summary: 'Continuing', detail: 'The process will continue running until "Finish" is clicked.' });
+                this.timeInSeconds = 0; 
             },
         });
     }
 
     updateStatusToDevaning(devaningId: any) {
+        // if (this.timeInSeconds <= 0 && this.inProgressRecord){
+        //     this.messageService.add({ severity: 'warn', summary: 'Please finish inprogress devan'});
+        //     return;
+        // } else if (this.timeInSeconds <= 0){
+        //     this.messageService.add({ severity: 'warn', summary: 'Please enter time devan'});
+        //     return;
+        // }
         this._service.updateStatusToDevaning(devaningId)
             .subscribe(() => {
                 this.getDevaningPlan();
+                this.updateProgress();
             }, (error) => {
                 console.error('Failed', error);
             });
@@ -176,12 +197,11 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
         const isConfirmed = await this.confirmAsync(this.l(''), 'FINISH DEVANING CONTAINER');
         if (isConfirmed) {
             try {
-                await this._service.finishDvnCont(id).toPromise(); // Hoặc sử dụng lastValueFrom nếu toPromise đã deprecated
+                await this._service.finishDvnCont(id).toPromise();
                 this.notify.success(this.l('FINISH Successfully'));
                 this.showDialog = false;
                 this.runProgressBar();
 
-                // Đợi getDevaningPlan hoàn thành
                 await this.getDevaningPlan();
 
                 this.progress = 0;
@@ -212,34 +232,25 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
 
     showTimeSetupDialog() {
         this.showSetupTimeDialog = true;
-        // let hour = 0, minute = 0, second = 0;
-
-        // this.confirmationService.confirm({
-        //     key: 'CompletionDialog',
-        //     message: `
-        //         <ng-container>
-        //             <label>Hours:
-        //                 <input type="number" [(ngModel)]="hour" min="0" style="width: 50px;">
-        //             </label>
-        //             <label>Minutes:
-        //                 <input type="number" [(ngModel)]="minute" min="0" max="59" style="width: 50px;">
-        //             </label>
-        //             <label>Seconds:
-        //                 <input type="number" [(ngModel)]="second" min="0" max="59" style="width: 50px;">
-        //             </label>
-        //         </ng-container>
-        //     `,
-        //     header: 'Set Time for Devaning',
-        //     accept: () => {
-        //         // Chuyển đổi giờ, phút, giây sang giây
-        //         this.timeInSeconds = hour * 3600 + minute * 60 + second;
-
-        //         // Gọi updateProgress với thời gian đã thiết lập
-        //         // this.updateProgress(this.timeInSeconds);
-        //     },
-        //     reject: () => {
-        //         console.log('Setup cancelled');
-        //     }
-        // });
     }
+
+    setTime() {
+        this.timeInSeconds = this.hour * 3600 + this.minute * 60 + this.second;
+    
+        if (this.timeInSeconds > 0 && this.inProgressRecord) {
+            console.log(`Time set: ${this.timeInSeconds} seconds`);
+            this.showSetupTimeDialog = false;
+            this.updateProgress();
+          } else if (this.timeInSeconds > 0){
+              console.log(`Time set: ${this.timeInSeconds} seconds`);
+              this.showSetupTimeDialog = false;
+          } else {
+            alert('Please set a valid time!');
+          }
+      }
+
+      cancelSetupTime() {
+        console.log('Setup cancelled');
+        this.showSetupTimeDialog = false;
+      }
 }

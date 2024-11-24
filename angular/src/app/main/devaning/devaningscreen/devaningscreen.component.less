@@ -18,12 +18,25 @@
         .card-container {
             width: 100%;
             display: flex;
-            gap: 10%;
+            gap: 6%;
             padding: 10px;
             height: calc(45% - 10px);
             align-items: center;
             margin-top: 10px;
 
+            .clock-icon-card {
+                border-radius: 50%;
+
+                .pi-clock {
+                    font-size: 6rem;
+                    border-radius: 50%;
+
+                    &:hover {
+                        transform: scale(1.05);
+                        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+                    }
+                }
+            }
             .unique-card {
                 position: relative;
                 width: calc(80%/2);

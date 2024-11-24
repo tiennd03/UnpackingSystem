@@ -59,7 +59,7 @@
                     </td>
                     <td>
                         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="updateStatusToDevaning(rowData.devaningId)"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+                        <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="showTimeSetupDialog()" *ngIf="!inProgressRecord"></button> -->
                     </td>
                 </tr>
             </ng-template>
@@ -67,7 +67,7 @@
 
         <div class="card-container flex-center col-6">
             <div class="unique-card">
-                <div class="background-overlay-inprogress" (click)="showTimeSetupDialog()"></div>
+                <div class="background-overlay-inprogress"></div>
                 <div class="card-content-inprogress">
                     <div class="card-title">IN PROGRESS</div>
                     <div class="card-description">
@@ -79,8 +79,12 @@
                 </div>
             </div>
 
-            <div class="unique-card">
-                <div class="background-overlay-finish" (click)="finishDevModule(inProgressRecord.devaningId)"></div>
+            <div class="clock-icon-card" (click)="showTimeSetupDialog()">
+                <i class="pi pi-clock"></i>
+            </div>
+
+            <div class="unique-card" (click)="finishDevModule(inProgressRecord.devaningId)">
+                <div class="background-overlay-finish"></div>
                 <div class="card-content-finish">
                     <div class="card-title">FINISH</div>
                 </div>
@@ -89,7 +93,8 @@
 
         <div class="footer content">
             <div class="plan_actual">
-                <p-progressBar [value]="progress" [showValue]="true"></p-progressBar>
+                <p-progressBar [value]="progress" [showValue]="true" *ngIf="timeInSeconds"></p-progressBar>
+                <p-progressBar mode="indeterminate" *ngIf="!timeInSeconds && inProgressRecord"></p-progressBar>
             </div>
 
             <div class="progress">
@@ -121,6 +126,7 @@
 
 <p-confirmDialog [style]="{width: '50vw'}" key="CompletionDialog" [baseZIndex]="10000"></p-confirmDialog>
 <p-toast></p-toast>
+
 <p-dialog [(visible)]="showSetupTimeDialog" [modal]="true" [style]="{width: '400px'}" header="Set Time for Devaning">
     <div class="p-fluid">
         <div class="p-field">
@@ -137,7 +143,7 @@
         </div>
     </div>
     <p-footer>
-        <button type="button" pButton label="Set Time"  class="p-button-success"></button>
-        <button type="button" pButton label="Cancel"  class="p-button-secondary"></button>
+        <button type="button" pButton label="Set Time" (click)="setTime()" class="p-button-success"></button>
+        <button type="button" pButton label="Cancel" (click)="cancelSetupTime()" class="p-button-secondary"></button>
     </p-footer>
 </p-dialog>

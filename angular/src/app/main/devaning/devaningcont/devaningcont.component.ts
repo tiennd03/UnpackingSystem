@@ -86,7 +86,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.loadAllData();
         setTimeout(() => {
             this.getAll(1);
-        }, 1000);
+        }, 100);
     }
 
     loadAllData() {
@@ -219,7 +219,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.loadAllData();
         setTimeout(() => {
             this.getAll(this.status);
-        }, 1000);
+        }, 100);
     }
 
     deleteRecord(id, typeDelete: string) {
