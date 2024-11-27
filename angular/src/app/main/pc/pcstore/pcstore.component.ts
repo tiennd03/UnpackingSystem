@@ -1,4 +1,5 @@
 ﻿import { Component, Injector, OnInit, ViewEncapsulation } from '@angular/core';
+import { ExportExcelService } from '@app/main/export-excel-standard.service';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { PcStoreServiceProxy } from '@shared/service-proxies/service-proxies';
 
@@ -13,10 +14,12 @@ export class PcStoreComponent extends AppComponentBase implements OnInit {
     partName;
     totalPart;
     totalLot;
+
+    loadingDowload: boolean;
     constructor(
         injector: Injector,
         private _service: PcStoreServiceProxy,
-        // private _fileDownloadService: FileDownloadService,
+        private excelService: ExportExcelService,
     ) {
         super(injector)
     }
@@ -57,5 +60,19 @@ export class PcStoreComponent extends AppComponentBase implements OnInit {
     //             this.notify.error('Export failed',error)
     //         });
     // }
+
+    exportToExcel(): void {
+        if (!this.rowdata.length) {
+            this.notify.warn('No Data to Export');
+        }
+        else {
+            this.loadingDowload = true;
+            this.excelService.exportExcel(this.rowdata, 'PcStore').then(() => {
+                this.loadingDowload = false;
+            }).catch(() => {
+                this.loadingDowload = false;
+            });
+        }
+    }
 
 }

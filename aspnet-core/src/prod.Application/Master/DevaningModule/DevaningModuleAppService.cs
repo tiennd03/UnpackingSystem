@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace prod.Master.DevaningModule
 {
 
-    [AbpAuthorize(AppPermissions.Pages_UPS_Devaning)]
+    [AbpAuthorize(AppPermissions.Pages_UPS)]
     public class DevaningModuleAppService : prodAppServiceBase, IDevaningModuleAppService
     {
         private readonly IRepository<DvnContList, long> _repo;
@@ -45,7 +45,7 @@ namespace prod.Master.DevaningModule
             }
 
         }
-
+        [AbpAuthorize(AppPermissions.Pages_UPS_Devaning)]
         public async Task UpdateOrCreate(DevaningModuleDto input)
         {
             if (input.Id == null)

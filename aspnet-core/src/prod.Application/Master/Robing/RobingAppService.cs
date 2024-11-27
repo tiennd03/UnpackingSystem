@@ -1,6 +1,8 @@
 ﻿using Abp.Dapper.Repositories;
 using Abp.Domain.Repositories;
+using prod.Dto;
 using prod.Master.Robing.Dto;
+using prod.Master.Robing.Exporting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace prod.Master.Robing
     {
         private readonly IRepository<Robings, long> _repo;
         private readonly IDapperRepository<Robings, long> _dapperRepo;
+        private readonly IRobingExcelExporter _calendarListExcelExporter;
         public RobingAppService(IRepository<Robings, long> repo, 
                                 IDapperRepository<Robings, long> dapperRepo)
         {
@@ -37,6 +40,16 @@ namespace prod.Master.Robing
                 partNo = partNo
             });
             return a.ToList();
+        }
+
+        public async Task<FileDto> GetRobingToExcel(string partNo)
+        {
+            var a = await _dapperRepo.QueryAsync<RobingDto>(@"select * from Robing where (ISNULL(@partNo, '') = '' OR PartNo LIKE CONCAT('%', @partNo, '%'))", new
+            {
+                partNo = partNo
+            });
+            var exportToExcel = a.ToList();
+            return _calendarListExcelExporter.ExportToFile(exportToExcel);
         }
     }
 }

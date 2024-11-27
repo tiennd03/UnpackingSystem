@@ -21,12 +21,14 @@
                 <!-- Row 1 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Devaning No</label>
-                        <input pInputText [(ngModel)]="selection.devaningNo">
+                        <label>Devaning No <small *ngIf="validationErrors.devaningNo" class="p-error">- {{ validationErrors.devaningNo }}</small></label>
+                        <input pInputText [(ngModel)]="selection.devaningNo"
+                        (blur)="validateField('devaningNo')">
                     </div>
                     <div class="form-group">
-                        <label>Container No</label>
-                        <input pInputText [(ngModel)]="selection.containerNo">
+                        <label>Container No <small *ngIf="validationErrors.containerNo" class="p-error">- {{ validationErrors.containerNo }}</small></label>
+                        <input pInputText [(ngModel)]="selection.containerNo"
+                        (blur)="validateField('containerNo')">
                     </div>
                 </div>
                 <!-- Row 2 -->
@@ -53,10 +55,11 @@
                 <!-- Row 3 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Shift No</label>
-                        <input pInputText [(ngModel)]="selection.shiftNo">
+                        <label>Shift No <small *ngIf="validationErrors.shiftNo" class="p-error">- {{ validationErrors.shiftNo }}</small></label>
+                        <input pInputText [(ngModel)]="selection.shiftNo"
+                        (blur)="validateField('shiftNo')">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [@shake]="shakeState">
                         <label>Plan Devaning Date</label>
                         <p-calendar
                             [(ngModel)]="selection.planDevaningDate"
@@ -64,15 +67,22 @@
                             dateFormat="dd/mm/yy"
                             appendTo="body">
                         </p-calendar>
+
+                        <!-- <small *ngIf="validationErrors.planDevaningDate" class="p-error">- {{ validationErrors.planDevaningDate }}</small> -->
                     </div>
                 </div>
                 <!-- Row 4 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Renban</label>
-                        <input pInputText [(ngModel)]="selection.renban">
+                        <label>Renban <small *ngIf="validationErrors.renban" class="p-error">- {{ validationErrors.renban }}</small></label>
+                        <input
+                        pInputText
+                        [(ngModel)]="selection.renban"
+                        [disabled]="!selection.suppilerNo || !selection.renban"
+                        (blur)="validateField('renban')"
+                        (ngModelChange)="onRenbanChange($event)">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [@shake]="shakeState">
                         <span class="p-float-label">
                             <p-dropdown
                                 inputId="supplierDropdown"
@@ -80,6 +90,7 @@
                                 [(ngModel)]="selection.suppilerNo"
                                 optionLabel="label"
                                 optionValue="value"
+                                (ngModelChange)="onSupplierChange($event)"
                                 [autoDisplayFirst]="false"
                                 appendTo="body">
                             </p-dropdown>
@@ -90,10 +101,11 @@
                 <!-- Row 5 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Devaning Type</label>
-                        <input pInputText [(ngModel)]="selection.devaningType">
+                        <label>Devaning Type <small *ngIf="validationErrors.devaningType" class="p-error">- {{ validationErrors.devaningType }}</small></label>
+                        <input pInputText [(ngModel)]="selection.devaningType"
+                        (blur)="validateField('devaningType')">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [@shake]="shakeState">
                         <span class="p-float-label">
                             <p-dropdown
                                 inputId="devaningStatusDropdown"
@@ -129,3 +141,4 @@
     </div>
 
 </div>
+<p-toast position="bottom-center"></p-toast>

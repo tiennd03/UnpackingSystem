@@ -104,6 +104,7 @@ import { ViewRecoveryCodesModalComponent } from './shared/layout/profile/view-re
 import { AddFriendModalComponent } from './shared/layout/chat/add-friend-modal.component';
 import { AddFromDifferentTenantModalComponent } from './shared/layout/chat/add-from-different-tenant-modal.component';
 import { FriendsLookupTableComponent } from './shared/layout/chat/friends-lookup-table.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -172,6 +173,7 @@ import { FriendsLookupTableComponent } from './shared/layout/chat/friends-lookup
         ToggleDarkModeComponent,
     ],
     providers: [
+        MessageService,
         ImpersonationService,
         LinkedAccountService,
         UserNotificationHelper,

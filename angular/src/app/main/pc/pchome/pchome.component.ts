@@ -2,6 +2,7 @@
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DashboardCustomizationConst } from '@app/shared/common/customizable-dashboard/DashboardCustomizationConsts';
 import { PcHomeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ExportExcelService } from '@app/main/export-excel-standard.service';
 
 @Component({
     templateUrl: './pchome.component.html',
@@ -14,9 +15,12 @@ export class PcHomeComponent extends AppComponentBase implements OnInit {
     partName;
     totalPart;
     totalLot;
+
+    loadingDowload: boolean = false;
     constructor(
         injector: Injector,
         private _service: PcHomeServiceProxy,
+        private excelService: ExportExcelService,
     ) {
         super(injector)
     }
@@ -38,7 +42,7 @@ export class PcHomeComponent extends AppComponentBase implements OnInit {
             });
 
     }
-     searchOrClear(type?) {
+    searchOrClear(type?) {
         this.partNo = (type === "Clear") ? '' : this.partNo;
         this.getDatas(this.partNo);
     }
@@ -46,7 +50,7 @@ export class PcHomeComponent extends AppComponentBase implements OnInit {
     //     this._service
     //         .getPcHomeToExcel(
     //             this.partNo,
-    //             this.partName,               
+    //             this.partName,
     //         )
     //         .subscribe((result) => {
     //             this._fileDownloadService.downloadTempFile(result);
@@ -56,5 +60,19 @@ export class PcHomeComponent extends AppComponentBase implements OnInit {
     //             this.notify.error('Export failed',error)
     //         });
     // }
+
+    exportToExcel(): void {
+        if (!this.rowdata.length) {
+            this.notify.warn('No Data to Export');
+        }
+        else {
+            this.loadingDowload = true;
+            this.excelService.exportExcel(this.rowdata, 'PcHome').then(() => {
+                this.loadingDowload = false;
+            }).catch(() => {
+                this.loadingDowload = false;
+            });
+        }
+    }
 
 }
