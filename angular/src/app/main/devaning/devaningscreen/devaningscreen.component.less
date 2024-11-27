@@ -24,33 +24,48 @@
             align-items: center;
             margin-top: 10px;
 
-            .clock-icon-card {
-                border-radius: 50%;
-                cursor: pointer;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100px;
-                height: 100px;
-                background-color: #f6f6f6;
-                transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-
-                .pi-clock {
-                    font-size: 6rem;
-                    color: #333;
-                    transition: color 0.3s, transform 0.3s;
-                }
-
-                &:hover {
-                    background-color: #3f51b5;
-                    transform: scale(1.1);
-                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-
+            .clock{
+                .clock-icon-card {
+                    border-radius: 50%;
+                    cursor: pointer;
+                    display: flex;
+                    flex-direction: column; /* Sắp xếp theo chiều dọc */
+                    justify-content: center;
+                    align-items: center;
+                    width: 100px;
+                    height: 100px;
+                    background-color: #f6f6f6;
+                    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+                
                     .pi-clock {
-                        color: #ffffff;
+                        font-size: 6rem;
+                        color: #333;
+                        transition: color 0.3s, transform 0.3s;
+                    }
+                
+                    &:hover {
+                        background-color: #3f51b5;
+                        transform: scale(1.1);
+                        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+                
+                        .pi-clock {
+                            color: #ffffff;
+                        }
+                
+                        .clock-label {
+                            color: #ffffff; /* Đổi màu nhãn khi hover */
+                        }
                     }
                 }
+
+                .clock-label {
+                    color: #333;
+                    font-size: 2rem;
+                    font-weight: bold;
+                }
+
             }
+            
             .unique-card {
                 position: relative;
                 width: calc(80%/2);

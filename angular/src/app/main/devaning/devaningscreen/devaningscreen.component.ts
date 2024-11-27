@@ -28,6 +28,7 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
     hour: number = 0;
     minute: number = 0;
     second: number = 0;
+    countdownInterval: any;
 
     constructor(
         injector: Injector,
@@ -180,13 +181,6 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
     updateStatusToDevaning(devaningId: any) {
         this.timeInSeconds = 0;
         this.showDialog = true;
-        // if (this.timeInSeconds <= 0 && this.inProgressRecord){
-        //     this.messageService.add({ severity: 'warn', summary: 'Please finish inprogress devan'});
-        //     return;
-        // } else if (this.timeInSeconds <= 0){
-        //     this.messageService.add({ severity: 'warn', summary: 'Please enter time devan'});
-        //     return;
-        // }
         this._service.updateStatusToDevaning(devaningId)
             .subscribe(() => {
                 this.getDevaningPlan();
@@ -197,6 +191,10 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
     }
 
     async finishDevModule(id: number) {
+        if (!this.isGranted('Pages.UPS.Devaning.FinishDvn')) {
+            this.messageService.add({severity:'warn', summary:'Permission invalid', detail:'Your permission can not do this action'});
+            return;
+        }
         const isConfirmed = await this.confirmAsync(this.l(''), 'FINISH DEVANING CONTAINER');
         if (isConfirmed) {
             try {
@@ -244,16 +242,46 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
             console.log(`Time set: ${this.timeInSeconds} seconds`);
             this.showSetupTimeDialog = false;
             this.updateProgress();
+            this.startCountdown();
           } else if (this.timeInSeconds > 0){
               console.log(`Time set: ${this.timeInSeconds} seconds`);
               this.showSetupTimeDialog = false;
+              this.startCountdown();
           } else {
-            alert('Please set a valid time!');
+            this.messageService.add({severity:'warn', summary:'Invalid Time'})
           }
       }
 
       cancelSetupTime() {
         console.log('Setup cancelled');
         this.showSetupTimeDialog = false;
-      }
+    }
+
+    getFormattedTime(): string {
+        const hours = Math.floor(this.timeInSeconds / 3600);
+        const minutes = Math.floor((this.timeInSeconds % 3600) / 60);
+        const seconds = this.timeInSeconds % 60;
+    
+        // Đảm bảo luôn hiển thị 2 chữ số bằng cách thêm '0' nếu cần
+        const formattedHours = hours.toString().padStart(2, '0');
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = seconds.toString().padStart(2, '0');
+    
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    startCountdown(): void {
+        if (this.countdownInterval) {
+            clearInterval(this.countdownInterval); // Đảm bảo không có bộ đếm nào đang chạy
+        }
+    
+        this.countdownInterval = setInterval(() => {
+            if (this.timeInSeconds > 0) {
+                this.timeInSeconds--;
+            } else {
+                clearInterval(this.countdownInterval); // Dừng khi đếm ngược kết thúc
+                console.log('Countdown finished!');
+            }
+        }, 1000); // Lặp lại mỗi giây
+    }
 }

@@ -116,7 +116,17 @@ namespace prod.Authorization
         //UnPackingSystem
         public const string Pages_UPS = "Pages.UPS";
 
-        //Master - Devaning 
+        //Devaning 
         public const string Pages_UPS_Devaning = "Pages.UPS.Devaning";
+        public const string Pages_UPS_Devaning_CreateEdit = "Pages.UPS.Devaning.CreateEdit";
+        public const string Pages_UPS_Devaning_FinishDvn = "Pages.UPS.Devaning.FinishDvn";
+        public const string Pages_UPS_Devaning_UpdateStatus = "Pages.UPS.Devaning.UpdateStatus";
+
+        //Unpacking
+        public const string Pages_UPS_Unpacking = "Pages.UPS.Unpacking";
+        public const string Pages_UPS_Unpacking_FinishPart = "Pages.UPS.Unpacking.FinishPart";
+        public const string Pages_UPS_Unpacking_FinishUpkModule = "Pages.UPS.Unpacking.FinishUpkModule";
+
+
     }
 }

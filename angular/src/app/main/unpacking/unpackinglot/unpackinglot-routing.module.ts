@@ -9,9 +9,6 @@ const routes: Routes = [
             {
                 path: 'unpackinglot',
                 component: UnpackingLotComponent,
-                data: {
-                    // permission: 'Pages.GHS.Approval'
-                }
             },
         ]
     },

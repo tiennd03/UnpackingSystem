@@ -132,9 +132,18 @@ namespace prod.Authorization
 
             // UPS
             var ups = pages.CreateChildPermission(AppPermissions.Pages_UPS, L("UPS"), multiTenancySides: MultiTenancySides.Tenant);
-            ups.CreateChildPermission(AppPermissions.Pages_UPS_Devaning, L("UPS_Devaning"), multiTenancySides: MultiTenancySides.Tenant);
 
-    }
+            // UPS-Devaning
+            var upsdevaning = pages.CreateChildPermission(AppPermissions.Pages_UPS_Devaning, L("UPS_Devaning"), multiTenancySides: MultiTenancySides.Tenant);
+            upsdevaning.CreateChildPermission(AppPermissions.Pages_UPS_Devaning_CreateEdit, L("UPS_Devaning_CreateEdit"), multiTenancySides: MultiTenancySides.Tenant);
+            upsdevaning.CreateChildPermission(AppPermissions.Pages_UPS_Devaning_FinishDvn, L("UPS_Devaning_FinishDvn"), multiTenancySides: MultiTenancySides.Tenant);
+            upsdevaning.CreateChildPermission(AppPermissions.Pages_UPS_Devaning_UpdateStatus, L("UPS_Devaning_UpdateStatus"), multiTenancySides: MultiTenancySides.Tenant);
+
+            // UPS-Unpacking
+            var upsunpacking = pages.CreateChildPermission(AppPermissions.Pages_UPS_Unpacking, L("UPS_Unpacking"), multiTenancySides: MultiTenancySides.Tenant);
+            upsunpacking.CreateChildPermission(AppPermissions.Pages_UPS_Unpacking_FinishPart, L("UPS_Unpacking_FinishPart"), multiTenancySides: MultiTenancySides.Tenant);
+            upsunpacking.CreateChildPermission(AppPermissions.Pages_UPS_Unpacking_FinishUpkModule, L("UPS_Unpacking_FinishUpkModule"), multiTenancySides: MultiTenancySides.Tenant);
+        }
 
         private static ILocalizableString L(string name)
         {

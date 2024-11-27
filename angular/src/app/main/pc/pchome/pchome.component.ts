@@ -46,20 +46,6 @@ export class PcHomeComponent extends AppComponentBase implements OnInit {
         this.partNo = (type === "Clear") ? '' : this.partNo;
         this.getDatas(this.partNo);
     }
-    // exportToExcel(): void {
-    //     this._service
-    //         .getPcHomeToExcel(
-    //             this.partNo,
-    //             this.partName,
-    //         )
-    //         .subscribe((result) => {
-    //             this._fileDownloadService.downloadTempFile(result);
-    //             this.notify.success('Export success')
-
-    //         },(error)=>{
-    //             this.notify.error('Export failed',error)
-    //         });
-    // }
 
     exportToExcel(): void {
         if (!this.rowdata.length) {

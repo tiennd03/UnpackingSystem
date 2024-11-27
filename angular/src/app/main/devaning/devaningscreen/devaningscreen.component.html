@@ -25,9 +25,9 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width: 4rem">
+                    <!-- <th style="width: 4rem">
                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    </th>
+                    </th> -->
                     <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn
                         class="column-border-right">
                         <div class="flex justify-content-center align-items-center">
@@ -46,9 +46,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
                 <tr [pSelectableRow]="rowData">
-                    <td pFrozenColumn>
+                    <!-- <td pFrozenColumn>
                         <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-                    </td>
+                    </td> -->
                     <td *ngFor="let col of cols">
                         <ng-container *ngIf="col.field === 'planDevaningDate'">
                             {{ rowData[col.field] | date:'dd/MM/yyyy' }}
@@ -58,7 +58,7 @@
                         </ng-container>
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="updateStatusToDevaning(rowData.devaningId)"></button>
+                        <button pButton pRipple icon="pi pi-play" class="p-button-rounded p-button-success mr-2" (click)="updateStatusToDevaning(rowData.devaningId)" *ngIf="isGranted('Pages.UPS.Devaning.UpdateStatus')"></button>
                         <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="showTimeSetupDialog()" *ngIf="!inProgressRecord"></button> -->
                     </td>
                 </tr>
@@ -79,9 +79,15 @@
                 </div>
             </div>
 
-            <div class="clock-icon-card" (click)="showTimeSetupDialog()">
-                <i class="pi pi-clock"></i>
+            <div class="clock">
+                <div class="clock-icon-card" (click)="showTimeSetupDialog()">
+                    <i class="pi pi-clock"></i>
+                </div>
+                <span class="clock-label" >{{getFormattedTime()}}</span>
             </div>
+            <!-- <div class="clock-icon-card" (click)="showTimeSetupDialog()">
+                <i class="pi pi-clock"></i>
+            </div> -->
 
             <div class="unique-card" (click)="finishDevModule(inProgressRecord.devaningId)">
                 <div class="background-overlay-finish"></div>
