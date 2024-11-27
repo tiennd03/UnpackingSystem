@@ -31,9 +31,9 @@ export class AppNavigationService {
 
             new AppMenuItem('Unpacking', 'Pages.UPS', 'flaticon-interface-8', '', [], [
 
-                new AppMenuItem('Unpacking Lot', '', 'flaticon-book', '/app/main/unpacking/unpackinglot/unpackinglot'),
-                new AppMenuItem('Unpacking Partlist', '', 'flaticon-book', '/app/main/unpacking/unpackingpartlist/unpackingpartlist'),
-                new AppMenuItem('Unpacking Screen', '', 'flaticon-book', '/app/main/unpacking/unpackingscreen/unpackingscreen'),
+                new AppMenuItem('Unpacking Lot', 'Pages.UPS.Unpacking', 'flaticon-book', '/app/main/unpacking/unpackinglot/unpackinglot'),
+                new AppMenuItem('Unpacking Partlist', 'Pages.UPS.Unpacking', 'flaticon-book', '/app/main/unpacking/unpackingpartlist/unpackingpartlist'),
+                new AppMenuItem('Unpacking Screen', 'Pages.UPS.Unpacking', 'flaticon-book', '/app/main/unpacking/unpackingscreen/unpackingscreen'),
             ]),
 
             new AppMenuItem('Robing', 'Pages.UPS', 'flaticon-interface-8', '', [], [

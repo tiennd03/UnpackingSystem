@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace prod.Master.DevaningModule
 {
 
-    [AbpAuthorize(AppPermissions.Pages_UPS)]
+    [AbpAuthorize(AppPermissions.Pages_UPS_Devaning)]
     public class DevaningModuleAppService : prodAppServiceBase, IDevaningModuleAppService
     {
         private readonly IRepository<DvnContList, long> _repo;
@@ -45,7 +45,7 @@ namespace prod.Master.DevaningModule
             }
 
         }
-        [AbpAuthorize(AppPermissions.Pages_UPS_Devaning)]
+        [AbpAuthorize(AppPermissions.Pages_UPS_Devaning_CreateEdit)]
         public async Task UpdateOrCreate(DevaningModuleDto input)
         {
             if (input.Id == null)
@@ -148,7 +148,7 @@ namespace prod.Master.DevaningModule
         }
 
         //Delete
-
+        [AbpAuthorize(AppPermissions.Pages_UPS_Devaning_CreateEdit)]
         public async Task Delete(List<int> deleteUsers)
         {
             try
@@ -166,6 +166,7 @@ namespace prod.Master.DevaningModule
             }
         }
 
+        [AbpAuthorize(AppPermissions.Pages_UPS_Devaning_FinishDvn)]
         public async Task FinishDvnCont(int dvn_id)
         {
             string _sql = "Exec DEVANT_MODULE @IdDevant";
@@ -180,6 +181,7 @@ namespace prod.Master.DevaningModule
             return _result.ToList();
         }
 
+        [AbpAuthorize(AppPermissions.Pages_UPS_Devaning_UpdateStatus)]
         public async Task UpdateStatusToDevaning(long devaningId)
         {
             try

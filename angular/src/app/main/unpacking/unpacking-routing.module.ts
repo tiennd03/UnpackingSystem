@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
                         path: 'unpackinglot',
                         loadChildren: () => import('./unpackinglot/unpackinglot.module', )
                         .then((m) => m.UnpackingLotModule),
+                        data: { permission: 'Pages.UPS.Unpacking' },
                     },
                 ],
             },
@@ -21,6 +22,7 @@ import { RouterModule, Routes } from '@angular/router';
                         path: 'unpackingpartlist',
                         loadChildren: () => import('./unpackingpartlist/unpackingpartlist.module', )
                         .then((m) => m.UnpackingPartlistModule),
+                        data: { permission: 'Pages.UPS.Unpacking' },
                     },
                 ],
             },
@@ -31,6 +33,7 @@ import { RouterModule, Routes } from '@angular/router';
                         path: 'unpackingscreen',
                         loadChildren: () => import('./unpackingscreen/unpackingscreen.module', )
                         .then((m) => m.UnpackingScreenModule),
+                        data: { permission: 'Pages.UPS.Unpacking' },
                     },
                 ],
             },

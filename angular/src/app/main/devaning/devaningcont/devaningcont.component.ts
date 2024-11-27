@@ -152,7 +152,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.items = [];
 
         // Tab "New" có thể mở được cả "Edit" và "Delete"
-        if (this.currentTab === 'New') {
+        if (this.currentTab === 'New' && this.isGranted('Pages.UPS.Devaning.CreateEdit')) {
             this.items.push(
                 {
                     label: 'Edit', icon: 'pi pi-fw pi-search',
@@ -166,7 +166,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         }
 
         // Tab "Devaned" có thể mở được cả "Edit" và "Delete"
-        else if (this.currentTab === 'Devaned') {
+        else if (this.currentTab === 'Devaned' && this.isGranted('Pages.UPS.Devaning.CreateEdit')) {
             this.items.push(
                 {
                     label: 'Edit', icon: 'pi pi-fw pi-search',
@@ -180,7 +180,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         }
 
         // Tab "Devaning" chỉ có thể mở được "Edit"
-        else if (this.currentTab === 'Devaning') {
+        else if (this.currentTab === 'Devaning' && this.isGranted('Pages.UPS.Devaning.CreateEdit')) {
             this.items.push(
                 {
                     label: 'Edit', icon: 'pi pi-fw pi-search',

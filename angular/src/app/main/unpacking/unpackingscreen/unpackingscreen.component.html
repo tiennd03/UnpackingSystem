@@ -39,10 +39,10 @@
                 <td>
                     <button pButton pRipple icon="pi pi-exclamation-circle" class="p-button-rounded p-button-danger mr-2"
                             label="Robing" (click)="addrobing(rowData)"
-                            *ngIf="rowData.status === 'READY' || rowData.status === 'START'"></button>
+                            *ngIf="isGranted('Pages.UPS.Unpacking.FinishPart') && (rowData.status === 'READY' || rowData.status === 'START')"></button>
                     <button pButton pRipple icon="pi pi-check-circle" class="p-button-rounded p-button-success mr-2"
                             label="Finish" (click)="finishPart(rowData)"
-                            *ngIf="rowData.status === 'READY' || rowData.status === 'START'"></button>
+                            *ngIf="isGranted('Pages.UPS.Unpacking.FinishPart') && (rowData.status === 'READY' || rowData.status === 'START')"></button>
                     <div *ngIf="rowData.status === 'FINISH' || rowData.status === 'ROBING'">
                         DONE
                     </div>
@@ -61,8 +61,8 @@
             </div>
         </div>
 
-        <div class="unique-card">
-            <div class="background-overlay-finish" (click)=" finishUpkModule(moduleNoCurrent)"></div>
+        <div class="unique-card" (click)=" finishUpkModule(moduleNoCurrent)">
+            <div class="background-overlay-finish"></div>
             <div class="card-content-finish">
                 <div class="card-title">FINISH</div>
             </div>
@@ -84,4 +84,4 @@
     </div>
     </div>
 </div>
-
+<p-toast></p-toast>

@@ -9,9 +9,6 @@ const routes: Routes = [
             {
                 path: 'unpackingscreen',
                 component: UnpackingScreenComponent,
-                data: {
-                    // permission: 'Pages.GHS.Approval'
-                }
             },
         ]
     },

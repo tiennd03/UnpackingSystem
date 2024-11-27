@@ -5,10 +5,12 @@ import { result } from 'lodash-es';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { CreateRobingComponent } from './create-robing/create-robing.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
     templateUrl: './unpackingscreen.component.html',
     styleUrls: ['./unpackingscreen.component.less'],
+    providers:[MessageService],
 })
 export class UnpackingScreenComponent extends AppComponentBase implements OnInit {
     @ViewChild('dt1') dt1: Table | undefined;
@@ -37,6 +39,7 @@ export class UnpackingScreenComponent extends AppComponentBase implements OnInit
         injector: Injector,
         private _service: UnpackingServiceProxy,
         public dialogService: DialogService,
+        private messageService: MessageService,
     ) {
         super(injector);
         this.cols = [
@@ -89,6 +92,11 @@ export class UnpackingScreenComponent extends AppComponentBase implements OnInit
     }
 
     finishUpkModule(id: string) {
+        if (!this.isGranted('Pages.UPS.Unpacking.FinishUpkModule')) {
+            this.messageService.add({severity:'warn', summary:'Permission invalid', detail:'Your permission can not do this action'});
+            return;
+        }
+
         this.message.confirm(this.l(''), 'FINISH UNPACKING MODULE', (isConfirmed) => {
             if (isConfirmed) {
                 this._service.finishUpkModule(id)

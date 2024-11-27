@@ -1,6 +1,8 @@
-﻿using Abp.Dapper.Repositories;
+﻿using Abp.Authorization;
+using Abp.Dapper.Repositories;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using prod.Authorization;
 using prod.Master.DevaningModule;
 using prod.Master.Unpacking.Dto;
 using System;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace prod.Master.Unpacking
 {
+    [AbpAuthorize(AppPermissions.Pages_UPS_Unpacking)]
     public class UnpackingAppService : prodAppServiceBase, IUnpackingAppService
     {
         private readonly IRepository<LupContModule, long> _repo;
@@ -75,12 +78,14 @@ namespace prod.Master.Unpacking
 
         }
 
+        [AbpAuthorize(AppPermissions.Pages_UPS_Unpacking_FinishUpkModule)]
         public async Task FinishUpkModule(string module_no)
         {
             string _sql = "Exec FINISH_MODULE @ModuleNo";
             await _dapperRepo.QueryAsync<LupContModule>(_sql, new { ModuleNo = module_no });
         }
 
+        [AbpAuthorize(AppPermissions.Pages_UPS_Unpacking_FinishPart)]
         public async Task FinishPart(long? id)
         {
             string sql = "UPDATE Part SET Status = 'FINISH' WHERE id = @Id";
@@ -91,6 +96,7 @@ namespace prod.Master.Unpacking
 
         }
 
+        [AbpAuthorize(AppPermissions.Pages_UPS_Unpacking_FinishPart)]
         public async Task AddPartToRobbing(long Id, string PartNo, string PartName, string Supplier, string ModuleNo, string Type, string Description)
         {
             string _sql = "Exec ADD_PART_TO_ROBBING @p_id ,@p_partNo ,@p_partName,@p_supplier ,@p_moduleNo,@p_type ,@p_description";
