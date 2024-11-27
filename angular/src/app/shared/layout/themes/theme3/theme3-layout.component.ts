@@ -22,7 +22,7 @@ export class Theme3LayoutComponent extends ThemesLayoutBaseComponent implements 
 
     ngOnInit() {
         this.installationMode = UrlHelper.isInstallUrl(location.href);
-        this.defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-light-sm.svg';
+        this.defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-light.svg';
     }
 
     triggerAsideToggleClickEvent(): void {

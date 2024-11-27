@@ -4,6 +4,7 @@ import { RobingDto, RobingServiceProxy, UnpackingServiceProxy } from '@shared/se
 import { Table } from 'primeng/table';
 import { Paginator } from 'primeng/paginator';
 import * as moment from 'moment';
+import { ExportExcelService } from '@app/main/export-excel-standard.service';
 
 @Component({
     templateUrl: './robing.component.html',
@@ -35,11 +36,13 @@ export class RobingComponent extends AppComponentBase implements OnInit {
     arrayTest = ['1', '2', '3', '4', '5']
     listPartInModule;
     disable;
+    loadingDowload: boolean = false;
 
     constructor(
         injector: Injector,
         private _service: RobingServiceProxy,
         private _unpackingProxy: UnpackingServiceProxy,
+        private excelService: ExportExcelService,
     ) {
         super(injector);
 
@@ -135,4 +138,28 @@ export class RobingComponent extends AppComponentBase implements OnInit {
           return 'PENDING';
         }
       }
+
+    //   exportToExcel(): void {
+    //     this._service
+    //         .getRobingToExcel(
+    //             this.partNo,
+    //         )
+    //         .subscribe((result) => {
+    //             this._fileDownloadService.downloadTempFile(result);
+    //             this.notify.success('Export success')
+
+    //         });
+    // }
+
+    exportToExcel(): void {
+        if (!this.rowdata.length) {
+            this.notify.warn('No Data to Export');
+        }
+        this.loadingDowload = true;
+        this.excelService.exportExcel(this.rowdata, 'Robing').then(() => {
+            this.loadingDowload = false;
+        }).catch(() => {
+            this.loadingDowload = false;
+        });
+    }
 }

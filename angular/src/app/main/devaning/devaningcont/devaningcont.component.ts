@@ -8,6 +8,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { CreateOrEditDevaningContComponent } from './create-or-edit-devaningcont/create-or-edit-devaningcont.component';
+import { ExportExcelService } from '@app/main/export-excel-standard.service';
 
 @Component({
     templateUrl: './devaningcont.component.html',
@@ -46,7 +47,8 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         public dialogService: DialogService,
-        private localizePipe: LocalizePipe
+        private localizePipe: LocalizePipe,
+        private excelService: ExportExcelService,
     ) {
         super(injector);
         this.cols = [
@@ -219,7 +221,7 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
         this.loadAllData();
         setTimeout(() => {
             this.getAll(this.status);
-        }, 100);
+        }, 300);
     }
 
     deleteRecord(id, typeDelete: string) {
@@ -261,5 +263,32 @@ export class DevaningContComponent extends AppComponentBase implements OnInit {
                 }
             }
         });
+    }
+    exportToExcel(): void {
+        if (!this.listDataDevaningCont.length) {
+            this.notify.warn('No Data to Export');
+        }
+
+        this.loadingDowload = true;
+
+        if (this.currentTab === 'New') {
+            this.excelService.exportExcel(this.listDataDevaningCont, 'DevaningContTabNew').then(() => {
+                this.loadingDowload = false;
+            }).catch(() => {
+                this.loadingDowload = false;
+            });
+        } else if (this.currentTab === 'Devaning') {
+            this.excelService.exportExcel(this.listDataDevaningCont, 'DevaningContTabDevaning').then(() => {
+                this.loadingDowload = false;
+            }).catch(() => {
+                this.loadingDowload = false;
+            });
+        } else if (this.currentTab === 'Devaned') {
+            this.excelService.exportExcel(this.listDataDevaningCont, 'DevaningContTabDevaned').then(() => {
+                this.loadingDowload = false;
+            }).catch(() => {
+                this.loadingDowload = false;
+            });
+        }
     }
 }

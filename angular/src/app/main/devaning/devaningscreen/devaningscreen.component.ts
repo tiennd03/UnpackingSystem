@@ -107,19 +107,19 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
     updateProgress() {
         if (this.timeInSeconds <= 0) {
             console.warn('Invalid time. Progress update will not run.');
-            this.messageService.add({ severity: 'warn', summary: 'Please enter time devan'});
+            this.messageService.add({ severity: 'warn', summary: 'Please enter time devan or Click Finish'});
             return;
         } else {
             this.progress = 0;
             const updateInterval = 1000;
             const incrementPerInterval = 100 / this.timeInSeconds;
-    
+
             let interval = setInterval(() => {
                 this.progress += incrementPerInterval;
                 if (this.progress >= 100) {
                     this.progress = 100;
                     clearInterval(interval);
-    
+
                     if(this.showDialog && this.inProgressRecord){
                         this.showCompletedProgressDialog();
                     }
@@ -168,15 +168,18 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
             rejectLabel: 'Continue Progress',
             accept: () => {
                 this.finishDevModule(this.inProgressRecord.devaningId)
+                this.timeInSeconds = 0;
             },
             reject: () => {
                 this.messageService.add({ severity: 'info', summary: 'Continuing', detail: 'The process will continue running until "Finish" is clicked.' });
-                this.timeInSeconds = 0; 
+                this.timeInSeconds = 0;
             },
         });
     }
 
     updateStatusToDevaning(devaningId: any) {
+        this.timeInSeconds = 0;
+        this.showDialog = true;
         // if (this.timeInSeconds <= 0 && this.inProgressRecord){
         //     this.messageService.add({ severity: 'warn', summary: 'Please finish inprogress devan'});
         //     return;
@@ -236,7 +239,7 @@ export class DevaningScreenComponent extends AppComponentBase implements OnInit 
 
     setTime() {
         this.timeInSeconds = this.hour * 3600 + this.minute * 60 + this.second;
-    
+
         if (this.timeInSeconds > 0 && this.inProgressRecord) {
             console.log(`Time set: ${this.timeInSeconds} seconds`);
             this.showSetupTimeDialog = false;

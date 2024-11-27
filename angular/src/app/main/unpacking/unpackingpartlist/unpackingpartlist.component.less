@@ -29,6 +29,24 @@
 
 :host::ng-deep {
 
+    .p-button {
+        margin-right: 0.25rem;
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+
+        &:hover {
+            background-color: #3f51b5; /* Màu nền khi hover */
+            color: #ffffff; /* Màu chữ khi hover */
+            transform: scale(1.05); /* Phóng to nhẹ */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+        }
+
+        &:active {
+            transform: scale(0.95); /* Thu nhỏ khi click */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Đổ bóng giảm */
+        }
+    }
+
+
     .p-datatable-wrapper {
         min-height: 61vh;
         max-height: 61vh;

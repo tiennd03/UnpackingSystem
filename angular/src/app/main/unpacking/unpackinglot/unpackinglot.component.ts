@@ -1,4 +1,5 @@
 ﻿import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { ExportExcelService } from '@app/main/export-excel-standard.service';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { UnpackingDto, UnpackingServiceProxy } from '@shared/service-proxies/service-proxies';
 import { error } from 'console';
@@ -15,6 +16,7 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
 
     listUnpackingLot
     loading: boolean;
+    loadingDowload: boolean;
     rowSelection: UnpackingDto[] = [];
     columns;
     cols: any[];
@@ -31,7 +33,8 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
 
     constructor(
         injector: Injector,
-        private _service: UnpackingServiceProxy
+        private _service: UnpackingServiceProxy,
+        private excelService: ExportExcelService,
     ) {
         super(injector);
         this.cols = [
@@ -97,5 +100,18 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
         } else if (status === 'READY') {
             return 'READY';
         }
+    }
+
+    exportToExcel(): void {
+
+        if (!this.listUnpackingLot.length) {
+            this.notify.warn('No Data to Export');
+        }
+        this.loadingDowload = true;
+        this.excelService.exportExcel(this.listUnpackingLot, 'UnpackingLot').then(() => {
+            this.loadingDowload = false;
+        }).catch(() => {
+            this.loadingDowload = false;
+        });
     }
 }
