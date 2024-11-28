@@ -10,7 +10,7 @@ const routes: Routes = [
                 path: 'robing',
                 component: RobingComponent,
                 data: {
-                    // permission: 'Pages.GHS.Approval'
+                    permission: 'Pages.UPS.Robing'
                 }
             },
         ]

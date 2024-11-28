@@ -127,6 +127,17 @@ namespace prod.Authorization
         public const string Pages_UPS_Unpacking_FinishPart = "Pages.UPS.Unpacking.FinishPart";
         public const string Pages_UPS_Unpacking_FinishUpkModule = "Pages.UPS.Unpacking.FinishUpkModule";
 
+        //Robing
+        public const string Pages_UPS_Robing = "Pages.UPS.Robing";
+        public const string Pages_UPS_Robing_Request = "Pages.UPS.Robing.Request";
 
+        //PC
+        public const string Pages_UPS_PC = "Pages.UPS.PC";
+
+        //PC_Store
+        public const string Pages_UPS_PC_Store = "Pages.UPS.PC.Store";
+
+        //PC_Home
+        public const string Pages_UPS_PC_Home = "Pages.UPS.PC.Home";
     }
 }

@@ -43,7 +43,7 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
             { field: 'renban', header: 'Renban' },
             { field: 'supplier', header: 'Supplier' },
             { field: 'planUnpackingDate', header: 'Plan Unpacking Date' },
-            { field: 'actUnpackingDate', header: 'Act Unpacking Date' },
+            // { field: 'actUnpackingDate', header: 'Act Unpacking Date' },
             { field: 'actUnpackingDateFinish', header: 'Act Unpacking Date Finish' },
             { field: 'moduleStatus', header: 'Module Status' },
         ]

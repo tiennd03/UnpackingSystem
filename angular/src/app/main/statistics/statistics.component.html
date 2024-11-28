@@ -1,0 +1,147 @@
+
+<div class="statistics-container">
+    <div class="statistics-pc ">
+        <div
+            class="statistics-pc-all w-100 h-100 d-flex justify-content-between align-items-center">
+            <div class="statistics-pc-store pc h-100 d-flex justify-content-between align-items-center" (click)="openRoute('dvnContainer')">
+                <div class="statistics-content icon h-50">
+                    <img src="/assets/common/images/container.png" class="icon" />
+                </div>
+                <div class="statistics-content total h-50">
+                    <div class="total-header">
+                        <h6>Container</h6>
+                    </div>
+                    <div class="total-value">
+                        <h2>{{countContainer || 0}}</h2>
+                    </div>
+                    <div class="total-content">
+                        <p>Total Part</p>
+                    </div>
+                    <div class="total-view">
+                        <u>View detail</u>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics-pc-home pc h-100 d-flex justify-content-between align-items-center">
+                <div class="statistics-content icon h-50">
+                    <img src="/assets/common/images/renban.png" class="icon" />
+                </div>
+                <div class="statistics-content total h-50">
+                    <div class="total-header">
+                        <h6>Renban</h6>
+                    </div>
+                    <div class="total-value">
+                        <h2>120</h2>
+                    </div>
+                    <!-- <div class="total-content">
+                        <p>Total Part</p>
+                    </div> -->
+                </div>
+            </div>
+            <div class="statistics-pc-total pc h-100 d-flex justify-content-between align-items-center" (click)="openRoute('robing')">
+                <div class="statistics-content icon h-50">
+                    <img src="/assets/common/images/robing.png" class="icon" />
+                </div>
+                <div class="statistics-content total h-50">
+                    <div class="total-header">
+                        <h6>Robing</h6>
+                    </div>
+                    <div class="total-value">
+                        <h2>{{countRobing || 0}}</h2>
+                    </div>
+                    <div class="total-content">
+                        <p>Total Part</p>
+                    </div>
+                    <div class="total-view">
+                        <u>View detail</u>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="statistics-chart-dvn-upk">
+        <div class="statistics-chart-all w-100 h-100">
+            <div class="statistics-chart-content h-100">
+                <div class="statistics-chart mt-2">
+                    <!-- <ngx-charts-bar-vertical
+                    [view]="[700, 400]"
+                    [results]="barChartData"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                  ></ngx-charts-bar-vertical> -->
+                    <ngx-charts-bar-vertical-2d
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="multi"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        [legendTitle]="legendTitle">
+                    </ngx-charts-bar-vertical-2d>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="statistics-dvn-upk">
+        <div
+            class="statistics-dvn-all w-100 h-100 d-flex justify-content-between align-items-center">
+            <div class="statistics-dvn group-statistics  h-100 d-flex justify-content-center align-items-center">
+                <div class="statistics-content icon w-25 h-50">
+                    <img src="/assets/common/images/tyre.png" class="icon h-50" />
+                </div>
+                <div class="statistics-content total w-75 h-50">
+                    <div class="total-value">
+                        <h3>{{countPart || 0}}</h3>
+                    </div>
+                    <div class="total-content">
+                        <p>Total Part</p>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics-upk group-statistics  h-100 d-flex justify-content-center align-items-center">
+                <div class="statistics-content icon w-25 h-50">
+                    <img src="/assets/common/images/module.png" class="icon h-50" />
+                </div>
+                <div class="statistics-content total w-75 h-50">
+                    <div class="total-value">
+                        <h3>{{countModule || 0}}</h3>
+                    </div>
+                    <div class="total-content">
+                        <p>Total Module</p>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics-robing group-statistics  h-100 d-flex justify-content-center align-items-center">
+                <div class="statistics-content icon w-25 h-50">
+                    <img src="/assets/common/images/stock.png" class="icon h-50" />
+                </div>
+                <div class="statistics-content total w-75 h-50">
+                    <div class="total-value">
+                        <h3>{{countPcStore || 0}}</h3>
+                    </div>
+                    <div class="total-content">
+                        <p>Total Pc Store</p>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics-robing group-statistics  h-100 d-flex justify-content-center align-items-center">
+                <div class="statistics-content icon w-25 h-50">
+                    <img src="/assets/common/images/warehouse.png" class="icon h-50" />
+                </div>
+                <div class="statistics-content total w-75 h-50">
+                    <div class="total-value">
+                        <h3>{{countPcHome || 0}}</h3>
+                    </div>
+                    <div class="total-content">
+                        <p>Total Pc Home</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

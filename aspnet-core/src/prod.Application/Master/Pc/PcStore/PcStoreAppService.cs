@@ -1,5 +1,7 @@
-﻿using Abp.Domain.Repositories;
+﻿using Abp.Authorization;
+using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using prod.Authorization;
 using prod.Dto;
 using prod.Master.Pc;
 using prod.Pc.PcStore.Exporting;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace prod.Master
 {
+    [AbpAuthorize(AppPermissions.Pages_UPS_PC_Store)]
     public class PcStoreAppService : prodAppServiceBase, IPcStoreAppService
     {
         private readonly IRepository<PcStore, long> _repo;

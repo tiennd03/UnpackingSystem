@@ -45554,6 +45554,7 @@ body {
 body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 body a:hover,
 body a:active,

@@ -13,6 +13,11 @@ import { RouterModule } from '@angular/router';
                         data: { permission: 'Pages.Tenant.Dashboard' },
                     },
                     {
+                        path: 'statistics',
+                        loadChildren: () => import('./statistics/statistics.module').then((m) => m.StatisticsModule),
+                        data: { permission: 'Pages.Tenant.Dashboard' },
+                    },
+                    {
                         path: 'devaning',
                         loadChildren: () => import('./devaning/devaning.module').then(m => m.DevaningModule),
                         data: { permission: 'Pages.UPS' }

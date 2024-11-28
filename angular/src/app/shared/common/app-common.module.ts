@@ -34,6 +34,7 @@ import { ComboboxInputTypeComponent } from './input-types/combobox-input-type/co
 import { CheckboxInputTypeComponent } from './input-types/checkbox-input-type/checkbox-input-type.component';
 import { MultipleSelectComboboxInputTypeComponent } from './input-types/multiple-select-combobox-input-type/multiple-select-combobox-input-type.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PasswordInputWithShowButtonComponent } from './password-input-with-show-button/password-input-with-show-button.component';
 import { KeyValueListManagerComponent } from './key-value-list-manager/key-value-list-manager.component';
 @NgModule({
@@ -53,6 +54,7 @@ import { KeyValueListManagerComponent } from './key-value-list-manager/key-value
         CountoModule,
         AppBsModalModule,
         AutoCompleteModule,
+        NgxChartsModule,
     ],
     declarations: [
         TimeZoneComboComponent,
@@ -77,6 +79,7 @@ import { KeyValueListManagerComponent } from './key-value-list-manager/key-value
         DatePickerInitialValueSetterDirective,
         PasswordInputWithShowButtonComponent,
         KeyValueListManagerComponent,
+        NgxChartsModule,
     ],
     providers: [
         DateTimeService,
