@@ -1,0 +1,101 @@
+@radius: 5px;
+
+:host::ng-deep{
+    .ngx-charts,.chart-legend{
+        margin-top: 15px;
+    }
+}
+
+.statistics-container {
+    height: 88vh; // 58.13px = 47.5px(height tab) + 10px(margin bottom tab)
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    margin-left: 10px;
+    .statistics-pc {
+        padding: 5px 0 0 0 ;
+        height: 20%;
+        .statistics-pc-all{
+            padding: 0 20px 0 20px;
+            .pc{
+                transition: transform 0.3s;
+                width: calc((100% / 3) - 10px);
+                background-color: white;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                border-radius: @radius;
+                .statistics-content{
+                    .total-content{
+                        p{
+                            margin-bottom: 0px;
+                        }
+                    }
+                    .total-view{
+                        u{
+                            color: rgb(0, 169, 253);
+                        }
+                    }
+                }
+                .icon{
+                    width: 40%;
+                }
+                .total{
+                    width: 60%;
+                    div{
+                        h6,h3,p{
+                            color: black;
+                        }
+                    }
+                    .total-header{
+
+                    }
+                }
+            }
+        }
+    }
+    .statistics-chart-dvn-upk{
+        margin-top: 1%;
+        height: 50%;
+        .statistics-chart-all{
+            padding: 0 20px 0 20px;
+            .statistics-chart-content{
+                border-radius: @radius;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                .statistics-chart{
+                    height: 120%;
+                    background-color: white;
+                }
+            }
+        }
+    }
+    .statistics-dvn-upk{
+        margin-top: 1%;
+        height: 15%;
+        .statistics-dvn-all{
+            padding: 0 20px 0 20px;
+            .group-statistics{
+                width: calc((100% / 4) - 5px);
+                border-radius: @radius;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            }
+        }
+    }
+}
+
+.pc:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.total-value{
+    h3{
+        color: black;
+        font-weight: 700;
+    }
+}
+

@@ -1,5 +1,7 @@
-﻿using Abp.Dapper.Repositories;
+﻿using Abp.Authorization;
+using Abp.Dapper.Repositories;
 using Abp.Domain.Repositories;
+using prod.Authorization;
 using prod.Dto;
 using prod.Master.Robing.Dto;
 using prod.Master.Robing.Exporting;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace prod.Master.Robing
 {
+    [AbpAuthorize(AppPermissions.Pages_UPS_Robing)]
     public class RobingAppService : prodAppServiceBase, IRobingAppService
     {
         private readonly IRepository<Robings, long> _repo;
@@ -23,6 +26,7 @@ namespace prod.Master.Robing
             _dapperRepo = dapperRepo;
         }
 
+        [AbpAuthorize(AppPermissions.Pages_UPS_Robing_Request)]
         public async Task RequestGiveBack(long? id)
         {
             string sql = "UPDATE Robing SET Type = 'PENDING' WHERE id = @Id";

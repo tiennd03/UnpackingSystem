@@ -143,6 +143,15 @@ namespace prod.Authorization
             var upsunpacking = pages.CreateChildPermission(AppPermissions.Pages_UPS_Unpacking, L("UPS_Unpacking"), multiTenancySides: MultiTenancySides.Tenant);
             upsunpacking.CreateChildPermission(AppPermissions.Pages_UPS_Unpacking_FinishPart, L("UPS_Unpacking_FinishPart"), multiTenancySides: MultiTenancySides.Tenant);
             upsunpacking.CreateChildPermission(AppPermissions.Pages_UPS_Unpacking_FinishUpkModule, L("UPS_Unpacking_FinishUpkModule"), multiTenancySides: MultiTenancySides.Tenant);
+
+            //UPS-Robing
+            var upsrobing = pages.CreateChildPermission(AppPermissions.Pages_UPS_Robing, L("UPS_Robing"), multiTenancySides: MultiTenancySides.Tenant);
+            upsrobing.CreateChildPermission(AppPermissions.Pages_UPS_Robing_Request, L("UPS_Robing_Request"), multiTenancySides: MultiTenancySides.Tenant);
+
+            //UPS-PC
+            var upspc = pages.CreateChildPermission(AppPermissions.Pages_UPS_PC, L("UPS_PC"), multiTenancySides: MultiTenancySides.Tenant);
+            upspc.CreateChildPermission(AppPermissions.Pages_UPS_PC_Store, L("UPS_PC_Store"), multiTenancySides: MultiTenancySides.Tenant);
+            upspc.CreateChildPermission(AppPermissions.Pages_UPS_PC_Home, L("UPS_PC_Home"), multiTenancySides: MultiTenancySides.Tenant);
         }
 
         private static ILocalizableString L(string name)

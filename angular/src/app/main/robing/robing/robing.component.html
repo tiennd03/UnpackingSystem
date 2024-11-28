@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="detail-content detail-action d-flex justify-content-center align-items-center">
-                    <button class="request-give-back" [disabled]="disable" (click)="requestGiveBack()">Request Give Back</button>
+                    <button class="request-give-back" [disabled]="disable" (click)="requestGiveBack()"  *ngIf="isGranted('Pages.UPS.Robing.Request')">Request Give Back</button>
                 </div>
             </div>
         </div>

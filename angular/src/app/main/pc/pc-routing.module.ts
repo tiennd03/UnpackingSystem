@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
                         path: 'pcstore',
                         loadChildren: () => import('./pcstore/pcstore.module', )
                         .then((m) => m.PcStoreModule),
+                        data: { permission: 'Pages.UPS.PC.Store' },
                     },
                 ],
             },
@@ -21,6 +22,7 @@ import { RouterModule, Routes } from '@angular/router';
                         path: 'pchome',
                         loadChildren: () => import('./pchome/pchome.module', )
                         .then((m) => m.PcHomeModule),
+                        data: { permission: 'Pages.UPS.PC.Home' },
                     },
                 ],
             },

@@ -22,6 +22,7 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
+            new AppMenuItem('Statistics', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/statistics'),
 
             new AppMenuItem('Devaning', 'Pages.UPS', 'flaticon-interface-8', '', [], [
 
@@ -38,13 +39,13 @@ export class AppNavigationService {
 
             new AppMenuItem('Robing', 'Pages.UPS', 'flaticon-interface-8', '', [], [
 
-                new AppMenuItem('Robing', '', 'flaticon-book', '/app/main/robing/robing/robing'),
+                new AppMenuItem('Robing', 'Pages.UPS.Robing', 'flaticon-book', '/app/main/robing/robing/robing'),
             ]),
 
-            new AppMenuItem('Pc', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+            new AppMenuItem('Pc', 'Pages.UPS.PC', 'flaticon-interface-8', '', [], [
 
-                new AppMenuItem('Pc Home', '', 'flaticon-book', '/app/main/pc/pchome/pchome'),
-                new AppMenuItem('Pc store', '', 'flaticon-book', '/app/main/pc/pcstore/pcstore'),
+                new AppMenuItem('Pc Home', 'Pages.UPS.PC.Home', 'flaticon-book', '/app/main/pc/pchome/pchome'),
+                new AppMenuItem('Pc store', 'Pages.UPS.PC.Store', 'flaticon-book', '/app/main/pc/pcstore/pcstore'),
             ]),
 
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
