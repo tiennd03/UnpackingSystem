@@ -38,6 +38,7 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
     ) {
         super(injector);
         this.cols = [
+            { field: 'id', header: 'ID' },
             { field: 'moduleNo', header: 'Module No' },
             { field: 'devaningNo', header: 'Devaning No' },
             { field: 'renban', header: 'Renban' },
@@ -73,7 +74,6 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
             this.moduleStatus
         ).subscribe((res) => {
             this.listUnpackingLot = res;
-            const readyRecords = res.filter(item => item.moduleStatus === 'READY')
             this.loading = false
         },
         (error) => {
