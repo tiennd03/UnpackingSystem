@@ -14,11 +14,11 @@ export class DashboardComponent extends AppComponentBase {
         super(injector);
     }
 
-    ngOnInit() {
-        this.loadForm();
-    }
-    loadForm() {
-        var kt_wrapper = document.getElementById('kt_wrapper');
-        kt_wrapper.style.display = 'none';
-    }
+    // ngOnInit() {
+    //     this.loadForm();
+    // }
+    // loadForm() {
+    //     var kt_wrapper = document.getElementById('kt_wrapper');
+    //     kt_wrapper.style.display = 'none';
+    // }
 }
