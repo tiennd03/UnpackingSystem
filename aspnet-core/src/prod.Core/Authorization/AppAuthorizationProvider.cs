@@ -152,6 +152,9 @@ namespace prod.Authorization
             var upspc = pages.CreateChildPermission(AppPermissions.Pages_UPS_PC, L("UPS_PC"), multiTenancySides: MultiTenancySides.Tenant);
             upspc.CreateChildPermission(AppPermissions.Pages_UPS_PC_Store, L("UPS_PC_Store"), multiTenancySides: MultiTenancySides.Tenant);
             upspc.CreateChildPermission(AppPermissions.Pages_UPS_PC_Home, L("UPS_PC_Home"), multiTenancySides: MultiTenancySides.Tenant);
+
+            //Statistics
+            var upsstatistics = pages.CreateChildPermission(AppPermissions.Pages_UPS_Statistics, L("UPS_STATISTICS"), multiTenancySides: MultiTenancySides.Tenant);
         }
 
         private static ILocalizableString L(string name)

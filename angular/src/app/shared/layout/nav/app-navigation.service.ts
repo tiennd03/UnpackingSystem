@@ -22,7 +22,7 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
-            new AppMenuItem('Statistics', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/statistics'),
+            new AppMenuItem('Statistics', 'Pages.UPS.Statistics', 'flaticon-line-graph', '/app/main/statistics'),
 
             new AppMenuItem('Devaning', 'Pages.UPS', 'flaticon-interface-8', '', [], [
 

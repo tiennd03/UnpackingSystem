@@ -139,5 +139,8 @@ namespace prod.Authorization
 
         //PC_Home
         public const string Pages_UPS_PC_Home = "Pages.UPS.PC.Home";
+
+        //Statistics
+        public const string Pages_UPS_Statistics = "Pages.UPS.Statistics";
     }
 }
