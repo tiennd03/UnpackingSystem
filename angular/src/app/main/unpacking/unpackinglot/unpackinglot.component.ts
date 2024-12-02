@@ -73,6 +73,7 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
             this.moduleStatus
         ).subscribe((res) => {
             this.listUnpackingLot = res;
+            const readyRecords = res.filter(item => item.moduleStatus === 'READY')
             this.loading = false
         },
         (error) => {

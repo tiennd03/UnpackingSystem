@@ -24,25 +24,25 @@ export class AppNavigationService {
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             new AppMenuItem('Statistics', 'Pages.UPS.Statistics', 'flaticon-line-graph', '/app/main/statistics'),
 
-            new AppMenuItem('Devaning', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+            new AppMenuItem('Devaning', 'Pages.UPS', 'flaticon-settings', '', [], [
 
                 new AppMenuItem('Devaning Container', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningcont/devaningcont'),
                 new AppMenuItem('Devaning Screen', 'Pages.UPS.Devaning', 'flaticon-book', '/app/main/devaning/devaningscreen/devaningscreen'),
             ]),
 
-            new AppMenuItem('Unpacking', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+            new AppMenuItem('Unpacking', 'Pages.UPS', 'flaticon-settings', '', [], [
 
                 new AppMenuItem('Unpacking Lot', 'Pages.UPS.Unpacking', 'flaticon-book', '/app/main/unpacking/unpackinglot/unpackinglot'),
                 new AppMenuItem('Unpacking Partlist', 'Pages.UPS.Unpacking', 'flaticon-book', '/app/main/unpacking/unpackingpartlist/unpackingpartlist'),
                 new AppMenuItem('Unpacking Screen', 'Pages.UPS.Unpacking', 'flaticon-book', '/app/main/unpacking/unpackingscreen/unpackingscreen'),
             ]),
 
-            new AppMenuItem('Robing', 'Pages.UPS', 'flaticon-interface-8', '', [], [
+            new AppMenuItem('Robing', 'Pages.UPS', 'flaticon-refresh', '', [], [
 
                 new AppMenuItem('Robing', 'Pages.UPS.Robing', 'flaticon-book', '/app/main/robing/robing/robing'),
             ]),
 
-            new AppMenuItem('Pc', 'Pages.UPS.PC', 'flaticon-interface-8', '', [], [
+            new AppMenuItem('Pc', 'Pages.UPS.PC', 'flaticon-folder-1', '', [], [
 
                 new AppMenuItem('Pc Home', 'Pages.UPS.PC.Home', 'flaticon-book', '/app/main/pc/pchome/pchome'),
                 new AppMenuItem('Pc store', 'Pages.UPS.PC.Store', 'flaticon-book', '/app/main/pc/pcstore/pcstore'),
@@ -143,12 +143,12 @@ export class AppNavigationService {
                     )
                 ]
             ),
-            new AppMenuItem(
-                'DemoUiComponents',
-                'Pages.DemoUiComponents',
-                'flaticon-shapes',
-                '/app/admin/demo-ui-components'
-            ),
+            // new AppMenuItem(
+            //     'DemoUiComponents',
+            //     'Pages.DemoUiComponents',
+            //     'flaticon-shapes',
+            //     '/app/admin/demo-ui-components'
+            // ),
         ]);
     }
 
