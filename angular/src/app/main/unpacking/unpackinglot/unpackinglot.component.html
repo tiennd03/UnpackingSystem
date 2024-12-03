@@ -6,9 +6,9 @@
             [rowHover]="true"
             [rows]="10"
             [metaKeySelection]="false"
-            rowGroupMode="subheader" 
-            groupRowsBy="devaningNo" 
-            [(selection)]="rowSelection" 
+            rowGroupMode="subheader"
+            groupRowsBy="devaningNo"
+            [(selection)]="rowSelection"
             [resizableColumns]="true"
             [globalFilterFields]="['devaningNo']">
 
@@ -16,13 +16,6 @@
                 <div class="d-flex justify-between align-items-center">
                     <h3 class="m-0">UNPACKING LOT</h3>
                     <div class="search-option">
-                        <!-- <p-dropdown
-                            [options]="searchFields"
-                            [(ngModel)]="selectedField"
-                            placeholder="Search by"
-                            (onChange)="onSearch(searchValue)">
-                        </p-dropdown> -->
-
                         <div class="p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input
@@ -46,33 +39,16 @@
                     </th>
                 </tr>
             </ng-template>
-            <!-- <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr [pContextMenuRow]="rowData" [pSelectableRow]="rowData">
-                    <td *ngFor="let col of cols" [ngClass]="col.field === 'moduleStatus' ? getStatusBackgroundClass(rowData[col.field]) : ''">
-                        <ng-container
-                            *ngIf="col.field === 'actUnpackingDate' || col.field ==='actUnpackingDateFinish'">
-                            {{ rowData[col.field] | date:'dd/MM/yy HH:mm:ss' }}
-                        </ng-container>
-                        <ng-container *ngIf=" col.field === 'planUnpackingDate'">
-                            {{ rowData[col.field] | date:'dd/MM/yyyy' }}
-                        </ng-container>
-                        <ng-container
-                            *ngIf="col.field !== 'actUnpackingDate' && col.field !== 'planUnpackingDate' && col.field !== 'actUnpackingDateFinish'">
-                            {{ rowData[col.field] }}
-                        </ng-container>
-                    </td>
-                </tr>
-            </ng-template> -->
 
             <ng-template pTemplate="groupheader" let-rowData let-columns="columns" let-expanded="expanded">
                 <tr>
                     <td colspan="8" style ="text-align: left;">
-                        <button 
-                            type="button" 
-                            pButton 
-                            pRipple 
-                            [pRowToggler]="rowData" 
-                            class="p-button-text p-button-rounded p-button-plain mr-2" 
+                        <button
+                            type="button"
+                            pButton
+                            pRipple
+                            [pRowToggler]="rowData"
+                            class="p-button-text p-button-rounded p-button-plain mr-2"
                             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
                         </button>
                         <span class="font-bold ml-2">{{rowData.devaningNo}}</span>
