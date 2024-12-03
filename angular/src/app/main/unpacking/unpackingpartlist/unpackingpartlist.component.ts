@@ -36,6 +36,7 @@ export class UnpackingPartlistComponent extends AppComponentBase implements OnIn
     ) {
         super(injector);
         this.cols = [
+            { field: 'id', header: 'ID' },
             { field: 'partNo', header: 'Part No' },
             { field: 'moduleNo', header: 'Module No' },
             { field: 'partName', header: 'Part Name' },
@@ -44,15 +45,6 @@ export class UnpackingPartlistComponent extends AppComponentBase implements OnIn
             { field: 'status', header: 'Status' },
         ];
 
-        this.searchFields = [
-            { label: 'All', value: '' },
-            { label: 'Part No', value: 'partNo' },
-            { label: 'Module No', value: 'moduleNo' },
-            { label: 'Part Name', value: 'partName' },
-            { label: 'Renban', value: 'renban' },
-            { label: 'Supplier', value: 'supplier' },
-            { label: 'Status', value: 'status' }
-        ];
     }
 
     ngOnInit(): void {
@@ -77,10 +69,10 @@ export class UnpackingPartlistComponent extends AppComponentBase implements OnIn
     }
 
     onSearch(value: string): void {
-        if (this.selectedField === '') {
+        if (!value) {
             this.dt1.clear();
         } else {
-            this.dt1.filter(value, this.selectedField, 'contains');
+            this.dt1.filter(value, 'moduleNo', 'contains');
         }
     }
 

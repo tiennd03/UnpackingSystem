@@ -49,15 +49,6 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
             { field: 'moduleStatus', header: 'Module Status' },
         ]
 
-        this.searchFields = [
-            { label: 'All', value: '' },
-            { label: 'Devaning No', value: 'devaningNo' },
-            { label: 'Module No', value: 'moduleNo' },
-            { label: 'Renban', value: 'renban' },
-            { label: 'Supplier', value: 'supplier' },
-            { label: 'Module Status', value: 'moduleStatus' }
-        ];
-
     }
     ngOnInit(): void {
         this.loading = true;
@@ -82,10 +73,10 @@ export class UnpackingLotComponent extends AppComponentBase implements OnInit {
     }
 
     onSearch(value: string): void {
-        if (this.selectedField === '') {
+        if (!value) {
             this.dt1.clear();
         } else {
-            this.dt1.filter(value, this.selectedField, 'contains');
+            this.dt1.filter(value, 'devaningNo', 'contains');
         }
     }
 
